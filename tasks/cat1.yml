@@ -1,5 +1,5 @@
 - name: "HIGH | V-1073 | AUDIT | Systems must be maintained at a supported service pack level."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -11,7 +11,7 @@
       - V-1073
 
 - name: "HIGH | V-1073 | PATCH | Systems must be maintained at a supported service pack level."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -19,7 +19,7 @@
       - V-1073
 
 - name: "HIGH | V-1074 | AUDIT | An approved DoD antivirus program must be installed and used."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -31,7 +31,7 @@
       - V-1074
 
 - name: "HIGH | V-1074 | PATCH | An approved DoD antivirus program must be installed and used."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -39,7 +39,7 @@
       - V-1074
 
 - name: "HIGH | V-1081 | AUDIT | Local volumes must be formatted using NTFS."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -51,7 +51,7 @@
       - V-1081
 
 - name: "HIGH | V-1081 | PATCH | Local volumes must be formatted using NTFS."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -59,7 +59,7 @@
       - V-1081
 
 - name: "HIGH | V-1093 | AUDIT | Anonymous enumeration of shares must be restricted."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -71,7 +71,7 @@
       - V-1093
 
 - name: "HIGH | V-1093 | PATCH | Anonymous enumeration of shares must be restricted."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -79,7 +79,7 @@
       - V-1093
 
 - name: "HIGH | V-1102 | AUDIT | Unauthorized accounts must not have the Act as part of the operating system user right."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -91,7 +91,7 @@
       - V-1102
 
 - name: "HIGH | V-1102 | PATCH | Unauthorized accounts must not have the Act as part of the operating system user right."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -99,7 +99,7 @@
       - V-1102
 
 - name: "HIGH | V-1121 | AUDIT | FTP servers must be configured to prevent access to the system drive."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -111,7 +111,7 @@
       - V-1121
 
 - name: "HIGH | V-1121 | PATCH | FTP servers must be configured to prevent access to the system drive."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -119,7 +119,7 @@
       - V-1121
 
 - name: "HIGH | V-1127 | AUDIT | Only administrators responsible for the member server must have Administrator rights on the system."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -131,7 +131,7 @@
       - V-1127
 
 - name: "HIGH | V-1127 | PATCH | Only administrators responsible for the member server must have Administrator rights on the system."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -139,7 +139,7 @@
       - V-1127
 
 - name: "HIGH | V-1152 | AUDIT | Anonymous access to the registry must be restricted."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -151,7 +151,7 @@
       - V-1152
 
 - name: "HIGH | V-1152 | PATCH | Anonymous access to the registry must be restricted."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -159,7 +159,7 @@
       - V-1152
 
 - name: "HIGH | V-1153 | AUDIT | The LanMan authentication level must be set to send NTLMv2 response only, and to refuse LM and NTLM."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -171,7 +171,7 @@
       - V-1153
 
 - name: "HIGH | V-1153 | PATCH | The LanMan authentication level must be set to send NTLMv2 response only, and to refuse LM and NTLM."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -179,7 +179,7 @@
       - V-1153
 
 - name: "HIGH | V-1159 | AUDIT | The Recovery Console option must be set to prevent automatic logon to the system."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -191,7 +191,7 @@
       - V-1159
 
 - name: "HIGH | V-1159 | PATCH | The Recovery Console option must be set to prevent automatic logon to the system."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -199,7 +199,7 @@
       - V-1159
 
 - name: "HIGH | V-2372 | AUDIT | Reversible password encryption must be disabled."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -211,7 +211,7 @@
       - V-2372
 
 - name: "HIGH | V-2372 | PATCH | Reversible password encryption must be disabled."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -219,7 +219,7 @@
       - V-2372
 
 - name: "HIGH | V-2374 | AUDIT | Autoplay must be disabled for all drives."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -231,7 +231,7 @@
       - V-2374
 
 - name: "HIGH | V-2374 | PATCH | Autoplay must be disabled for all drives."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -239,7 +239,7 @@
       - V-2374
 
 - name: "HIGH | V-3337 | AUDIT | Anonymous SID/Name translation must not be allowed."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -251,7 +251,7 @@
       - V-3337
 
 - name: "HIGH | V-3337 | PATCH | Anonymous SID/Name translation must not be allowed."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -259,7 +259,7 @@
       - V-3337
 
 - name: "HIGH | V-3338 | AUDIT | Named pipes that can be accessed anonymously must be configured to contain no values on member servers."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -271,7 +271,7 @@
       - V-3338
 
 - name: "HIGH | V-3338 | PATCH | Named pipes that can be accessed anonymously must be configured to contain no values on member servers."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -279,7 +279,7 @@
       - V-3338
 
 - name: "HIGH | V-3339 | AUDIT | Unauthorized remotely accessible registry paths must not be configured."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -291,7 +291,7 @@
       - V-3339
 
 - name: "HIGH | V-3339 | PATCH | Unauthorized remotely accessible registry paths must not be configured."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -299,7 +299,7 @@
       - V-3339
 
 - name: "HIGH | V-3340 | AUDIT | Network shares that can be accessed anonymously must not be allowed."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -311,7 +311,7 @@
       - V-3340
 
 - name: "HIGH | V-3340 | PATCH | Network shares that can be accessed anonymously must not be allowed."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -319,7 +319,7 @@
       - V-3340
 
 - name: "HIGH | V-3343 | AUDIT | Solicited Remote Assistance must not be allowed."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -331,7 +331,7 @@
       - V-3343
 
 - name: "HIGH | V-3343 | PATCH | Solicited Remote Assistance must not be allowed."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -339,7 +339,7 @@
       - V-3343
 
 - name: "HIGH | V-3344 | AUDIT | Local accounts with blank passwords must be restricted to prevent access from the network."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -351,7 +351,7 @@
       - V-3344
 
 - name: "HIGH | V-3344 | PATCH | Local accounts with blank passwords must be restricted to prevent access from the network."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -359,7 +359,7 @@
       - V-3344
 
 - name: "HIGH | V-3379 | AUDIT | The system must be configured to prevent the storage of the LAN Manager hash of passwords."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -371,7 +371,7 @@
       - V-3379
 
 - name: "HIGH | V-3379 | PATCH | The system must be configured to prevent the storage of the LAN Manager hash of passwords."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -379,7 +379,7 @@
       - V-3379
 
 - name: "HIGH | V-4443 | AUDIT | Unauthorized remotely accessible registry paths and sub-paths must not be configured."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -391,7 +391,7 @@
       - V-4443
 
 - name: "HIGH | V-4443 | PATCH | Unauthorized remotely accessible registry paths and sub-paths must not be configured."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -399,7 +399,7 @@
       - V-4443
 
 - name: "HIGH | V-6834 | AUDIT | Anonymous access to Named Pipes and Shares must be restricted."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -411,7 +411,7 @@
       - V-6834
 
 - name: "HIGH | V-6834 | PATCH | Anonymous access to Named Pipes and Shares must be restricted."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -419,7 +419,7 @@
       - V-6834
 
 - name: "HIGH | V-7002 | AUDIT | Accounts must require passwords."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -431,7 +431,7 @@
       - V-7002
 
 - name: "HIGH | V-7002 | PATCH | Accounts must require passwords."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -439,7 +439,7 @@
       - V-7002
 
 - name: "HIGH | V-18010 | AUDIT | Unauthorized accounts must not have the Debug programs user right."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -451,7 +451,7 @@
       - V-18010
 
 - name: "HIGH | V-18010 | PATCH | Unauthorized accounts must not have the Debug programs user right."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -459,7 +459,7 @@
       - V-18010
 
 - name: "HIGH | V-21973 | AUDIT | Autoplay must be turned off for non-volume devices."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -471,7 +471,7 @@
       - V-21973
 
 - name: "HIGH | V-21973 | PATCH | Autoplay must be turned off for non-volume devices."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -479,7 +479,7 @@
       - V-21973
 
 - name: "HIGH | V-22692 | AUDIT | The default Autorun behavior must be configured to prevent Autorun commands."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -491,7 +491,7 @@
       - V-22692
 
 - name: "HIGH | V-22692 | PATCH | The default Autorun behavior must be configured to prevent Autorun commands."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -499,7 +499,7 @@
       - V-22692
 
 - name: "HIGH | V-26070 | AUDIT | Standard user accounts must only have Read permissions to the Winlogon registry key."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -511,7 +511,7 @@
       - V-26070
 
 - name: "HIGH | V-26070 | PATCH | Standard user accounts must only have Read permissions to the Winlogon registry key."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -519,7 +519,7 @@
       - V-26070
 
 - name: "HIGH | V-26283 | AUDIT | Anonymous enumeration of SAM accounts must not be allowed."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -531,7 +531,7 @@
       - V-26283
 
 - name: "HIGH | V-26283 | PATCH | Anonymous enumeration of SAM accounts must not be allowed."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -539,7 +539,7 @@
       - V-26283
 
 - name: "HIGH | V-26479 | AUDIT | Unauthorized accounts must not have the Create a token object user right."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -551,7 +551,7 @@
       - V-26479
 
 - name: "HIGH | V-26479 | PATCH | Unauthorized accounts must not have the Create a token object user right."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -559,7 +559,7 @@
       - V-26479
 
 - name: "HIGH | V-32282 | AUDIT | Standard user accounts must only have Read permissions to the Active Setup\Installed Components registry key."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -571,7 +571,7 @@
       - V-32282
 
 - name: "HIGH | V-32282 | PATCH | Standard user accounts must only have Read permissions to the Active Setup\Installed Components registry key."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -579,7 +579,7 @@
       - V-32282
 
 - name: "HIGH | V-34974 | AUDIT | The Windows Installer Always install with elevated privileges option must be disabled."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -591,7 +591,7 @@
       - V-34974
 
 - name: "HIGH | V-34974 | PATCH | The Windows Installer Always install with elevated privileges option must be disabled."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -599,7 +599,7 @@
       - V-34974
 
 - name: "HIGH | V-36451 | AUDIT | Policy must require that administrative accounts not be used with applications that access the Internet, such as web browsers, or with potential Internet sources, such as email."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -611,7 +611,7 @@
       - V-36451
 
 - name: "HIGH | V-36451 | PATCH | Policy must require that administrative accounts not be used with applications that access the Internet, such as web browsers, or with potential Internet sources, such as email."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -619,7 +619,7 @@
       - V-36451
 
 - name: "HIGH | V-36659 | AUDIT | Users with Administrative privileges must have separate accounts for administrative duties and normal operational tasks."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -631,7 +631,7 @@
       - V-36659
 
 - name: "HIGH | V-36659 | PATCH | Users with Administrative privileges must have separate accounts for administrative duties and normal operational tasks."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -639,7 +639,7 @@
       - V-36659
 
 - name: "HIGH | V-36664 | AUDIT | The system must not use removable media as the boot loader."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -651,7 +651,7 @@
       - V-36664
 
 - name: "HIGH | V-36664 | PATCH | The system must not use removable media as the boot loader."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -659,7 +659,7 @@
       - V-36664
 
 - name: "HIGH | V-36712 | AUDIT | The Windows Remote Management (WinRM) client must not use Basic authentication."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -671,7 +671,7 @@
       - V-36712
 
 - name: "HIGH | V-36712 | PATCH | The Windows Remote Management (WinRM) client must not use Basic authentication."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -679,7 +679,7 @@
       - V-36712
 
 - name: "HIGH | V-36718 | AUDIT | The Windows Remote Management (WinRM) service must not use Basic authentication."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -691,7 +691,7 @@
       - V-36718
 
 - name: "HIGH | V-36718 | PATCH | The Windows Remote Management (WinRM) service must not use Basic authentication."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
@@ -699,7 +699,7 @@
       - V-36718
 
 - name: "HIGH | V-40175 | AUDIT | The antivirus program signature files must be kept updated."
-  command: true
+  win_command: true
   register: result
   check_mode: no
   changed_when: no
@@ -711,7 +711,7 @@
       - V-40175
 
 - name: "HIGH | V-40175 | PATCH | The antivirus program signature files must be kept updated."
-  command: true
+  win_command: true
   tags:
       - cat1
       - high
