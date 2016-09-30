@@ -1,7 +1,7 @@
 - name: "LOW | V-1075 | AUDIT | The shutdown option must not be available from the logon dialog box."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -21,7 +21,7 @@
 - name: "LOW | V-1076 | AUDIT | System-level information must be backed up in accordance with local recovery time and recovery point objectives."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -41,7 +41,7 @@
 - name: "LOW | V-1090 | AUDIT | Caching of logon credentials must be limited."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -61,7 +61,7 @@
 - name: "LOW | V-1112 | AUDIT | Outdated or unused accounts must be removed from the system or disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -81,7 +81,7 @@
 - name: "LOW | V-1128 | AUDIT | Security configuration tools or equivalent processes must be used to configure and maintain platforms for security compliance."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -101,7 +101,7 @@
 - name: "LOW | V-1135 | AUDIT | Nonadministrative user accounts or groups must only have print permissions on printer shares."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -121,7 +121,7 @@
 - name: "LOW | V-1136 | AUDIT | Users must be forcibly disconnected when their logon hours expire."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -141,7 +141,7 @@
 - name: "LOW | V-1151 | AUDIT | The print driver installation privilege must be restricted to administrators."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -161,7 +161,7 @@
 - name: "LOW | V-1158 | AUDIT | The Recovery Console SET command must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -181,7 +181,7 @@
 - name: "LOW | V-1165 | AUDIT | The computer account password must not be prevented from being reset."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -201,7 +201,7 @@
 - name: "LOW | V-1172 | AUDIT | Users must be warned in advance of their passwords expiring."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -221,7 +221,7 @@
 - name: "LOW | V-1173 | AUDIT | The default permissions of global system objects must be increased."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -241,7 +241,7 @@
 - name: "LOW | V-1174 | AUDIT | The amount of idle time required before suspending a session must be properly set."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -261,7 +261,7 @@
 - name: "LOW | V-3373 | AUDIT | The maximum age for machine account passwords must be set to requirements."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -281,7 +281,7 @@
 - name: "LOW | V-3472 | AUDIT | If the time service is configured, it must use an authorized time server."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -301,7 +301,7 @@
 - name: "LOW | V-4108 | AUDIT | The system must generate an audit event when the audit log reaches a percentage of full threshold."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -321,7 +321,7 @@
 - name: "LOW | V-4110 | AUDIT | The system must be configured to prevent IP source routing."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -341,7 +341,7 @@
 - name: "LOW | V-4111 | AUDIT | The system must be configured to prevent Internet Control Message Protocol (ICMP) redirects from overriding Open Shortest Path First (OSPF) generated routes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -361,7 +361,7 @@
 - name: "LOW | V-4112 | AUDIT | The system must be configured to disable the Internet Router Discovery Protocol (IRDP)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -381,7 +381,7 @@
 - name: "LOW | V-4113 | AUDIT | The system must be configured to limit how often keep-alive packets are sent."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -401,7 +401,7 @@
 - name: "LOW | V-4116 | AUDIT | The system must be configured to ignore NetBIOS name release requests except from WINS servers."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -421,7 +421,7 @@
 - name: "LOW | V-4438 | AUDIT | The system must limit how many times unacknowledged TCP data is retransmitted."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -441,7 +441,7 @@
 - name: "LOW | V-4442 | AUDIT | The system must be configured to have password protection take effect within a limited time frame when the screen saver becomes active."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -461,7 +461,7 @@
 - name: "LOW | V-4445 | AUDIT | Optional Subsystems must not be permitted to operate on the system."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -481,7 +481,7 @@
 - name: "LOW | V-11806 | AUDIT | The system must be configured to prevent the display of the last username on the logon screen."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -501,7 +501,7 @@
 - name: "LOW | V-14232 | AUDIT | IPSec Exemptions must be limited."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -521,7 +521,7 @@
 - name: "LOW | V-15672 | AUDIT | Event Viewer Events.asp links must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -541,7 +541,7 @@
 - name: "LOW | V-15680 | AUDIT | The classic logon screen must be required for user logons."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -561,7 +561,7 @@
 - name: "LOW | V-15686 | AUDIT | Nonadministrators must be prevented from applying vendor-signed updates."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -581,7 +581,7 @@
 - name: "LOW | V-15687 | AUDIT | Users must not be presented with Privacy and Installation options on first use of Windows Media Player."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -601,7 +601,7 @@
 - name: "LOW | V-15701 | AUDIT | A system restore point must be created when a new device driver is installed."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -621,7 +621,7 @@
 - name: "LOW | V-15702 | AUDIT | An Error Report must not be sent when a generic device driver is installed."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -641,7 +641,7 @@
 - name: "LOW | V-15703 | AUDIT | Users must not be prompted to search Windows Update for device drivers."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -661,7 +661,7 @@
 - name: "LOW | V-15704 | AUDIT | Errors in handwriting recognition on tablet PCs must not be reported to Microsoft."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -681,7 +681,7 @@
 - name: "LOW | V-15707 | AUDIT | Remote Assistance log files must be generated."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -701,7 +701,7 @@
 - name: "LOW | V-15718 | AUDIT | Turning off File Explorer heap termination on corruption must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -721,7 +721,7 @@
 - name: "LOW | V-15719 | AUDIT | Users must be notified if the logon server was inaccessible and cached credentials were used."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -741,7 +741,7 @@
 - name: "LOW | V-16005 | AUDIT | The system must be configured to remove the Disconnect option from the Shut Down dialog box on the Remote Desktop Client.  (Remote Desktop Services Role)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -761,7 +761,7 @@
 - name: "LOW | V-21955 | AUDIT | IPv6 source routing must be configured to the highest protection level."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -781,7 +781,7 @@
 - name: "LOW | V-21956 | AUDIT | IPv6 TCP data retransmissions must be configured to prevent resources from becoming exhausted."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -801,7 +801,7 @@
 - name: "LOW | V-21960 | AUDIT | Domain users must be required to elevate when setting a networks location."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -821,7 +821,7 @@
 - name: "LOW | V-21961 | AUDIT | All Direct Access traffic must be routed through the internal network."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -841,7 +841,7 @@
 - name: "LOW | V-21963 | AUDIT | Windows Update must be prevented from searching for point and print drivers."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -861,7 +861,7 @@
 - name: "LOW | V-21964 | AUDIT | Device metadata retrieval from the Internet must be prevented."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -881,7 +881,7 @@
 - name: "LOW | V-21965 | AUDIT | Device driver searches using Windows Update must be prevented."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -901,7 +901,7 @@
 - name: "LOW | V-21967 | AUDIT | Microsoft Support Diagnostic Tool (MSDT) interactive communication with Microsoft must be prevented."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -921,7 +921,7 @@
 - name: "LOW | V-21969 | AUDIT | Access to Windows Online Troubleshooting Service (WOTS) must be prevented."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -941,7 +941,7 @@
 - name: "LOW | V-21970 | AUDIT | Responsiveness events must be prevented from being aggregated and sent to Microsoft."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -961,7 +961,7 @@
 - name: "LOW | V-21971 | AUDIT | The Application Compatibility Program Inventory must be prevented from collecting data and sending the information to Microsoft."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -981,7 +981,7 @@
 - name: "LOW | V-26359 | AUDIT | The Windows dialog box title for the legal banner must be configured."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1001,7 +1001,7 @@
 - name: "LOW | V-26475 | AUDIT | Unauthorized accounts must not have the Bypass traverse checking user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1021,7 +1021,7 @@
 - name: "LOW | V-26477 | AUDIT | Unauthorized accounts must not have the Change the time zone user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1041,7 +1041,7 @@
 - name: "LOW | V-28504 | AUDIT | Windows must be prevented from sending an error report when a device driver requests additional software during installation."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1061,7 +1061,7 @@
 - name: "LOW | V-36673 | AUDIT | IP stateless autoconfiguration limits state must be enabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1081,7 +1081,7 @@
 - name: "LOW | V-36677 | AUDIT | Optional component installation and component repair must be prevented from using Windows Update."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1101,7 +1101,7 @@
 - name: "LOW | V-36678 | AUDIT | Device driver updates must only search managed servers, not Windows Update."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1121,7 +1121,7 @@
 - name: "LOW | V-36696 | AUDIT | The detection of compatibility issues for applications and drivers must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1141,7 +1141,7 @@
 - name: "LOW | V-36697 | AUDIT | Trusted app installation must be enabled to allow for signed enterprise line of business apps."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1161,7 +1161,7 @@
 - name: "LOW | V-36707 | AUDIT | The Windows SmartScreen must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1181,7 +1181,7 @@
 - name: "LOW | V-36710 | AUDIT | Automatic download of updates from the Windows Store must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1201,7 +1201,7 @@
 - name: "LOW | V-36733 | AUDIT | User-level information must be backed up in accordance with local recovery time and recovery point objectives."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1221,7 +1221,7 @@
 - name: "LOW | V-36774 | AUDIT | A screen saver must be defined."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1241,7 +1241,7 @@
 - name: "LOW | V-36775 | AUDIT | Changing the screen saver must be prevented."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1261,7 +1261,7 @@
 - name: "LOW | V-36776 | AUDIT | Notifications from Windows Push Network Service must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1281,7 +1281,7 @@
 - name: "LOW | V-36777 | AUDIT | Toast notifications to the lock screen must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1301,7 +1301,7 @@
 - name: "LOW | V-40172 | AUDIT | Backups of system-level information must be protected."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1321,7 +1321,7 @@
 - name: "LOW | V-40173 | AUDIT | System-related documentation must be backed up in accordance with local recovery time and recovery point objectives."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1341,7 +1341,7 @@
 - name: "LOW | V-43241 | AUDIT | The setting to allow Microsoft accounts to be optional for modern style apps must be enabled (Windows 2012 R2)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:

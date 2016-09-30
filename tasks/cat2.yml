@@ -1,7 +1,7 @@
 - name: "MEDIUM | V-1070 | AUDIT | Server systems must be located in a controlled access area, accessible only to authorized personnel."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -21,7 +21,7 @@
 - name: "MEDIUM | V-1072 | AUDIT | Shared user accounts must not be permitted on the system."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -41,7 +41,7 @@
 - name: "MEDIUM | V-1089 | AUDIT | The required legal notice must be configured to display before console logon."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -61,7 +61,7 @@
 - name: "MEDIUM | V-1097 | AUDIT | The number of allowed bad logon attempts must meet minimum requirements."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -81,7 +81,7 @@
 - name: "MEDIUM | V-1098 | AUDIT | The period of time before the bad logon counter is reset must meet minimum requirements."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -101,7 +101,7 @@
 - name: "MEDIUM | V-1099 | AUDIT | The lockout duration must be configured to require an administrator to unlock an account."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -121,7 +121,7 @@
 - name: "MEDIUM | V-1104 | AUDIT | The maximum password age must meet requirements."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -141,7 +141,7 @@
 - name: "MEDIUM | V-1105 | AUDIT | The minimum password age must meet requirements."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -161,7 +161,7 @@
 - name: "MEDIUM | V-1107 | AUDIT | The password history must be configured to 24 passwords remembered."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -181,7 +181,7 @@
 - name: "MEDIUM | V-1113 | AUDIT | The built-in guest account must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -201,7 +201,7 @@
 - name: "MEDIUM | V-1114 | AUDIT | The built-in guest account must be renamed."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -221,7 +221,7 @@
 - name: "MEDIUM | V-1115 | AUDIT | The built-in administrator account must be renamed."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -241,7 +241,7 @@
 - name: "MEDIUM | V-1119 | AUDIT | The system must not boot into multiple operating systems (dual-boot)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -261,7 +261,7 @@
 - name: "MEDIUM | V-1120 | AUDIT | FTP servers must be configured to prevent anonymous logons."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -281,7 +281,7 @@
 - name: "MEDIUM | V-1141 | AUDIT | Unencrypted passwords must not be sent to third-party SMB Servers."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -301,7 +301,7 @@
 - name: "MEDIUM | V-1145 | AUDIT | Automatic logons must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -321,7 +321,7 @@
 - name: "MEDIUM | V-1150 | AUDIT | The built-in Windows password complexity policy must be enabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -341,7 +341,7 @@
 - name: "MEDIUM | V-1154 | AUDIT | The Ctrl+Alt+Del security attention sequence for logons must be enabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -361,7 +361,7 @@
 - name: "MEDIUM | V-1155 | AUDIT | The Deny access to this computer from the network user right on member servers must be configured to prevent access from highly privileged domain accounts and all local accounts on domain systems, and from unauthenticated access on all systems."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -381,7 +381,7 @@
 - name: "MEDIUM | V-1157 | AUDIT | The Smart Card removal option must be configured to Force Logoff or Lock Workstation."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -401,7 +401,7 @@
 - name: "MEDIUM | V-1162 | AUDIT | The Windows SMB server must perform SMB packet signing when possible."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -421,7 +421,7 @@
 - name: "MEDIUM | V-1163 | AUDIT | Outgoing secure channel traffic must be encrypted when possible."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -441,7 +441,7 @@
 - name: "MEDIUM | V-1164 | AUDIT | Outgoing secure channel traffic must be signed when possible."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -461,7 +461,7 @@
 - name: "MEDIUM | V-1166 | AUDIT | The Windows SMB client must be enabled to perform SMB packet signing when possible."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -481,7 +481,7 @@
 - name: "MEDIUM | V-1168 | AUDIT | Members of the Backup Operators group must be documented."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -501,7 +501,7 @@
 - name: "MEDIUM | V-1171 | AUDIT | Ejection of removable NTFS media must be restricted to Administrators."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -521,7 +521,7 @@
 - name: "MEDIUM | V-2907 | AUDIT | System files must be monitored for unauthorized changes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -541,7 +541,7 @@
 - name: "MEDIUM | V-3245 | AUDIT | File shares must limit access to data on a system."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -561,7 +561,7 @@
 - name: "MEDIUM | V-3289 | AUDIT | Servers must have a host-based Intrusion Detection System."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -581,7 +581,7 @@
 - name: "MEDIUM | V-3374 | AUDIT | The system must be configured to require a strong session key."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -601,7 +601,7 @@
 - name: "MEDIUM | V-3376 | AUDIT | The system must be configured to prevent the storage of passwords and credentials."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -621,7 +621,7 @@
 - name: "MEDIUM | V-3377 | AUDIT | The system must be configured to prevent anonymous users from having the same rights as the Everyone group."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -641,7 +641,7 @@
 - name: "MEDIUM | V-3378 | AUDIT | The system must be configured to use the Classic security model."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -661,7 +661,7 @@
 - name: "MEDIUM | V-3380 | AUDIT | The system must be configured to force users to log off when their allowed logon hours expire."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -681,7 +681,7 @@
 - name: "MEDIUM | V-3381 | AUDIT | The system must be configured to the required LDAP client signing level."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -701,7 +701,7 @@
 - name: "MEDIUM | V-3382 | AUDIT | The system must be configured to meet the minimum session security requirement for NTLM SSP-based clients."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -721,7 +721,7 @@
 - name: "MEDIUM | V-3383 | AUDIT | The system must be configured to use FIPS-compliant algorithms for encryption, hashing, and signing."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -741,7 +741,7 @@
 - name: "MEDIUM | V-3385 | AUDIT | The system must be configured to require case insensitivity for non-Windows subsystems."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -761,7 +761,7 @@
 - name: "MEDIUM | V-3449 | AUDIT | Remote Desktop Services must limit users to one remote session."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -781,7 +781,7 @@
 - name: "MEDIUM | V-3453 | AUDIT | Remote Desktop Services must always prompt a client for passwords upon connection."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -801,7 +801,7 @@
 - name: "MEDIUM | V-3454 | AUDIT | Remote Desktop Services must be configured with the client connection encryption set to the required level."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -821,7 +821,7 @@
 - name: "MEDIUM | V-3455 | AUDIT | Remote Desktop Services must be configured to use session-specific temporary folders."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -841,7 +841,7 @@
 - name: "MEDIUM | V-3456 | AUDIT | Remote Desktop Services must delete temporary folders when a session is terminated."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -861,7 +861,7 @@
 - name: "MEDIUM | V-3457 | AUDIT | Remote Desktop Services must be configured to set a time limit for disconnected sessions."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -881,7 +881,7 @@
 - name: "MEDIUM | V-3458 | AUDIT | Remote Desktop Services must be configured to disconnect an idle session after the specified time period."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -901,7 +901,7 @@
 - name: "MEDIUM | V-3469 | AUDIT | Group Policies must be refreshed in the background if the user is logged on."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -921,7 +921,7 @@
 - name: "MEDIUM | V-3470 | AUDIT | The system must be configured to prevent unsolicited remote assistance offers."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -941,7 +941,7 @@
 - name: "MEDIUM | V-3479 | AUDIT | The system must be configured to use Safe DLL Search Mode."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -961,7 +961,7 @@
 - name: "MEDIUM | V-3480 | AUDIT | Windows Media Player must be configured to prevent automatic checking for updates."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -981,7 +981,7 @@
 - name: "MEDIUM | V-3481 | AUDIT | Media Player must be configured to prevent automatic Codec downloads."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1001,7 +1001,7 @@
 - name: "MEDIUM | V-3487 | AUDIT | Necessary services must be documented to maintain a baseline to determine if additional, unnecessary services have been added to a system."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1021,7 +1021,7 @@
 - name: "MEDIUM | V-3666 | AUDIT | The system must be configured to meet the minimum session security requirement for NTLM SSP-based servers."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1041,7 +1041,7 @@
 - name: "MEDIUM | V-4446 | AUDIT | Software certificate restriction policies must be enforced."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1061,7 +1061,7 @@
 - name: "MEDIUM | V-4447 | AUDIT | The Remote Desktop Session Host must require secure RPC communications."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1081,7 +1081,7 @@
 - name: "MEDIUM | V-4448 | AUDIT | Group Policy objects must be reprocessed even if they have not changed."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1101,7 +1101,7 @@
 - name: "MEDIUM | V-6831 | AUDIT | Outgoing secure channel traffic must be encrypted or signed."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1121,7 +1121,7 @@
 - name: "MEDIUM | V-6832 | AUDIT | The Windows SMB client must be configured to always perform SMB packet signing."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1141,7 +1141,7 @@
 - name: "MEDIUM | V-6833 | AUDIT | The Windows SMB server must be configured to always perform SMB packet signing."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1161,7 +1161,7 @@
 - name: "MEDIUM | V-6836 | AUDIT | Passwords must, at a minimum, be 14 characters."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1181,7 +1181,7 @@
 - name: "MEDIUM | V-6840 | AUDIT | System mechanisms must be implemented to enforce automatic expiration of passwords."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1201,7 +1201,7 @@
 - name: "MEDIUM | V-14225 | AUDIT | Passwords for the built-in Administrator account must be changed at least annually or when a member of the administrative team leaves the organization."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1221,7 +1221,7 @@
 - name: "MEDIUM | V-14228 | AUDIT | Auditing the Access of Global System Objects must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1241,7 +1241,7 @@
 - name: "MEDIUM | V-14229 | AUDIT | Auditing of Backup and Restore Privileges must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1261,7 +1261,7 @@
 - name: "MEDIUM | V-14230 | AUDIT | Audit policy using subcategories must be enabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1281,7 +1281,7 @@
 - name: "MEDIUM | V-14234 | AUDIT | User Account Control approval mode for the built-in Administrator must be enabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1301,7 +1301,7 @@
 - name: "MEDIUM | V-14235 | AUDIT | User Account Control must, at minimum, prompt administrators for consent."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1321,7 +1321,7 @@
 - name: "MEDIUM | V-14236 | AUDIT | User Account Control must automatically deny standard user requests for elevation."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1341,7 +1341,7 @@
 - name: "MEDIUM | V-14237 | AUDIT | User Account Control must be configured to detect application installations and prompt for elevation."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1361,7 +1361,7 @@
 - name: "MEDIUM | V-14239 | AUDIT | User Account Control must only elevate UIAccess applications that are installed in secure locations."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1381,7 +1381,7 @@
 - name: "MEDIUM | V-14240 | AUDIT | User Account Control must run all administrators in Admin Approval Mode, enabling UAC."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1401,7 +1401,7 @@
 - name: "MEDIUM | V-14241 | AUDIT | User Account Control must switch to the secure desktop when prompting for elevation."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1421,7 +1421,7 @@
 - name: "MEDIUM | V-14242 | AUDIT | User Account Control must virtualize file and registry write failures to per-user locations."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1441,7 +1441,7 @@
 - name: "MEDIUM | V-14243 | AUDIT | The system must require username and password to elevate a running application."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1461,7 +1461,7 @@
 - name: "MEDIUM | V-14247 | AUDIT | Passwords must not be saved in the Remote Desktop Client."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1481,7 +1481,7 @@
 - name: "MEDIUM | V-14249 | AUDIT | Local drives must be prevented from sharing with Remote Desktop Session Hosts.  (Remote Desktop Services Role)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1501,7 +1501,7 @@
 - name: "MEDIUM | V-14253 | AUDIT | Unauthenticated RPC clients must be restricted from connecting to the RPC server."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1521,7 +1521,7 @@
 - name: "MEDIUM | V-14254 | AUDIT | Client computers must be required to authenticate for RPC communication."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1541,7 +1541,7 @@
 - name: "MEDIUM | V-14259 | AUDIT | Printing over HTTP must be prevented."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1561,7 +1561,7 @@
 - name: "MEDIUM | V-14260 | AUDIT | Downloading print driver packages over HTTP must be prevented."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1581,7 +1581,7 @@
 - name: "MEDIUM | V-14261 | AUDIT | Windows must be prevented from using Windows Update to search for drivers."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1601,7 +1601,7 @@
 - name: "MEDIUM | V-14268 | AUDIT | Zone information must be preserved when saving attachments."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1621,7 +1621,7 @@
 - name: "MEDIUM | V-14269 | AUDIT | Mechanisms for removing zone information from file attachments must be hidden."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1641,7 +1641,7 @@
 - name: "MEDIUM | V-14270 | AUDIT | The system must notify antivirus when file attachments are opened."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1661,7 +1661,7 @@
 - name: "MEDIUM | V-15505 | AUDIT | The HBSS McAfee Agent must be installed."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1681,7 +1681,7 @@
 - name: "MEDIUM | V-15666 | AUDIT | Windows Peer-to-Peer networking services must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1701,7 +1701,7 @@
 - name: "MEDIUM | V-15667 | AUDIT | Network Bridges must be prohibited in Windows."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1721,7 +1721,7 @@
 - name: "MEDIUM | V-15674 | AUDIT | The Internet File Association service must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1741,7 +1741,7 @@
 - name: "MEDIUM | V-15682 | AUDIT | Attachments must be prevented from being downloaded from RSS feeds."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1761,7 +1761,7 @@
 - name: "MEDIUM | V-15683 | AUDIT | File Explorer shell protocol must run in protected mode."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1781,7 +1781,7 @@
 - name: "MEDIUM | V-15684 | AUDIT | Users must be notified if a web-based program attempts to install software."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1801,7 +1801,7 @@
 - name: "MEDIUM | V-15685 | AUDIT | Users must be prevented from changing installation options."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1821,7 +1821,7 @@
 - name: "MEDIUM | V-15696 | AUDIT | The Mapper I/O network protocol (LLTDIO) driver must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1841,7 +1841,7 @@
 - name: "MEDIUM | V-15697 | AUDIT | The Responder network protocol driver must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1861,7 +1861,7 @@
 - name: "MEDIUM | V-15698 | AUDIT | The configuration of wireless devices using Windows Connect Now must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1881,7 +1881,7 @@
 - name: "MEDIUM | V-15699 | AUDIT | The Windows Connect Now wizards must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1901,7 +1901,7 @@
 - name: "MEDIUM | V-15700 | AUDIT | Remote access to the Plug and Play interface must be disabled for device installation."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1921,7 +1921,7 @@
 - name: "MEDIUM | V-15705 | AUDIT | Users must be prompted to authenticate on resume from sleep (on battery)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1941,7 +1941,7 @@
 - name: "MEDIUM | V-15706 | AUDIT | The user must be prompted to authenticate on resume from sleep (plugged in)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1961,7 +1961,7 @@
 - name: "MEDIUM | V-15713 | AUDIT | Microsoft Active Protection Service membership must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -1981,7 +1981,7 @@
 - name: "MEDIUM | V-15714 | AUDIT | The system must be configured to save Error Reporting events and messages to the system event log."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2001,7 +2001,7 @@
 - name: "MEDIUM | V-15715 | AUDIT | The system must be configured to generate error reports."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2021,7 +2021,7 @@
 - name: "MEDIUM | V-15717 | AUDIT | The system must be configured to allow a local or DOD-wide collector to request additional error reporting diagnostic data to be sent."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2041,7 +2041,7 @@
 - name: "MEDIUM | V-15722 | AUDIT | Windows Media Digital Rights Management (DRM) must be prevented from accessing the Internet."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2061,7 +2061,7 @@
 - name: "MEDIUM | V-15727 | AUDIT | Users must be prevented from sharing files in their profiles."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2081,7 +2081,7 @@
 - name: "MEDIUM | V-15823 | AUDIT | Software certificate installation files must be removed from a system."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2101,7 +2101,7 @@
 - name: "MEDIUM | V-15991 | AUDIT | UIAccess applications must not be allowed to prompt for elevation without using the secure desktop."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2121,7 +2121,7 @@
 - name: "MEDIUM | V-15997 | AUDIT | Users must be prevented from mapping local COM ports and redirecting data from the Remote Desktop Session Host to local COM ports.  (Remote Desktop Services Role)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2141,7 +2141,7 @@
 - name: "MEDIUM | V-15998 | AUDIT | Users must be prevented from mapping local LPT ports and redirecting data from the Remote Desktop Session Host to local LPT ports.  (Remote Desktop Services Role)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2161,7 +2161,7 @@
 - name: "MEDIUM | V-15999 | AUDIT | Users must be prevented from redirecting Plug and Play devices to the Remote Desktop Session Host.  (Remote Desktop Services Role)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2181,7 +2181,7 @@
 - name: "MEDIUM | V-16000 | AUDIT | The system must be configured to ensure smart card devices can be redirected to the Remote Desktop session.  (Remote Desktop Services Role)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2201,7 +2201,7 @@
 - name: "MEDIUM | V-16008 | AUDIT | Windows must elevate all applications in User Account Control, not just signed ones."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2221,7 +2221,7 @@
 - name: "MEDIUM | V-16020 | AUDIT | The Windows Customer Experience Improvement Program must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2241,7 +2241,7 @@
 - name: "MEDIUM | V-16021 | AUDIT | The Windows Help Experience Improvement Program must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2261,7 +2261,7 @@
 - name: "MEDIUM | V-16048 | AUDIT | Windows Help Ratings feedback must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2281,7 +2281,7 @@
 - name: "MEDIUM | V-21950 | AUDIT | The service principal name (SPN) target name validation level must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2301,7 +2301,7 @@
 - name: "MEDIUM | V-21951 | AUDIT | Services using Local System that use Negotiate when reverting to NTLM authentication must use the computer identity vs. authenticating anonymously."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2321,7 +2321,7 @@
 - name: "MEDIUM | V-21952 | AUDIT | NTLM must be prevented from falling back to a Null session."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2341,7 +2341,7 @@
 - name: "MEDIUM | V-21953 | AUDIT | PKU2U authentication using online identities must be prevented."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2361,7 +2361,7 @@
 - name: "MEDIUM | V-21954 | AUDIT | The use of DES encryption suites must not be allowed for Kerberos encryption."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2381,7 +2381,7 @@
 - name: "MEDIUM | V-21980 | AUDIT | Explorer Data Execution Prevention must be enabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2401,7 +2401,7 @@
 - name: "MEDIUM | V-26469 | AUDIT | Unauthorized accounts must not have the Access Credential Manager as a trusted caller user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2421,7 +2421,7 @@
 - name: "MEDIUM | V-26470 | AUDIT | Unauthorized accounts must not have the Access this computer from the network user right on member servers."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2441,7 +2441,7 @@
 - name: "MEDIUM | V-26471 | AUDIT | Unauthorized accounts must not have the Adjust memory quotas for a process user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2461,7 +2461,7 @@
 - name: "MEDIUM | V-26472 | AUDIT | Unauthorized accounts must not have the Allow log on locally user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2481,7 +2481,7 @@
 - name: "MEDIUM | V-26473 | AUDIT | The Allow log on through Remote Desktop Services user right must only be assigned to the Administrators group and other approved groups."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2501,7 +2501,7 @@
 - name: "MEDIUM | V-26474 | AUDIT | Unauthorized accounts must not have the back up files and directories user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2521,7 +2521,7 @@
 - name: "MEDIUM | V-26476 | AUDIT | Unauthorized accounts must not have the Change the system time user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2541,7 +2541,7 @@
 - name: "MEDIUM | V-26478 | AUDIT | Unauthorized accounts must not have the Create a pagefile user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2561,7 +2561,7 @@
 - name: "MEDIUM | V-26480 | AUDIT | Unauthorized accounts must not have the Create global objects user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2581,7 +2581,7 @@
 - name: "MEDIUM | V-26481 | AUDIT | Unauthorized accounts must not have the Create permanent shared objects user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2601,7 +2601,7 @@
 - name: "MEDIUM | V-26482 | AUDIT | Unauthorized accounts must not have the Create symbolic links user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2621,7 +2621,7 @@
 - name: "MEDIUM | V-26483 | AUDIT | The Deny log on as a batch job user right on member servers must be configured to prevent access from highly privileged domain accounts on domain systems, and from unauthenticated access on all systems."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2641,7 +2641,7 @@
 - name: "MEDIUM | V-26484 | AUDIT | The Deny log on as a service user right on member servers must be configured to prevent access from highly privileged domain accounts on domain systems.  No other groups or accounts must be assigned this right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2661,7 +2661,7 @@
 - name: "MEDIUM | V-26485 | AUDIT | The Deny log on locally user right on member servers must be configured to prevent access from highly privileged domain accounts on domain systems, and from unauthenticated access on all systems."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2681,7 +2681,7 @@
 - name: "MEDIUM | V-26486 | AUDIT | The Deny log on through Remote Desktop Services user right on member servers must be configured to prevent access from highly privileged domain accounts and all local accounts on domain systems, and from unauthenticated access on all systems."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2701,7 +2701,7 @@
 - name: "MEDIUM | V-26487 | AUDIT | Unauthorized accounts must not have the Enable computer and user accounts to be trusted for delegation user right on member servers."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2721,7 +2721,7 @@
 - name: "MEDIUM | V-26488 | AUDIT | Unauthorized accounts must not have the Force shutdown from a remote system user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2741,7 +2741,7 @@
 - name: "MEDIUM | V-26489 | AUDIT | Unauthorized accounts must not have the Generate security audits user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2761,7 +2761,7 @@
 - name: "MEDIUM | V-26490 | AUDIT | Unauthorized accounts must not have the Impersonate a client after authentication user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2781,7 +2781,7 @@
 - name: "MEDIUM | V-26491 | AUDIT | Unauthorized accounts must not have the Increase a process working set user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2801,7 +2801,7 @@
 - name: "MEDIUM | V-26492 | AUDIT | Unauthorized accounts must not have the Increase scheduling priority user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2821,7 +2821,7 @@
 - name: "MEDIUM | V-26493 | AUDIT | Unauthorized accounts must not have the Load and unload device drivers user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2841,7 +2841,7 @@
 - name: "MEDIUM | V-26494 | AUDIT | Unauthorized accounts must not have the Lock pages in memory user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2861,7 +2861,7 @@
 - name: "MEDIUM | V-26495 | AUDIT | Unauthorized accounts must not have the Log on as a batch job user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2881,7 +2881,7 @@
 - name: "MEDIUM | V-26496 | AUDIT | Unauthorized accounts must not have the Manage auditing and security log user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2901,7 +2901,7 @@
 - name: "MEDIUM | V-26497 | AUDIT | Unauthorized accounts must not have the Modify an object label user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2921,7 +2921,7 @@
 - name: "MEDIUM | V-26498 | AUDIT | Unauthorized accounts must not have the Modify firmware environment values user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2941,7 +2941,7 @@
 - name: "MEDIUM | V-26499 | AUDIT | Unauthorized accounts must not have the Perform volume maintenance tasks user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2961,7 +2961,7 @@
 - name: "MEDIUM | V-26500 | AUDIT | Unauthorized accounts must not have the Profile single process user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -2981,7 +2981,7 @@
 - name: "MEDIUM | V-26501 | AUDIT | Unauthorized accounts must not have the Profile system performance user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3001,7 +3001,7 @@
 - name: "MEDIUM | V-26503 | AUDIT | Unauthorized accounts must not have the Replace a process level token user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3021,7 +3021,7 @@
 - name: "MEDIUM | V-26504 | AUDIT | Unauthorized accounts must not have the Restore files and directories user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3041,7 +3041,7 @@
 - name: "MEDIUM | V-26505 | AUDIT | Unauthorized accounts must not have the Shut down the system user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3061,7 +3061,7 @@
 - name: "MEDIUM | V-26506 | AUDIT | Unauthorized accounts must not have the Take ownership of files or other objects user right."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3081,7 +3081,7 @@
 - name: "MEDIUM | V-26529 | AUDIT | The system must be configured to audit Account Logon - Credential Validation successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3101,7 +3101,7 @@
 - name: "MEDIUM | V-26530 | AUDIT | The system must be configured to audit Account Logon - Credential Validation failures."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3121,7 +3121,7 @@
 - name: "MEDIUM | V-26531 | AUDIT | The system must be configured to audit Account Management - Computer Account Management successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3141,7 +3141,7 @@
 - name: "MEDIUM | V-26532 | AUDIT | The system must be configured to audit Account Management - Computer Account Management failures."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3161,7 +3161,7 @@
 - name: "MEDIUM | V-26533 | AUDIT | The system must be configured to audit Account Management - Other Account Management Events successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3181,7 +3181,7 @@
 - name: "MEDIUM | V-26534 | AUDIT | The system must be configured to audit Account Management - Other Account Management Events failures."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3201,7 +3201,7 @@
 - name: "MEDIUM | V-26535 | AUDIT | The system must be configured to audit Account Management - Security Group Management successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3221,7 +3221,7 @@
 - name: "MEDIUM | V-26536 | AUDIT | The system must be configured to audit Account Management - Security Group Management failures."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3241,7 +3241,7 @@
 - name: "MEDIUM | V-26537 | AUDIT | The system must be configured to audit Account Management - User Account Management successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3261,7 +3261,7 @@
 - name: "MEDIUM | V-26538 | AUDIT | The system must be configured to audit Account Management - User Account Management failures."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3281,7 +3281,7 @@
 - name: "MEDIUM | V-26539 | AUDIT | The system must be configured to audit Detailed Tracking - Process Creation successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3301,7 +3301,7 @@
 - name: "MEDIUM | V-26540 | AUDIT | The system must be configured to audit Logon/Logoff - Logoff successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3321,7 +3321,7 @@
 - name: "MEDIUM | V-26541 | AUDIT | The system must be configured to audit Logon/Logoff - Logon successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3341,7 +3341,7 @@
 - name: "MEDIUM | V-26542 | AUDIT | The system must be configured to audit Logon/Logoff - Logon failures."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3361,7 +3361,7 @@
 - name: "MEDIUM | V-26543 | AUDIT | The system must be configured to audit Logon/Logoff - Special Logon successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3381,7 +3381,7 @@
 - name: "MEDIUM | V-26546 | AUDIT | The system must be configured to audit Policy Change - Audit Policy Change successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3401,7 +3401,7 @@
 - name: "MEDIUM | V-26547 | AUDIT | The system must be configured to audit Policy Change - Audit Policy Change failures."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3421,7 +3421,7 @@
 - name: "MEDIUM | V-26548 | AUDIT | The system must be configured to audit Policy Change - Authentication Policy Change successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3441,7 +3441,7 @@
 - name: "MEDIUM | V-26549 | AUDIT | The system must be configured to audit Privilege Use - Sensitive Privilege Use successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3461,7 +3461,7 @@
 - name: "MEDIUM | V-26550 | AUDIT | The system must be configured to audit Privilege Use - Sensitive Privilege Use failures."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3481,7 +3481,7 @@
 - name: "MEDIUM | V-26551 | AUDIT | The system must be configured to audit System - IPsec Driver successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3501,7 +3501,7 @@
 - name: "MEDIUM | V-26552 | AUDIT | The system must be configured to audit System - IPsec Driver failures."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3521,7 +3521,7 @@
 - name: "MEDIUM | V-26553 | AUDIT | The system must be configured to audit System - Security State Change successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3541,7 +3541,7 @@
 - name: "MEDIUM | V-26554 | AUDIT | The system must be configured to audit System - Security State Change failures."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3561,7 +3561,7 @@
 - name: "MEDIUM | V-26555 | AUDIT | The system must be configured to audit System - Security System Extension successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3581,7 +3581,7 @@
 - name: "MEDIUM | V-26556 | AUDIT | The system must be configured to audit System - Security System Extension failures."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3601,7 +3601,7 @@
 - name: "MEDIUM | V-26557 | AUDIT | The system must be configured to audit System - System Integrity successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3621,7 +3621,7 @@
 - name: "MEDIUM | V-26558 | AUDIT | The system must be configured to audit System - System Integrity failures."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3641,7 +3641,7 @@
 - name: "MEDIUM | V-26575 | AUDIT | The 6to4 IPv6 transition technology must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3661,7 +3661,7 @@
 - name: "MEDIUM | V-26576 | AUDIT | The IP-HTTPS IPv6 transition technology must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3681,7 +3681,7 @@
 - name: "MEDIUM | V-26577 | AUDIT | The ISATAP IPv6 transition technology must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3701,7 +3701,7 @@
 - name: "MEDIUM | V-26578 | AUDIT | The Teredo IPv6 transition technology must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3721,7 +3721,7 @@
 - name: "MEDIUM | V-26579 | AUDIT | The Application event log size must be configured to 32768 KB or greater."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3741,7 +3741,7 @@
 - name: "MEDIUM | V-26580 | AUDIT | The Security event log size must be configured to 196608 KB or greater."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3761,7 +3761,7 @@
 - name: "MEDIUM | V-26581 | AUDIT | The Setup event log size must be configured to 32768 KB or greater."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3781,7 +3781,7 @@
 - name: "MEDIUM | V-26582 | AUDIT | The System event log size must be configured to 32768 KB or greater."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3801,7 +3801,7 @@
 - name: "MEDIUM | V-26600 | AUDIT | The Fax service must be disabled if installed."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3821,7 +3821,7 @@
 - name: "MEDIUM | V-26602 | AUDIT | The Microsoft FTP service must not be installed."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3841,7 +3841,7 @@
 - name: "MEDIUM | V-26604 | AUDIT | The Peer Networking Identity Manager service must be disabled if installed."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3861,7 +3861,7 @@
 - name: "MEDIUM | V-26605 | AUDIT | The Simple TCP/IP Services service must be disabled if installed."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3881,7 +3881,7 @@
 - name: "MEDIUM | V-26606 | AUDIT | The Telnet service must be disabled if installed."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3901,7 +3901,7 @@
 - name: "MEDIUM | V-32272 | AUDIT | The DoD root certificate must be installed into the Trusted Root Store."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3921,7 +3921,7 @@
 - name: "MEDIUM | V-32274 | AUDIT | The DoD Interoperability Root CA 1 to DoD Root CA 2 cross-certificate must be installed into the Untrusted Certificates Store."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3941,7 +3941,7 @@
 - name: "MEDIUM | V-36439 | AUDIT | Local administrator accounts must have their privileged token filtered to prevent elevated privileges from being used over the network on domain systems."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3961,7 +3961,7 @@
 - name: "MEDIUM | V-36656 | AUDIT | A screen saver must be enabled on the system."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -3981,7 +3981,7 @@
 - name: "MEDIUM | V-36657 | AUDIT | The screen saver must be password protected."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4001,7 +4001,7 @@
 - name: "MEDIUM | V-36658 | AUDIT | Users with administrative privilege must be documented."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4021,7 +4021,7 @@
 - name: "MEDIUM | V-36661 | AUDIT | Policy must require application account passwords be at least 15 characters in length."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4041,7 +4041,7 @@
 - name: "MEDIUM | V-36662 | AUDIT | Application account passwords must be changed at least annually or when a system administrator with knowledge of the password leaves the organization."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4061,7 +4061,7 @@
 - name: "MEDIUM | V-36663 | AUDIT | System BIOS or system controllers must have administrator accounts/passwords configured."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4081,7 +4081,7 @@
 - name: "MEDIUM | V-36666 | AUDIT | Policy must require that system administrators (SAs) be trained for the operating systems used by systems under their control."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4101,7 +4101,7 @@
 - name: "MEDIUM | V-36667 | AUDIT | The system must be configured to audit Object Access - Removable Storage failures."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4121,7 +4121,7 @@
 - name: "MEDIUM | V-36668 | AUDIT | The system must be configured to audit Object Access - Removable Storage successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4141,7 +4141,7 @@
 - name: "MEDIUM | V-36670 | AUDIT | Audit data must be reviewed on a regular basis."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4161,7 +4161,7 @@
 - name: "MEDIUM | V-36671 | AUDIT | Audit data must be retained for at least one year."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4181,7 +4181,7 @@
 - name: "MEDIUM | V-36672 | AUDIT | Audit records must be backed up onto a different system or media than the system being audited."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4201,7 +4201,7 @@
 - name: "MEDIUM | V-36679 | AUDIT | Early Launch Antimalware, Boot-Start Driver Initialization Policy must be enabled and configured to only Good and Unknown."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4221,7 +4221,7 @@
 - name: "MEDIUM | V-36680 | AUDIT | Access to the Windows Store must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4241,7 +4241,7 @@
 - name: "MEDIUM | V-36681 | AUDIT | Copying of user input methods to the system account for sign-in must be prevented."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4261,7 +4261,7 @@
 - name: "MEDIUM | V-36684 | AUDIT | Local users on domain-joined computers must not be enumerated."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4281,7 +4281,7 @@
 - name: "MEDIUM | V-36687 | AUDIT | App notifications on the lock screen must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4301,7 +4301,7 @@
 - name: "MEDIUM | V-36698 | AUDIT | The use of biometrics must be disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4321,7 +4321,7 @@
 - name: "MEDIUM | V-36700 | AUDIT | The password reveal button must not be displayed."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4341,7 +4341,7 @@
 - name: "MEDIUM | V-36708 | AUDIT | The location feature must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4361,7 +4361,7 @@
 - name: "MEDIUM | V-36709 | AUDIT | Basic authentication for RSS feeds over HTTP must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4381,7 +4381,7 @@
 - name: "MEDIUM | V-36711 | AUDIT | The Windows Store application must be turned off."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4401,7 +4401,7 @@
 - name: "MEDIUM | V-36713 | AUDIT | The Windows Remote Management (WinRM) client must not allow unencrypted traffic."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4421,7 +4421,7 @@
 - name: "MEDIUM | V-36714 | AUDIT | The Windows Remote Management (WinRM) client must not use Digest authentication."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4441,7 +4441,7 @@
 - name: "MEDIUM | V-36719 | AUDIT | The Windows Remote Management (WinRM) service must not allow unencrypted traffic."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4461,7 +4461,7 @@
 - name: "MEDIUM | V-36720 | AUDIT | The Windows Remote Management (WinRM) service must not store RunAs credentials."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4481,7 +4481,7 @@
 - name: "MEDIUM | V-36722 | AUDIT | Permissions for the Application event log must prevent access by nonprivileged accounts."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4501,7 +4501,7 @@
 - name: "MEDIUM | V-36723 | AUDIT | Permissions for the Security event log must prevent access by nonprivileged accounts."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4521,7 +4521,7 @@
 - name: "MEDIUM | V-36724 | AUDIT | Permissions for the System event log must prevent access by nonprivileged accounts."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4541,7 +4541,7 @@
 - name: "MEDIUM | V-36734 | AUDIT | The operating system must employ automated mechanisms to determine the state of system components with regard to flaw remediation using the following frequency: continuously, where HBSS is used; 30 days, for any additional internal network scans not covered by HBSS; and annually, for external scans by Computer Network Defense Service Provider (CNDSP)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4561,7 +4561,7 @@
 - name: "MEDIUM | V-36735 | AUDIT | The system must support automated patch management tools to facilitate flaw remediation."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4581,7 +4581,7 @@
 - name: "MEDIUM | V-36736 | AUDIT | The system must query the certification authority to determine whether a public key certificate has been revoked before accepting the certificate for authentication purposes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4601,7 +4601,7 @@
 - name: "MEDIUM | V-36772 | AUDIT | The machine account lockout threshold must be set to 10 on systems with BitLocker enabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4621,7 +4621,7 @@
 - name: "MEDIUM | V-36773 | AUDIT | The machine inactivity limit must be set to 15 minutes, locking the system with the screensaver."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4641,7 +4641,7 @@
 - name: "MEDIUM | V-40177 | AUDIT | Permissions for program file directories must conform to minimum requirements."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4661,7 +4661,7 @@
 - name: "MEDIUM | V-40178 | AUDIT | Permissions for system drive root directory (usually C:\) must conform to minimum requirements."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4681,7 +4681,7 @@
 - name: "MEDIUM | V-40179 | AUDIT | Permissions for Windows installation directory must conform to minimum requirements."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4701,7 +4701,7 @@
 - name: "MEDIUM | V-40193 | AUDIT | Virtual guest operating systems must be registered in a vulnerability and asset management system."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4721,7 +4721,7 @@
 - name: "MEDIUM | V-40195 | AUDIT | System BIOS or system controllers must not allow user-level access."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4741,7 +4741,7 @@
 - name: "MEDIUM | V-40198 | AUDIT | Members of the Backup Operators group must have separate accounts for backup duties and normal operational tasks."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4761,7 +4761,7 @@
 - name: "MEDIUM | V-40200 | AUDIT | The system must be configured to audit Object Access - Central Access Policy Staging failures."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4781,7 +4781,7 @@
 - name: "MEDIUM | V-40202 | AUDIT | The system must be configured to audit Object Access - Central Access Policy Staging successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4801,7 +4801,7 @@
 - name: "MEDIUM | V-40204 | AUDIT | Only the default client printer must be redirected to the Remote Desktop Session Host.  (Remote Desktop Services Role)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4821,7 +4821,7 @@
 - name: "MEDIUM | V-40206 | AUDIT | The Smart Card Removal Policy service must be configured to automatic."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4841,7 +4841,7 @@
 - name: "MEDIUM | V-40237 | AUDIT | The US DoD CCEB Interoperability Root CA 1 to DoD Root CA 2 cross-certificate must be installed into the Untrusted Certificates Store."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4861,7 +4861,7 @@
 - name: "MEDIUM | V-42420 | AUDIT | A host-based firewall must be installed and enabled on the system."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4881,7 +4881,7 @@
 - name: "MEDIUM | V-43238 | AUDIT | The display of slide shows on the lock screen must be disabled (Windows 2012 R2)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4901,7 +4901,7 @@
 - name: "MEDIUM | V-43239 | AUDIT | Command line data must be prevented from inclusion in process creation events (Windows 2012 R2)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4921,7 +4921,7 @@
 - name: "MEDIUM | V-43240 | AUDIT | The network selection user interface (UI) must not be displayed on the logon screen (Windows 2012 R2)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4941,7 +4941,7 @@
 - name: "MEDIUM | V-43245 | AUDIT | Automatically signing in the last interactive user after a system-initiated restart must be disabled (Windows 2012 R2)."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4961,7 +4961,7 @@
 - name: "MEDIUM | V-56511 | AUDIT | The Windows Error Reporting Service must be running and configured to start automatically."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -4981,7 +4981,7 @@
 - name: "MEDIUM | V-57453 | AUDIT | The system must be configured to collect multiple error reports of the same event type."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5001,7 +5001,7 @@
 - name: "MEDIUM | V-57455 | AUDIT | The system must be configured to prevent the display of error messages to the user."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5021,7 +5021,7 @@
 - name: "MEDIUM | V-57457 | AUDIT | The system must be configured to store error reports locally, on the system or in the enclave, and not send them to Microsoft."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5041,7 +5041,7 @@
 - name: "MEDIUM | V-57459 | AUDIT | The system must be configured to use SSL to forward error reports."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5061,7 +5061,7 @@
 - name: "MEDIUM | V-57461 | AUDIT | The system must be configured to send error reports on TCP port 1232."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5081,7 +5081,7 @@
 - name: "MEDIUM | V-57463 | AUDIT | The system must be configured to archive error reports."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5101,7 +5101,7 @@
 - name: "MEDIUM | V-57465 | AUDIT | The system must be configured to store all data in the error report archive."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5121,7 +5121,7 @@
 - name: "MEDIUM | V-57467 | AUDIT | The maximum number of error reports to archive on a system must be configured to 100 or greater."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5141,7 +5141,7 @@
 - name: "MEDIUM | V-57469 | AUDIT | The system must be configured to queue error reports until a local or DOD-wide collector is available."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5161,7 +5161,7 @@
 - name: "MEDIUM | V-57471 | AUDIT | The system must be configured to add all error reports to the queue."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5181,7 +5181,7 @@
 - name: "MEDIUM | V-57473 | AUDIT | The maximum number of error reports to queue on a system must be configured to 50 or greater."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5201,7 +5201,7 @@
 - name: "MEDIUM | V-57475 | AUDIT | The system must be configured to attempt to forward queued error reports once a day."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5221,7 +5221,7 @@
 - name: "MEDIUM | V-57477 | AUDIT | The system must be configured to automatically consent to send all data requested by a local or DOD-wide error collection site."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5241,7 +5241,7 @@
 - name: "MEDIUM | V-57479 | AUDIT | The system must be configured to permit the default consent levels of Windows Error Reporting to override any other consent policy setting."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5261,7 +5261,7 @@
 - name: "MEDIUM | V-57633 | AUDIT | The system must be configured to audit Policy Change - Authorization Policy Change successes."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5281,7 +5281,7 @@
 - name: "MEDIUM | V-57635 | AUDIT | The system must be configured to audit Policy Change - Authorization Policy Change failures."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5301,7 +5301,7 @@
 - name: "MEDIUM | V-57637 | AUDIT | The operating system must employ a deny-all, permit-by-exception policy to allow the execution of authorized software programs."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5321,7 +5321,7 @@
 - name: "MEDIUM | V-57639 | AUDIT | Users must be required to enter a password to access private keys stored on the computer."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5341,7 +5341,7 @@
 - name: "MEDIUM | V-57641 | AUDIT | Protection methods such as TLS, encrypted VPNs, or IPSEC must be implemented if the data owner has a strict requirement for ensuring data integrity and confidentiality is maintained at every step of the data transfer and handling process."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5361,7 +5361,7 @@
 - name: "MEDIUM | V-57645 | AUDIT | Systems requiring data at rest protections must employ cryptographic mechanisms to prevent unauthorized disclosure and modification of the information at rest."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5381,7 +5381,7 @@
 - name: "MEDIUM | V-57653 | AUDIT | The operating system must automatically remove or disable temporary user accounts after 72 hours."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5401,7 +5401,7 @@
 - name: "MEDIUM | V-57655 | AUDIT | The operating system must be configured such that emergency administrator accounts are never automatically removed or disabled."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5421,7 +5421,7 @@
 - name: "MEDIUM | V-57719 | AUDIT | The operating system must, at a minimum, off-load audit records of interconnected systems in real time and off-load standalone systems weekly."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
@@ -5441,7 +5441,7 @@
 - name: "MEDIUM | V-57721 | AUDIT | Event Viewer must be protected from unauthorized modification and deletion."
   command: true
   register: result
-  always_run: yes
+  check_mode: no
   changed_when: no
   ignore_errors: yes
   tags:
