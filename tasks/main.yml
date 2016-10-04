@@ -1,3 +1,8 @@
+- include: prelim.yml
+  tags:
+      - prelim_tasks
+      - always
+
 - include: cat1.yml
 - include: cat2.yml
 - include: cat3.yml
