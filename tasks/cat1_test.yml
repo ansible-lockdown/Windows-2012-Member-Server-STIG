@@ -21,3 +21,35 @@
       - high
       - patch
       - V-1093
+
+- name: "HIGH | V-1152 | AUDIT | Anonymous access to the registry must be restricted."
+  win_command: reg query HKLM\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg
+  register: anon_registry_access_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in anon_registry_access_audit.stderr and anon_registry_access_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-1152
+
+# NOTE: V-1152 is shared between all OS's, but Backup Operators data for 2k12 is 'Read (This key only)' and for 2k8 is 'Special'.
+- name: "HIGH | V-1152 | PATCH | Anonymous access to the registry must be restricted."
+  win_regedit: 
+      key: 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg'
+      value: "{{ item.value }}"
+      data: "{{ item.data }}"
+  
+  with_items: 
+      - value: 'Administrators'
+        data: 'Full'
+      - value: 'Backup Operators'
+        data: 'Read'
+      - value: 'LOCAL SERVICE'
+        data: 'Read' 
+  tags:
+      - cat1
+      - high
+      - patch
+      - V-1152
