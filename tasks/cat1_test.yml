@@ -1,0 +1,23 @@
+- name: "HIGH | V-1093 | AUDIT | Anonymous enumeration of shares will be restricted."
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v RestrictAnonymous
+  register: anon_shares_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in anon_shares_audit.stderr and anon_shares_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-1093
+
+- name: "HIGH | V-1093 | PATCH | Anonymous enumeration of shares will be restricted."
+  win_regedit: 
+      key: 'HKLM:\System\CurrentControlSet\Control\Lsa'
+      value: RestrictAnonymous
+      data: 1
+      datatype: dword
+  tags:
+      - cat1
+      - high
+      - patch
+      - V-1093
