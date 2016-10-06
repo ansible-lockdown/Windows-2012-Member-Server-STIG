@@ -236,3 +236,62 @@
       - high
       - patch
       - V-3379
+
+- name: "HIGH | V-6834 | AUDIT | Anonymous access to Named Pipes and Shares must be restricted."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\LanManServer\Parameters\ /v RestrictNullSessAccess /t REG_DWORD /f 1
+  register: anon_access_pipes_shares_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in anon_access_pipes_shares_audit.stderr and anon_access_pipes_shares_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-6834
+
+- name: "HIGH | V-6834 | PATCH | Anonymous access to Named Pipes and Shares must be restricted."
+  action: win_ping
+  tags:
+      - cat1
+      - high
+      - patch
+      - V-6834
+
+- name: "HIGH | V-21973 | AUDIT | Autoplay must be turned off for non-volume devices."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\Explorer\ /v NoAutoplayfornonVolume /t REG_DWORD /f 1
+  register: autoplay_nonvolume_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in autoplay_nonvolume_audit.stderr and autoplay_nonvolume_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-21973
+
+- name: "HIGH | V-21973 | PATCH | Autoplay must be turned off for non-volume devices."
+  action: win_ping
+  tags:
+      - cat1
+      - high
+      - patch
+
+- name: "HIGH | V-22692 | AUDIT | The default Autorun behavior must be configured to prevent Autorun commands."
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\ /v NoAutorun /t REG_DWORD /f 1
+  register: autorun_prevent_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in autorun_prevent_audit.stderr and autorun_prevent_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-22692
+
+- name: "HIGH | V-22692 | PATCH | The default Autorun behavior must be configured to prevent Autorun commands."
+  action: win_ping
+  tags:
+      - cat1
+      - high
+      - patch
+      - V-22692
