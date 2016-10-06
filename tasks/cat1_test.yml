@@ -103,7 +103,7 @@
       - V-1159
 
 - name: "HIGH | V-2374 | AUDIT | Autoplay must be disabled for all drives."
-  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\policies\Explorer\ /v NoDriveTypeAutoRun /t REG_DWORD /f 25 
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\policies\Explorer\ /v NoDriveTypeAutoRun /t REG_DWORD /f 255 
   register: autoplay_disabled_audit
   check_mode: no
   changed_when: no
@@ -115,13 +115,16 @@
       - V-2374
 
 - name: "HIGH | V-2374 | PATCH | Autoplay must be disabled for all drives."
-  action: win_ping
+  win_regedit:
+      key: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\policies\Explorer\'
+      value: NoDriveTypeAutoRun
+      data: 255
+      datatype: dword
   tags:
       - cat1
       - high
       - patch
       - V-2374
-
 
 - name: "HIGH | V-3339 | AUDIT | Unauthorized remotely accessible registry paths must not be configured."
   win_command: reg query \"HKLM\System\CurrentControlSet\Control\SecurePipeServers\ winreg\" /v Machine /t REG_MULTI_SZ /f {{ item }}
@@ -139,7 +142,6 @@
       - audit
       - V-3339
 
-#This may need to be implemented using something other than a registry edit
 - name: "HIGH | V-3339 | PATCH | Unauthorized remotely accessible registry paths must not be configured."
   win_regedit:
     key: 'HKLM:\System\CurrentControlSet\Control\SecurePipeServers\ winreg'
@@ -190,7 +192,11 @@
       - V-3343
 
 - name: "HIGH | V-3343 | PATCH | Solicited Remote Assistance must not be allowed."
-  action: win_ping
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+      value: fAllowToGetHelp
+      data: 0
+      datatype: dword
   tags:
       - cat1
       - high
@@ -209,8 +215,13 @@
       - audit
       - V-3344
 
+
 - name: "HIGH | V-3344 | PATCH | Local accounts with blank passwords must be restricted to prevent access from the network."
-  action: win_ping
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Lsa\'
+      value: LimitBlankPasswordUse
+      data: 1
+      datatype: dword
   tags:
       - cat1
       - high
@@ -229,8 +240,12 @@
       - audit
       - V-3379
 
-- name: "HIGH | V-3379 | PATCH | The system must be configured to prevent the storage of the LAN Manager hash of passwords."
-  action: win_ping
+- name: "HIGH | V-3379 | PATCH | The system will be configured to prevent the storage of the LAN Manager hash of passwords."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Lsa'
+      value: NoLMHash
+      data: 1
+      datatype: dword
   tags:
       - cat1
       - high
@@ -250,7 +265,11 @@
       - V-6834
 
 - name: "HIGH | V-6834 | PATCH | Anonymous access to Named Pipes and Shares must be restricted."
-  action: win_ping
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters\'
+      value: RestrictNullSessAccess
+      data: 1
+      datatype: dword
   tags:
       - cat1
       - high
@@ -270,7 +289,11 @@
       - V-21973
 
 - name: "HIGH | V-21973 | PATCH | Autoplay must be turned off for non-volume devices."
-  action: win_ping
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\Explorer\'
+      value: NoAutoplayfornonVolume
+      data: 1
+      datatype: dword
   tags:
       - cat1
       - high
@@ -295,3 +318,27 @@
       - high
       - patch
       - V-22692
+
+- name: "HIGH | V-26283 | AUDIT | Anonymous enumeration of SAM accounts must not be allowed."
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa\ /v RestrictAnonymousSAM /t REG_DWORD /f 1
+  register: anonymous_enum_sam_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in anonymous_enum_sam_audit.stderr and anonymous_enum_sam_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-26283
+
+- name: "HIGH | V-26283 | PATCH | Anonymous enumeration of SAM accounts must not be allowed."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Lsa\'
+      value: RestrictAnonymousSAM
+      data: 1
+      datatype: dword
+  tags:
+      - cat1
+      - high
+      - patch
+      - V-26283
