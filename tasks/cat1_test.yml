@@ -312,7 +312,11 @@
       - V-22692
 
 - name: "HIGH | V-22692 | PATCH | The default Autorun behavior must be configured to prevent Autorun commands."
-  action: win_ping
+  win_regedit:
+      key: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\'
+      value: NoAutorun
+      data: 1
+      datatype: dword
   tags:
       - cat1
       - high
