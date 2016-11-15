@@ -126,3 +126,14 @@
       - medium
       - patch
       - V-1113
+
+- name: "MEDIUM | V-1119 | AUDIT | Booting into alternate non STIG compliant operating systems will not be permitted."
+  win_command: bcdedit
+  register: OS_list_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1119
