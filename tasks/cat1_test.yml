@@ -1,3 +1,38 @@
+- name: "HIGH | V-1073 | AUDIT | Systems must be maintained at a supported service pack level."
+  win_command: wmic os get Caption, Version, CSDVersion, BuildNumber
+  register: supported_pack_level_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in supported_pack_level_audit.stderr and supported_pack_level_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-1073
+
+- name: "HIGH | V-1074 | AUDIT | An approved DoD antivirus program must be installed and used."
+  win_command: reg query HKLM\Software\McAfee\DesktopProtection /v szProductVer
+  register: mcafee_approved_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in mcafee_approved_audit.stderr and mcafee_approved_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-1074
+
+- name: "HIGH | V-1081 | AUDIT | Local volumes must be formatted using NTFS."
+  win_shell: Get-Volume | Select-Object -Property DriveLetter,FileSystem
+  register: local_volume_format_aduit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-1081
+
 - name: "HIGH | V-1093 | AUDIT | Anonymous enumeration of shares will be restricted."
   win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v RestrictAnonymous /t REG_DWORD /f 1
   register: anon_shares_audit
