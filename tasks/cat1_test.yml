@@ -148,6 +148,7 @@
 
   when: "path_not_found not in anon_registry_access_audit.stderr and anon_registry_access_audit"
 ###################################### block end ########################################################  
+
 - name: "HIGH | V-1153 | AUDIT | The LanMan authentication level must be set to send NTLMv2 response only, and to refuse LM and NTLM."
   win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v LMCompatibilityLevel
   register: lanMan_authentication_audit
@@ -237,7 +238,10 @@
     key: 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters\'
     value: NullSessionPipes
     data: \0netlogon\0samr\0lsarpc\0\0
-    datatype: multistring
+    datatype: '{{ item }}' 
+  with_items:
+      - string
+      - multistring
   tags:
       - cat1
       - high
