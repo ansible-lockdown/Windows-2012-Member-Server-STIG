@@ -220,6 +220,30 @@
       - patch
       - V-2374
 
+- name: "HIGH | V-3338 | AUDIT | Named pipes that can be accessed anonymously must be configured with limited values on domain controllers."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\LanManServer\Parameters\ /v NullSessionPipes
+  register: pipes_limited_dc_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in pipes_limited_dc_audit.stderr and pipes_limited_dc_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-3338
+
+- name: "HIGH | V-3338 | PATCH | Named pipes that can be accessed anonymously must be configured with limited values on domain controllers."
+  win_regedit:
+    key: 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters\'
+    value: NullSessionPipes
+    data: \0netlogon\0samr\0lsarpc\0\0
+    datatype: multistring
+  tags:
+      - cat1
+      - high
+      - patch
+      - V-3338
+
 - name: "HIGH | V-3339 | AUDIT | Unauthorized remotely accessible registry paths must not be configured."
   win_command: reg query \"HKLM\System\CurrentControlSet\Control\SecurePipeServers\ winreg\" /v Machine
   register: remotely_accessible_registry_audit
@@ -341,6 +365,30 @@
       - high
       - patch
       - V-3379
+
+- name: "HIGH | V-4443 | AUDIT | Unauthorized remotely accessible registry paths and sub-paths must not be configured."
+  win_command: reg query HKLM\System\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedPaths\ /v Machine
+  register: unauthorized_remote_registry_paths_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in unauthorized_remote_registry_paths_audit.stderr and unauthorized_remote_registry_paths_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-4443
+
+- name: "HIGH | V-4443 | PATCH | Unauthorized remotely accessible registry paths and sub-paths must not be configured."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedPaths\'
+      value: Machine
+      data: \0\"Software\Microsoft\OLAP Server\"\0\"Software\Microsoft\Windows NT\CurrentVersion\Perflib\"\0\"Software\Microsoft\Windows NT\CurrentVersion\Print\"\0\"Software\Microsoft\Windows NT\CurrentVersion\Windows\"\0System\CurrentControlSet\Control\ContentIndex\0System\CurrentControlSet\Control\Print\Printers\0\"System\CurrentControlSet\Control\Terminal Server\"\0\"System\CurrentControlSet\Control\Terminal Server\UserConfig\"\0\"System\CurrentControlSet\Control\Terminal Server\DefaultUserConfiguration\"\0System\CurrentControlSet\Services\Eventlog\0System\CurrentControlSet\Services\Sysmonlog\0\0
+      datatype: multistring
+  tags:
+      - cat1
+      - high
+      - patch
+      - V-4443
 
 - name: "HIGH | V-6834 | AUDIT | Anonymous access to Named Pipes and Shares must be restricted."
   win_command: reg query HKLM\System\CurrentControlSet\Services\LanManServer\Parameters\ /v RestrictNullSessAccess
