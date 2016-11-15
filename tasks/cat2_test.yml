@@ -137,3 +137,74 @@
       - medium
       - audit
       - V-1119
+
+- name: "MEDIUM | V-1141 | AUDIT | Unencrypted passwords must not be sent to third-party SMB Servers."
+  win_command: reg query HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters /v EnablePlainTextPassword
+  register: plain_text_password_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in plain_text_password_audit.stderr and plain_text_password_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1141
+
+- name: "MEDIUM | V-1141 | PATCH | Unencrypted passwords must not be sent to third-party SMB Servers."
+  win_regedit:
+      key: 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters'
+      value: EnablePlainTextPassword
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1141
+
+- name: "MEDIUM | V-1145 | AUDIT | Automatic logons must be disabled."
+  win_command: reg query \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\" /v AutoAdminLogon
+  register: disable_automatic_logons_audit
+  check_mode: no
+  changed_when: no
+  ignore_errors: yes
+  failed_when: "reg_not_found not in disable_automatic_logons_audit.stderr and disable_automatic_logons_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1145
+
+- name: "MEDIUM | V-1145 | PATCH | Automatic logons must be disabled."
+  win_regedit:
+    key: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
+    value: AutoAdminLogon
+    data: 0
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1145
+
+- name: "MEDIUM | V-1150 | AUDIT | The built-in Windows password complexity policy must be enabled."
+  debug: var=secedit_rules.System_Access.PasswordComplexity
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1150
+
+- name: "MEDIUM | V-1150 | PATCH | The built-in Windows password complexity policy must be enabled."
+  win_secedit:
+      category: 'System Access'
+      key: PasswordComplexity
+      value: '1'
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1150
