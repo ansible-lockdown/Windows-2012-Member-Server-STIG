@@ -40,3 +40,42 @@
       - medium
       - patch
       - V-1099
+
+- name: "MEDIUM | V-1104 | AUDIT | The maximum password age must be configured to 60 days or less."
+  win_shell: net accounts | Select-String -Pattern "Max"
+  register: max_password_age_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1104
+
+- name: "MEDIUM | V-1104 | PATCH | The maximum password age must be configured to 60 days or less."
+  win_command: net accounts /maxpwage:60
+  when: "'60' not in max_password_age_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1104
+
+- name: "MEDIUM | V-1105 | AUDIT | The minimum password age must be configured to at least 1 day."
+  debug: var=secedit_rules.System_Access.MinimumPasswordAge
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1105
+
+- name: "MEDIUM | V-1105 | PATCH | The minimum password age must be configured to at least 1 day."
+  win_command: net accounts /minpwage:0
+  when: secedit_rules.System_Access.MinimumPasswordAge != "0"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1105
