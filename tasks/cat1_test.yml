@@ -414,17 +414,6 @@
       - patch
       - V-6834
 
-- name: "HIGH | V-7002 | AUDIT | DoD information system access will require the use of a password."
-  win_shell: (([ADSI]"WinNT://$env:computername").Children | Where-Object {$_.schemaclassname -eq 'user' -and $_.PasswordRequired -eq $False}).Name
-  register: no_password_users_audit
-  check_mode: no
-  changed_when: no
-  tags:
-      - cat1
-      - high
-      - audit
-      - V-7002
-
 - name: "HIGH | V-21973 | AUDIT | Autoplay must be turned off for non-volume devices."
   win_command: reg query HKLM\Software\Policies\Microsoft\Windows\Explorer\ /v NoAutoplayfornonVolume
   register: autoplay_nonvolume_audit
@@ -472,6 +461,92 @@
       - patch
       - V-22692
 
+- name: "HIGH | V-26070 | AUDIT | Standard user accounts must only have Read permissions to the Winlogon registry key."
+  win_shell: Get-Acl -PATH 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon' | Format-List
+  register: standard_user_read_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in standard_user_read_audit.stderr and standard_user_read_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-26070
+
+- name: "HIGH | V-26070 | AUDIT | Standard user accounts must only have Read permissions to the Winlogon registry key."
+  win_shell: (Get-Acl -PATH 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon').Access.IdentityReference.Value
+  register: standard_user_read_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in standard_user_read_audit.stderr and standard_user_read_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-26070
+
+######################## block start - conditionally apply patches if path exists #######################
+
+- block:
+
+  - name: "REMOVAL HIGH | V-26070 | PATCH | Standard user accounts must only have Read permissions to the Winlogon registry key."
+     win_acl:
+        path: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
+        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
+        rights: 'FullControl'
+        type: '{{ item[1] }}'
+        state: 'absent'
+     when: "not ('TrustedInstaller' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
+     ignore_errors: yes
+     with_nested:
+         - "{{ standard_user_read_audit.stdout_lines }}"
+         - [ allow, deny ]
+     tags:
+         - cat1
+         - high
+         - patch
+         - V-26070
+   
+  - name: "HIGH | V-26070 | PATCH | Standard user accounts must only have Read permissions to the Winlogon registry key."
+     win_acl:
+        path: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
+        user: '{{ item.user }}'
+        rights: '{{ item.rights }}'
+        type: 'allow'
+        state: 'present'
+        inherit: '{{ item.inherit }}'
+        propagation: '{{ item.propagation }}'
+     with_items:
+         - user: 'NT SERVICE\TrustedInstaller'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+         - user: 'NT AUTHORITY\SYSTEM'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+         - user: 'BUILTIN\Administrators'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+         - user: 'BUILTIN\Users'
+           rights: 'ReadKey'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+         - user: 'ALL APPLICATION PACKAGES'
+           rights: 'ReadKey'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+     ignore_errors: yes
+     tags:
+         - cat1
+         - high
+         - patch
+         - V-26070
+
+  when: "path_not_found not in standard_user_read_audit.stderr and standard_user_read_audit"
+########################################### block end ###################################################
+     
 - name: "HIGH | V-26283 | AUDIT | Anonymous enumeration of SAM accounts must not be allowed."
   win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa\ /v RestrictAnonymousSAM
   register: anonymous_enum_sam_audit
@@ -495,3 +570,297 @@
       - high
       - patch
       - V-26283
+
+- name: "HIGH | V-32282 | AUDIT | Standard user accounts must only have Read permissions to the Active Setup Installed Components registry key."
+  win_shell: (Get-Acl -PATH 'HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components').Access.IdentityReference.Value
+  register: standard_read_active_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in standard_read_active_audit.stderr and standard_read_active_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-32282
+
+- name: "HIGH | V-32282 | AUDIT | Standard user accounts must only have Read permissions to the Active Setup Installed Components registry key."
+  win_shell: (Get-Acl -PATH 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Active Setup\Installed Components').Access.IdentityReference.Value
+  register: standard_read_active2_audit
+  check_mode: no
+  changed_when: no
+  when: ansible_architecture == "64-bit"
+  failed_when: "path_not_found not in standard_read_active2_audit.stderr and standard_read_active2_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-32282
+
+###################### block start - conditionally apply patches if path exists #########################
+
+- block:
+
+   - name: "REMOVAL HIGH | V-32282 | PATCH | Standard user accounts must only have Read permissions to the Active Setup Installed Components registry key."
+     win_acl:
+        path: 'HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components'
+        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
+        rights: 'FullControl'
+        type: '{{ item[1] }}'
+        state: 'absent'
+     when: "not('Administrators' in item[0] or 'SYSTEM' in item[0]) or 'allow' not in item[1]"
+     ignore_errors: yes
+     with_nested:
+         - "{{ standard_read_active_audit.stdout_lines }}"
+         - [ allow, deny ]
+     tags:
+         - cat1
+         - high
+         - patch
+         - V-32282
+
+   - name: "HIGH | V-32282 | PATCH | Standard user accounts must only have Read permissions to the Active Setup Installed Components registry key."
+     win_acl:
+        path: 'HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components'
+        user: "{{ item.user }}"
+        rights: "{{ item.rights }}"
+        type: 'allow'
+        state: 'present'
+        inherit: "{{ item.inherit }}"
+        propagation: "{{ item.propagation }}"
+     ignore_errors: yes
+     with_items:
+         - user: 'BUILTIN\Users'
+           rights: 'ReadKey'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+         - user: 'BUILTIN\Administrators'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+         - user: 'NT AUTHORITY\SYSTEM'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+         - user: 'CREATOR OWNER'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit'
+           propagation: 'InheritOnly'
+         - user: 'ALL APPLICATION PACKAGES'
+           rights: 'ReadKey'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+     tags:
+         - cat1
+         - high
+         - patch
+         - V-32282
+
+  when: "path_not_found not in standard_read_active_audit.stderr and standard_read_active_audit"
+######################################### block end #####################################################
+
+###################### block start - conditionally apply patches if path exists #########################
+
+- block:
+
+   - name: "REMOVAL HIGH | V-32282 | PATCH | Standard user accounts must only have Read permissions to the Active Setup Installed Components registry key."
+     win_acl:
+        path: 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Active Setup\Installed Components'
+        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
+        rights: 'FullControl'
+        type: '{{ item[1] }}'
+        state: 'absent'
+     when: "not('Administrators' in item[0] or 'SYSTEM' in item[0]) or 'allow' not in item[1]"
+     ignore_errors: yes
+     with_nested:
+         - "{{ standard_read_active2_audit.stdout_lines }}"
+         - [ allow, deny ]
+     tags:
+         - cat1
+         - high
+         - patch
+         - V-32282
+
+   - name: "HIGH | V-32282 | PATCH | Standard user accounts must only have Read permissions to the Active Setup Installed Components registry key."
+     win_acl:
+        path: 'HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components'
+        user: "{{ item.user }}"
+        rights: "{{ item.rights }}"
+        type: 'allow'
+        state: 'present'
+        inherit: "{{ item.inherit }}"
+        propagation: "{{ item.propagation }}"
+     ignore_errors: yes
+     with_items:
+         - user: 'BUILTIN\Users'
+           rights: 'ReadKey'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+         - user: 'BUILTIN\Administrators'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+         - user: 'NT AUTHORITY\SYSTEM'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+         - user: 'CREATOR OWNER'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit'
+           propagation: 'InheritOnly'
+         - user: 'ALL APPLICATION PACKAGES'
+           rights: 'ReadKey'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+     tags:
+         - cat1
+         - high
+         - patch
+         - V-32282
+
+  when: "ansible_architecture == '64-bit' and path_not_found not in standard_read_active2_audit.stderr and standard_read_active2_audit"
+############################################ block end ##################################################
+
+- name: "HIGH | V-34974 | AUDIT | The Windows Installer Always install with elevated privileges option must be disabled."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\Installer\ /v AlwaysInstallElevated
+  register: install_elevated_disabled_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in install_elevated_disabled_audit.stderr and install_elevated_disabled_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-34974
+
+- name: "HIGH | V-34974 | PATCH | The Windows Installer Always install with elevated privileges option must be disabled."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\Installer\'
+      value: AlwaysInstallElevated
+      data: 0
+      datatype: dword
+  tags:
+      - cat1
+      - high
+      - patch
+      - V-34974
+
+- name: "HIGH | V-36718 | AUDIT | The Windows Remote Management (WinRM) service must not use Basic authentication."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\WinRM\Service\ /v AllowBasic
+  register: winrm_service_basic_auth_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in winrm_service_basic_auth_audit.stderr and winrm_service_basic_auth_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-36718
+
+- name: "HIGH | V-36718 | PATCH | The Windows Remote Management (WinRM) service must not use Basic authentication."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service\'
+      value: AllowBasic
+      data: 0
+      datatype: dword
+  tags:
+      - cat1
+      - high
+      - patch
+      - V-36718
+
+- name: "HIGH | V-39331 | AUDIT | The Active Directory SYSVOL directory must have the proper access control permissions."
+  win_shell: Get-Acl -Path '\Windows\SYSVOL' | Format-List
+  register: sysvol_permissions_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in sysvol_permissions_audit.stderr and sysvol_permissions_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-39331
+
+- name: "HIGH | V-39331 | AUDIT | The Active Directory SYSVOL directory must have the proper access control permissions."
+  win_shell: (Get-Acl -Path '\Windows\SYSVOL').Access.IdentityReference.Value
+  register: sysvol_permissions_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in sysvol_permissions_audit.stderr and sysvol_permissions_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-39331
+
+###################### block start - conditionally apply patches if path exists #########################
+
+- block:
+   - name: "HIGH | V-39331 | PATCH | The Active Directory SYSVOL directory must have the proper access control permissions."
+     win_acl_inheritance:
+        path: '\Windows\SYSVOL'
+        state: absent
+     tags:
+         - cat1
+         - high
+         - patch
+         - V-39331
+
+   - name: "REMOVAL HIGH | V-39331 | PATCH | The Active Directory SYSVOL directory must have the proper access control permissions."
+     win_acl:
+        path: '\Windows\SYSVOL'
+        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
+        rights: 'FullControl'
+        type: '{{ item[1] }}'
+        state: 'absent'
+     when: "not('Administrators' in item[0] or 'SYSTEM' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
+     with_nested:
+         - "{{ sysvol_permissions_audit.stdout_lines }}"
+         - [ allow, deny ]
+     tags:
+         - cat1
+         - high
+         - patch
+         - V-39331
+
+   - name: "HIGH | V-39331 | PATCH | The Active Directory SYSVOL directory must have the proper access control permissions."
+     win_acl:
+        path: '\Windows\SYSVOL'
+        user: '{{ item.user }}'
+        rights: '{{ item.rights }}'
+        type: 'allow'
+        state: 'present'
+        inherit: '{{ item.inherit }}'
+        propagation: '{{ item.propagation }}'
+     with_items:
+         - user: 'NT AUTHORITY\Authenticated Users'
+           rights: 'ReadAndExecute'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+         - user: 'BUILTIN\Server Operators'
+           rights: 'ReadAndExecute'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+         - user: 'BUILTIN\Administrators'
+           rights: 'Modify,ReadAndExecute,ListDirectory,Read,Write'
+           inherit: 'None'
+           propagation: 'None'
+         - user: 'CREATOR OWNER'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'InheritOnly'
+         - user: 'BUILTIN\Administrators'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'InheritOnly'
+         - user: 'NT AUTHORITY\SYSTEM'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+     tags:
+         - cat1
+         - high
+         - patch
+         - V-39331
+
+  when: "path_not_found not in sysvol_permissions_audit.stderr and sysvol_permissions_audit"
+######################################### block end ##################################################### 
