@@ -79,3 +79,50 @@
       - medium
       - patch
       - V-1105
+
+
+- name: "MEDIUM | V-1107 | AUDIT | The password history must be configured to 24 passwords remembered."
+  debug: var=secedit_rules.System_Access.PasswordHistorySize
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1107
+
+- name: "MEDIUM | V-1107 | PATCH | The password history must be configured to 24 passwords remembered."
+  win_secedit:
+      category: 'System Access'
+      key: PasswordHistorySize
+      value: '12'
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1107
+
+- name: "MEDIUM | V-1113 | AUDIT | The built-in guest account must be disabled."
+  debug: var=secedit_rules.System_Access.EnableGuestAccount
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1113
+
+- name: "MEDIUM | V-1113 | PATCH | The built-in guest account must be disabled."
+  win_secedit:
+      category: 'System Access'
+      key: EnableGuestAccount
+      value: '0'
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1113
