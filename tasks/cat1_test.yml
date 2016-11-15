@@ -34,7 +34,7 @@
       - V-1081
 
 - name: "HIGH | V-1093 | AUDIT | Anonymous enumeration of shares will be restricted."
-  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v RestrictAnonymous /t REG_DWORD /f 1
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v RestrictAnonymous
   register: anon_shares_audit
   check_mode: no
   changed_when: no
@@ -58,39 +58,98 @@
       - V-1093
 
 - name: "HIGH | V-1152 | AUDIT | Anonymous access to the registry must be restricted."
-  win_command: reg query HKLM\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg
+  win_shell: Get-Acl -PATH 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg' | Format-List
   register: anon_registry_access_audit
   check_mode: no
   changed_when: no
-  failed_when: "reg_not_found not in anon_registry_access_audit.stderr and anon_registry_access_audit.stderr"
+  failed_when: "path_not_found not in anon_registry_access_audit.stderr and anon_registry_access_audit.stderr"
   tags:
       - cat1
       - high
       - audit
       - V-1152
 
-# NOTE: V-1152 is shared between all OS's, but Backup Operators data for 2k12 is 'Read (This key only)' and for 2k8 is 'Special'.
 - name: "HIGH | V-1152 | PATCH | Anonymous access to the registry must be restricted."
-  win_regedit: 
-      key: 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg'
-      value: "{{ item.value }}"
-      data: "{{ item.data }}"
-  
-  with_items: 
-      - value: 'Administrators'
-        data: 'Full'
-      - value: 'Backup Operators'
-        data: 'Read'
-      - value: 'LOCAL SERVICE'
-        data: 'Read' 
+  win_regedit:
+     key: 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg'
+  when: "'Registry' not in anon_registry_access_audit.stdout"
   tags:
       - cat1
       - high
       - patch
       - V-1152
 
+- name: "HIGH | V-1152 | AUDIT | Anonymous access to the registry must be restricted."
+  win_shell: (Get-Acl -PATH 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg').Access.IdentityReference.Value
+  register: anon_registry_access_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in anon_registry_access_audit.stderr and anon_registry_access_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-1152
+
+######################## block start - conditionally apply patches if path exists #######################
+
+- block:
+
+   - name: "REMOVAL HIGH | V-1152 | PATCH | Anonymous access to the registry must be restricted."
+     win_acl_inheritance:
+        path: 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg'
+        state: 'absent'
+     tags:
+         - cat1
+         - high
+         - patch
+         - V-1152
+
+   - name: "REMOVAL HIGH | V-1152 | PATCH | Anonymous access to the registry must be restricted."
+     win_acl:
+        path: 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg'
+        user: '{{ item[0] }}'
+        rights: 'FullControl'
+        type: '{{ item[1] }}'
+        state: 'absent'
+     when: "'Administrators' not in item[0] or 'allow' not in item[1]"
+     with_nested:
+         - "{{ anon_registry_access_audit.stdout_lines }}"
+         - [ allow, deny ]
+     tags:
+         - cat1
+         - high
+         - patch
+         - V-1152
+
+   - name: "HIGH | V-1152 | PATCH | Admin Anonymous access to the registry must be restricted."
+     win_acl:
+        path: 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg\'
+        user: '{{ item.user }}'
+        rights: '{{ item.rights }}'
+        type: 'allow'
+        state: 'present'
+        inherit: '{{ item.inherit }}'
+        propagation: '{{ item.propagation }}'
+     with_items:
+         - user: 'BUILTIN\Administrators'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit, ObjectInherit'
+           propagation: 'None'
+         - user: 'BUILTIN\Backup Operators'
+           rights: 'ReadKey'
+           inherit: 'None'
+           propagation: 'None'
+     tags:
+         - cat1
+         - high
+         - patch
+         - V-1152
+
+  when: "path_not_found not in anon_registry_access_audit.stderr and anon_registry_access_audit"
+###################################### block end ########################################################  
 - name: "HIGH | V-1153 | AUDIT | The LanMan authentication level must be set to send NTLMv2 response only, and to refuse LM and NTLM."
-  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v LMCompatibilityLevel /t REG_DWORD /f 5
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v LMCompatibilityLevel
   register: lanMan_authentication_audit
   check_mode: no
   changed_when: no
@@ -114,7 +173,7 @@
       - V-1153
 
 - name: "HIGH | V-1159 | AUDIT | The Recovery Console option must be set to prevent automatic logon to the system."
-  win_command: reg query \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\Setup\RecoveryConsole\" /v SecurityLevel /t REG_DWORD /f 0
+  win_command: reg query \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\Setup\RecoveryConsole\" /v SecurityLevel
   register: recovery_prevent_autologin_audit
   check_mode: no
   changed_when: no
@@ -138,7 +197,7 @@
       - V-1159
 
 - name: "HIGH | V-2374 | AUDIT | Autoplay must be disabled for all drives."
-  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\policies\Explorer\ /v NoDriveTypeAutoRun /t REG_DWORD /f 255 
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\policies\Explorer\ /v NoDriveTypeAutoRun 
   register: autoplay_disabled_audit
   check_mode: no
   changed_when: no
@@ -162,15 +221,11 @@
       - V-2374
 
 - name: "HIGH | V-3339 | AUDIT | Unauthorized remotely accessible registry paths must not be configured."
-  win_command: reg query \"HKLM\System\CurrentControlSet\Control\SecurePipeServers\ winreg\" /v Machine /t REG_MULTI_SZ /f {{ item }}
+  win_command: reg query \"HKLM\System\CurrentControlSet\Control\SecurePipeServers\ winreg\" /v Machine
   register: remotely_accessible_registry_audit
   check_mode: no
   changed_when: no
   failed_when: "reg_not_found not in remotely_accessible_registry_audit.stderr and remotely_accessible_registry_audit.stderr"
-  with_items:
-      - System\CurrentControlSet\Control\ProductOptions 
-      - \"System\CurrentControlSet\Control\Server Applications\" 
-      - \"Software\Microsoft\Windows NT\CurrentVersion\" 
   tags:
       - cat1
       - high
@@ -215,7 +270,7 @@
       - V-3340
 
 - name: "HIGH | V-3343 | AUDIT | Solicited Remote Assistance must not be allowed."
-  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v fAllowToGetHelp /t REG_DWORD /f 0
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v fAllowToGetHelp
   register: solicited_remote_assistance_audit
   check_mode: no
   changed_when: no
@@ -239,7 +294,7 @@
       - V-3343
 
 - name: "HIGH | V-3344 | AUDIT | Local accounts with blank passwords must be restricted to prevent access from the network."
-  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa\ /v LimitBlankPasswordUse /t REG_DWORD /f 1
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa\ /v LimitBlankPasswordUse
   register: blankpass_network_restriction_audit
   check_mode: no
   changed_when: no
@@ -264,7 +319,7 @@
       - V-3344
 
 - name: "HIGH | V-3379 | AUDIT | The system must be configured to prevent the storage of the LAN Manager hash of passwords."
-  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa\ /v NoLMHash /t REG_DWORD /f 1
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa\ /v NoLMHash
   register: prevent_lanman_storage_audit
   check_mode: no
   changed_when: no
@@ -288,7 +343,7 @@
       - V-3379
 
 - name: "HIGH | V-6834 | AUDIT | Anonymous access to Named Pipes and Shares must be restricted."
-  win_command: reg query HKLM\System\CurrentControlSet\Services\LanManServer\Parameters\ /v RestrictNullSessAccess /t REG_DWORD /f 1
+  win_command: reg query HKLM\System\CurrentControlSet\Services\LanManServer\Parameters\ /v RestrictNullSessAccess
   register: anon_access_pipes_shares_audit
   check_mode: no
   changed_when: no
@@ -312,7 +367,7 @@
       - V-6834
 
 - name: "HIGH | V-21973 | AUDIT | Autoplay must be turned off for non-volume devices."
-  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\Explorer\ /v NoAutoplayfornonVolume /t REG_DWORD /f 1
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\Explorer\ /v NoAutoplayfornonVolume
   register: autoplay_nonvolume_audit
   check_mode: no
   changed_when: no
@@ -335,7 +390,7 @@
       - patch
 
 - name: "HIGH | V-22692 | AUDIT | The default Autorun behavior must be configured to prevent Autorun commands."
-  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\ /v NoAutorun /t REG_DWORD /f 1
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\ /v NoAutorun
   register: autorun_prevent_audit
   check_mode: no
   changed_when: no
@@ -359,7 +414,7 @@
       - V-22692
 
 - name: "HIGH | V-26283 | AUDIT | Anonymous enumeration of SAM accounts must not be allowed."
-  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa\ /v RestrictAnonymousSAM /t REG_DWORD /f 1
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa\ /v RestrictAnonymousSAM
   register: anonymous_enum_sam_audit
   check_mode: no
   changed_when: no
