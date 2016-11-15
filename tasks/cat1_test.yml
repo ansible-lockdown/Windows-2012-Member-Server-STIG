@@ -489,7 +489,7 @@
 
 - block:
 
-  - name: "REMOVAL HIGH | V-26070 | PATCH | Standard user accounts must only have Read permissions to the Winlogon registry key."
+   - name: "REMOVAL HIGH | V-26070 | PATCH | Standard user accounts must only have Read permissions to the Winlogon registry key."
      win_acl:
         path: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
         user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
@@ -507,7 +507,7 @@
          - patch
          - V-26070
    
-  - name: "HIGH | V-26070 | PATCH | Standard user accounts must only have Read permissions to the Winlogon registry key."
+   - name: "HIGH | V-26070 | PATCH | Standard user accounts must only have Read permissions to the Winlogon registry key."
      win_acl:
         path: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
         user: '{{ item.user }}'
