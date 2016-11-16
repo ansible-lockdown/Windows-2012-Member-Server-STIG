@@ -1136,3 +1136,123 @@
       - patch
       - V-36707
 
+- name: "LOW | V-36710 | AUDIT | Automatic download of updates from the Windows Store must be turned off."
+  win_command: reg query HKLM\SOFTWARE\Policies\Microsoft\WindowsStore\ /v AutoDownload
+  register: auto_download_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in auto_download_audit.stderr and auto_download_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-36710
+
+- name: "LOW | V-36710 | PATCH | Automatic download of updates from the Windows Store must be turned off."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Session Manager\Kernel'
+      value: AutoDownload
+      data: 0x00000002
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-36710
+
+- name: "LOW | V-36774 | AUDIT | A screen saver must be defined."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows\Control Panel\Desktop\" /v SCRNSAVE.EXE
+  register: screen_saver_disabled_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in screen_saver_disabled_audit.stderr and screen_saver_disabled_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-36774
+
+- name: "LOW | V-36774 | PATCH | A screen saver must be defined."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\Control Panel\Desktop\'
+      value: SCRNSAVE.EXE
+      data: scrnsave.scr
+      datatype: string
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-36774
+
+- name: "LOW | V-36775 | AUDIT | Changing the screen saver must be prevented."
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\ /v NoDispScrSavPage
+  register: screen_change_prevent_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in screen_change_prevent_audit.stderr and screen_change_prevent_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-36775
+
+- name: "LOW | V-36775 | PATCH | Changing the screen saver must be prevented."
+  win_regedit:
+      key: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\'
+      value: NoDispScrSavPage
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-36775
+
+- name: "LOW | V-36776 | AUDIT | Notifications from Windows Push Network Service must be turned off."
+  win_command: reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications\ /v NoCloudApplicationNotification
+  register: windows_push_notify_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in windows_push_notify_audit.stderr and windows_push_notify_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-36776
+
+- name: "LOW | V-36776 | PATCH | Notifications from Windows Push Network Service must be turned off."
+  win_regedit:
+      key: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\'
+      value: NoDispScrSavPage
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-36776
+
+- name: "LOW | V-36777 | AUDIT | Toast notifications to the lock screen must be turned off."
+  win_command: reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications\ /v NoToastApplicationNotificationOnLockScreen
+  register: toast_notifications_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in toast_notifications_audit.stderr and toast_notifications_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-36777
+
+- name: "LOW | V-36777 | PATCH | Toast notifications to the lock screen must be turned off."
+  win_regedit:
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications\'
+      value: NoToastApplicationNotificationOnLockScreen
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-36776
+
