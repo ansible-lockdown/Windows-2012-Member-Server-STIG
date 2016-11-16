@@ -536,3 +536,99 @@
       - patch
       - V-15687
 
+- name: "LOW | V-15701 | AUDIT | A system restore point will be created when a new device driver is installed."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\DeviceInstall\Settings /v DisableSystemRestore
+  register: restore_point_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in restore_point_audit.stderr and restore_point_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-15701
+
+- name: "LOW | V-15701 | PATCH | A system restore point will be created when a new device driver is installed."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\DeviceInstall\Settings'
+      value: DisableSystemRestore
+      data: 0
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-15701
+
+- name: "LOW | V-15702 | AUDIT | An Error Report will not be sent when a generic device driver is installed."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\DeviceInstall\Settings /v DisableSendGenericDriverNotFoundToWER
+  register: no_error_report_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in no_error_report_audit.stderr and no_error_report_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-15702
+
+- name: "LOW | V-15702 | PATCH | An Error Report will not be sent when a generic device driver is installed."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\DeviceInstall\Settings'
+      value: DisableSendGenericDriverNotFoundToWER
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-15702
+
+- name: "LOW | V-15703 | AUDIT | Users will not be prompted to search Windows Update for device drivers."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\DriverSearching /v DontPromptForWindowsUpdate
+  register: no_prompt_windows_update_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in no_prompt_windows_update_audit.stderr and no_prompt_windows_update_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-15703
+
+- name: "LOW | V-15703 | PATCH | Users will not be prompted to search Windows Update for device drivers."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\DriverSearching'
+      value: DontPromptForWindowsUpdate
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-15703
+
+- name: "LOW | V-15704 | AUDIT | Errors in handwriting recognition on Tablet PCs will not be reported to Microsoft."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\HandwritingErrorReports /v PreventHandwritingErrorReports
+  register: no_handwriting_error_reports_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in no_handwriting_error_reports_audit.stderr and no_handwriting_error_reports_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-15704
+
+- name: "LOW | V-15704 | PATCH | Errors in handwriting recognition on Tablet PCs will not be reported to Microsoft."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\HandwritingErrorReports'
+      value: PreventHandwritingErrorReports
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-15704
+
