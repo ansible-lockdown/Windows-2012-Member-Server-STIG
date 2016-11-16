@@ -1549,4 +1549,76 @@ me: "MEDIUM | V-14259 | AUDIT | Printing over HTTP will be prevented."
       - patch
       - V-15699
 
+- name: "MEDIUM | V-15700 | AUDIT | Remote access to the Plug and Play interface will be disabled for device installation."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\DeviceInstall\Settings /v AllowRemoteRPC
+  register: PnP_device_install_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in PnP_device_install_audit.stderr and PnP_device_install_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15700
+
+- name: "MEDIUM | V-15700 | PATCH | Remote access to the Plug and Play interface will be disabled for device installation."
+  win_regedit:
+    key: 'HKLM:\Software\Policies\Microsoft\Windows\DeviceInstall\Settings'
+    value: AllowRemoteRPC
+    data: 0
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-15700
+
+- name: "MEDIUM | V-15705 | AUDIT | Users will be prompted for a password on resume from sleep (on battery).  (Applicable to Server 2008 R2 if the system is configured to sleep.)"
+  win_command: reg query HKLM\Software\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51 /v DCSettingIndex
+  register: prompt_resume_DC_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in prompt_resume_DC_audit.stderr and prompt_resume_DC_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15705
+
+- name: "MEDIUM | V-15705 | PATCH | Users will be prompted for a password on resume from sleep (on battery).  (Applicable to Server 2008 R2 if the system is configured to sleep.)"
+  win_regedit:
+    key: 'HKLM:\Software\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51'
+    value: DCSettingIndex
+    data: 1
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-15705
+
+- name: "MEDIUM | V-15706 | AUDIT | The user will be prompted for a password on resume from sleep (Plugged In).  (Applicable on Server 2008 R2 if the system is configured to sleep.)"
+  win_command: reg query HKLM\Software\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51 /v ACSettingIndex
+  register: prompt_resume_AC_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in prompt_resume_AC_audit.stderr and prompt_resume_AC_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15706
+
+- name: "MEDIUM | V-15706 | PATCH | The user will be prompted for a password on resume from sleep (Plugged In).  (Applicable on Server 2008 R2 if the system is configured to sleep.)"
+  win_regedit:
+    key: 'HKLM:\Software\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51'
+    value: ACSettingIndex
+    data: 1
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-15706
+
 
