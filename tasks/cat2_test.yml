@@ -939,3 +939,77 @@
       - medium
       - audit
       - V-6833
+
+- name: "MEDIUM | V-14228 | AUDIT | Auditing Access of Global System Objects must be turned off."
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v AuditBaseObjects
+  register: audit_base_objects_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in audit_base_objects_audit.stderr and audit_base_objects_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14228
+
+- name: "MEDIUM | V-14228 | PATCH | Auditing Access of Global System Objects must be turned off."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Lsa'
+      value: AuditBaseObjects
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-14228
+
+- name: "MEDIUM | V-14229 | AUDIT | Audit of Backup and Restore Privileges will be turned off."
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v FullPrivilegeAuditing
+  register: full_privilege_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in full_privilege_audit.stderr and full_privilege_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14229
+
+# win_regedit requires 2 octects for binary values to detect if a change is needed or not.
+- name: "MEDIUM | V-14229 | PATCH | Audit of Backup and Restore Privileges will be turned off."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Lsa'
+      value: FullPrivilegeAuditing
+      data: 0x0,0x0
+      datatype: binary
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-14229
+
+- name: "MEDIUM | V-14230 | AUDIT | Audit policy using subcategories will be enabled."
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v SCENoApplyLegacyAuditPolicy
+  register: subcategories_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in subcategories_audit.stderr and subcategories_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14230
+
+- name: "MEDIUM | V-14230 | PATCH | Audit policy using subcategories will be enabled."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Lsa'
+      value: SCENoApplyLegacyAuditPolicy
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-14230
+
