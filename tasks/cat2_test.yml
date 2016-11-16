@@ -891,3 +891,51 @@
       - medium
       - patch
       - V-4448
+
+- name: "MEDIUM | V-6831 | AUDIT | Outgoing secure channel traffic will be encrypted or signed."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\Netlogon\Parameters /v RequireSignOrSeal
+  register: encrypt_or_sign_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in encrypt_or_sign_audit.stderr and encrypt_or_sign_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-6831
+
+- name: "MEDIUM | V-6831 | PATCH | Outgoing secure channel traffic will be encrypted or signed."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters'
+      value: RequireSignOrSeal
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-6831
+
+- name: "MEDIUM | V-6832 | AUDIT | The Windows SMB client will be enabled to always perform SMB packet signing."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\LanmanWorkstation\Parameters /v RequireSecuritySignature
+  register: require_SMB_client_packet_signing_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in require_SMB_client_packet_signing_audit.stderr and require_SMB_client_packet_signing_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-6832
+
+- name: "MEDIUM | V-6833 | AUDIT | The Windows SMB server will be enabled to always perform SMB packet signing."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\LanManServer\Parameters /v RequireSecuritySignature
+  register: require_SMB_server_packet_signing_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in require_SMB_server_packet_signing_audit.stderr and require_SMB_server_packet_signing_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-6833
