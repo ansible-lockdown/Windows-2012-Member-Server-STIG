@@ -3626,3 +3626,507 @@ me: "MEDIUM | V-36698 | AUDIT | The use of biometrics must be disabled."
       - medium
       - patch
       - V-36773
+
+- name: "MEDIUM | V-40177 | AUDIT | Permissions for program file directories must conform to minimum requirements."
+  win_shell: Get-Acl -PATH '\Program Files' | Format-List
+  register: program_files_minimum_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in program_files_minimum_audit.stderr and program_files_minimum_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-40177
+
+- name: "MEDIUM | V-40177 | AUDIT | Permissions for program file directories must conform to minimum requirements."
+  win_shell: (Get-Acl -PATH '\Program Files').Access.IdentityReference.Value
+  register: program_files_minimum_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in program_files_minimum_audit.stderr and program_files_minimum_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-40177
+
+- name: "MEDIUM | V-40177 | AUDIT | Permissions for program file directories must conform to minimum requirements."
+  win_shell: Get-Acl -PATH '\Program Files (x86)' | Format-List
+  register: program_filesx86_minimum_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in program_filesx86_minimum_audit.stderr and program_filesx86_minimum_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-40177
+
+- name: "MEDIUM | V-40177 | AUDIT | Permissions for program file directories must conform to minimum requirements."
+  win_shell: (Get-Acl -PATH '\Program Files (x86)').Access.IdentityReference.Value
+  register: program_filesx86_minimum_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in program_filesx86_minimum_audit.stderr and program_filesx86_minimum_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-40177
+
+###################### block start - conditionally apply patches if paths exist #########################
+
+- block:
+
+  - name: "REMOVAL MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
+    win_acl_inheritance:
+       path: '{{ item }}'
+       state: absent
+    with_items:
+        - '\Program Files'
+        - '\Program Files (x86)'
+    tags:
+        - cat2
+        - medium
+        - patch
+        - V-40177
+
+  - name: "REMOVAL MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
+    win_acl:
+       path: '\Program Files'
+       user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
+       rights: 'FullControl'
+       type: '{{ item[1] }}'
+       state: 'absent'
+    when: "not('TrustedInstaller' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
+    with_nested:
+        - '{{ program_files_minimum_audit.stdout_lines }}'
+        - [ allow, deny ]
+    tags:
+        - cat2
+        - medium
+        - patch
+        - V-40177
+
+  - name: "REMOVAL MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
+    win_acl:
+       path: '\Program Files (x86)'
+       user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
+       rights: 'FullControl'
+       type: '{{ item[1] }}'
+       state: 'absent'
+    when: "not('TrustedInstaller' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
+    with_nested:
+        - '{{ program_filesx86_minimum_audit.stdout_lines }}'
+        - [ allow, deny ]
+    tags:
+        - cat2
+        - medium
+        - patch
+        - V-40177
+ 
+  - name: "MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
+    win_acl:
+       path: '\Program Files'
+       user: '{{ item.user }}'
+       rights: '{{ item.rights }}'
+       type: 'allow'
+       state: 'present'
+       inherit: '{{ item.inherit }}'
+       propagation: '{{ item.propagation }}'
+    with_items:
+        - user: 'NT SERVICE\TrustedInstaller'
+          rights: 'FullControl'
+          inherit: 'ContainerInherit'
+          propagation: 'InheritOnly'
+        - user: 'NT AUTHORITY\SYSTEM'
+          rights: 'Modify'
+          inherit: 'None'
+          propagation: 'None'
+        - user: 'NT AUTHORITY\SYSTEM'
+          rights: 'FullControl'
+          inherit: 'ContainerInherit,ObjectInherit'
+          propagation: 'InheritOnly'
+        - user: 'BUILTIN\Administrators'
+          rights: 'Modify'
+          inherit: 'None'
+          propagation: 'None'
+        - user: 'BUILTIN\Administrators'
+          rights: 'FullControl'
+          inherit: 'ContainerInherit,ObjectInherit'
+          propagation: 'InheritOnly'
+        - user: 'BUILTIN\Users'
+          rights: 'ReadAndExecute'
+          inherit: 'ContainerInherit,ObjectInherit'
+          propagation: 'None'
+        - user: 'CREATOR OWNER'
+          rights: 'FullControl'
+          inherit: 'ContainerInherit,ObjectInherit'
+          propagation: 'InheritOnly'
+        - user: 'ALL APPLICATION PACKAGES'
+          rights: 'ReadAndExecute'
+          inherit: 'ContainerInherit, ObjectInherit'
+          propagation: 'None'
+    tags:
+        - cat2
+        - medium
+        - patch
+        - V-40177
+
+  - name: "MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
+    win_acl:
+       path: '\Program Files (x86)'
+       user: '{{ item.user }}'
+       rights: '{{ item.rights }}'
+       type: 'allow'
+       state: 'present'
+       inherit: '{{ item.inherit }}'
+       propagation: '{{ item.propagation }}'
+    with_items:
+        - user: 'NT SERVICE\TrustedInstaller'
+          rights: 'FullControl'
+          inherit: 'ContainerInherit'
+          propagation: 'InheritOnly'
+        - user: 'NT AUTHORITY\SYSTEM'
+          rights: 'Modify'
+          inherit: 'None'
+          propagation: 'None'
+        - user: 'NT AUTHORITY\SYSTEM'
+          rights: 'FullControl'
+          inherit: 'ContainerInherit,ObjectInherit'
+          propagation: 'InheritOnly'
+        - user: 'BUILTIN\Administrators'
+          rights: 'Modify'
+          inherit: 'None'
+          propagation: 'None'
+        - user: 'BUILTIN\Administrators'
+          rights: 'FullControl'
+          inherit: 'ContainerInherit,ObjectInherit'
+          propagation: 'InheritOnly'
+        - user: 'BUILTIN\Users'
+          rights: 'ReadAndExecute'
+          inherit: 'ContainerInherit,ObjectInherit'
+          propagation: 'None'
+        - user: 'CREATOR OWNER'
+          rights: 'FullControl'
+          inherit: 'ContainerInherit,ObjectInherit'
+          propagation: 'InheritOnly'
+        - user: 'ALL APPLICATION PACKAGES'
+          rights: 'ReadAndExecute'
+          inherit: 'ContainerInherit, ObjectInherit'
+          propagation: 'None'
+    tags:
+        - cat2
+        - medium
+        - patch
+        - V-40177
+
+  when: "path_not_found not in (program_files_minimum_audit.stderr and program_filesx86_minimum_audit.stderr) and program_files_minimum_audit and program_filesx86_minimum_audit"
+######################################### block end #####################################################
+
+- name: "MEDIUM | V-40178 | AUDIT | Permissions for system drive root directory must conform to minimum requirements."
+  win_shell: Get-Acl -PATH 'C:' | Format-List
+  register: root_permissions_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in root_permissions_audit.stderr and root_permissions_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-40178
+
+- name: "MEDIUM | V-40178 | AUDIT | Permissions for system drive root directory must conform to minimum requirements."
+  win_shell: (Get-Acl -PATH 'C:').Access.IdentityReference.Value
+  register: root_permissions_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in root_permissions_audit.stderr and root_permissions_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-40178
+
+###################### block start - conditionally apply patches if paths exist #########################
+
+- block:
+
+   - name: "MEDIUM | V-40178 | PATCH | Permissions for system drive root directory must conform to minimum requirements."
+     win_acl_inheritance:
+        path: 'C:'
+        state: 'absent'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-40178
+
+   - name: "REMOVAL MEDIUM | V-40178 | PATCH | Permissions for system drive root directory must conform to minimum requirements."
+     win_acl:
+        path: 'C:'
+        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
+        rights: 'FullControl'
+        type: '{{ item[1] }}'
+        state: 'absent'
+     when: "not('SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
+     with_nested:
+         - '{{ root_permissions_audit.stdout_lines }}'
+         - [ allow, deny ]
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-40178
+
+   - name: "MEDIUM | V-40178 | PATCH | Permissions for system drive root directory must conform to minimum requirements."
+     win_acl:
+        path: 'C:'
+        user: '{{ item.user }}'
+        rights: '{{ item.rights }}'
+        type: 'allow'
+        state: 'present'
+        inherit: '{{ item.inherit }}'
+        propagation: '{{ item.propagation }}'
+     with_items:
+         - user: 'NT AUTHORITY\SYSTEM'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit,ObjectInherit'
+           propagation: 'None'
+         - user: 'BUILTIN\Administrators'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit,ObjectInherit'
+           propagation: 'None'
+         - user: 'BUILTIN\Users'
+           rights: 'ReadAndExecute'
+           inherit: 'ContainerInherit,ObjectInherit'
+           propagation: 'None'
+         - user: 'BUILTIN\Users'
+           rights: 'AppendData'
+           inherit: 'ContainerInherit'
+           propagation: 'None'
+         - user: 'BUILTIN\Users'
+           rights: 'CreateFiles,WriteData'
+           inherit: 'ContainerInherit'
+           propagation: 'InheritOnly'
+         - user: 'CREATOR OWNER'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit,ObjectInherit'
+           propagation: 'InheritOnly'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-40178
+
+  when: "path_not_found not in root_permissions_audit.stderr and root_permissions_audit"
+######################################### block end #####################################################
+
+- name: "MEDIUM | V-40179 | AUDIT | Permissions for Windows installation directory must conform to minimum requirements."
+  win_command: reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion /v ProgramFilesDir
+  register: windows_installation_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in windows_installation_audit.stderr and windows_installation_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-40179
+
+- name: "MEDIUM | V-40179 | AUDIT | Permissions for Windows installation directory must conform to minimum requirements."
+  win_command: reg query HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion /v ProgramFilesDir
+  register: windows_installationx86_audit
+  check_mode: no
+  changed_when: no
+  when: ansible_architecture == "64-bit"
+  failed_when: "reg_not_found not in windows_installationx86_audit.stderr and windows_installationx86_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-40179
+
+- name: "MEDIUM | V-40179 | AUDIT | Permissions for Windows installation directory must conform to minimum requirements."
+  win_shell: (Get-Acl -PATH 'C:\Program Files').Access.IdentityReference.Value
+  register: windows_installation_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in windows_installation_audit.stderr and windows_installation_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-40179
+
+- name: "MEDIUM | V-40179 | AUDIT | Permissions for Windows installation directory must conform to minimum requirements."
+  win_shell: (Get-Acl -PATH 'C:\Program Files (x86)').Access.IdentityReference.Value
+  register: windows_installationx86_audit
+  check_mode: no
+  changed_when: no
+  when: ansible_architecture == "64-bit"
+  failed_when: "path_not_found not in windows_installation_audit.stderr and windows_installation_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-40179
+
+###################### block start - conditionally apply patches if path exists #########################
+
+- block:
+
+   - name: "REMOVAL MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
+     win_acl_inheritance:
+        path: 'C:\Program Files'
+        state: 'absent'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-40179
+
+   - name: "REMOVAL MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
+     win_acl:
+        path: 'C:\Program Files'
+        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
+        rights: 'FullControl'
+        type: '{{ item[1] }}'
+        state: 'absent'
+     when: "not('TrustedInstaller' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
+     with_nested:
+         - "{{ windows_installation_audit.stdout_lines }}"
+         - [ allow, deny ]
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-40179
+
+   - name: "MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
+     win_acl:
+        path: 'C:\Program Files'
+        user: '{{ item.user }}'
+        rights: '{{ item.rights }}'
+        type: 'allow'
+        state: 'present'
+        inherit: '{{ item.inherit }}'
+        propagation: '{{ item.propagation }}'
+     with_items:
+         - user: 'NT SERVICE\TrustedInstaller'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit'
+           propagation: 'None'
+         - user: 'NT AUTHORITY\SYSTEM'
+           rights: 'Modify'
+           inherit: 'None'
+           propagation: 'None'
+         - user: 'NT AUTHORITY\SYSTEM'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit,ObjectInherit'
+           propagation: 'InheritOnly'
+         - user: 'BUILTIN\Administrators'
+           rights: 'Modify'
+           inherit: 'None'
+           propagation: 'None'
+         - user: 'BUILTIN\Administrators'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit,ObjectInherit'
+           propagation: 'InheritOnly'
+         - user: 'CREATOR OWNER'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit,ObjectInherit'
+           propagation: 'InheritOnly'
+         - user: 'ALL APPLICATION PACKAGES'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit,ObjectInherit'
+           propagation: 'None'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-40179
+
+  when: "path_not_found not in windows_installation_audit.stderr and windows_installation_audit"
+######################################### block end #####################################################
+
+###################### block start - conditionally apply patches if path exists #########################
+
+- block:
+
+   - name: "REMOVAL MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
+     win_acl_inheritance:
+        path: 'C:\Program Files (x86)'
+        state: 'absent'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-40179
+
+   - name: "REMOVAL MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
+     win_acl:
+        path: 'C:\Program Files (x86)'
+        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
+        rights: 'FullControl'
+        type: '{{ item[1] }}'
+        state: 'absent'
+     when: "not('TrustedInstaller' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
+     with_nested:
+         - "{{ windows_installationx86_audit.stdout_lines }}"
+         - [ allow, deny ]
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-40179
+
+   - name: "MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
+     win_acl:
+        path: 'C:\Program Files (x86)'
+        user: '{{ item.user }}'
+        rights: '{{ item.rights }}'
+        type: 'allow'
+        state: 'present'
+        inherit: '{{ item.inherit }}'
+        propagation: '{{ item.propagation }}'
+     with_items:
+         - user: 'NT SERVICE\TrustedInstaller'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit'
+           propagation: 'None'
+         - user: 'NT AUTHORITY\SYSTEM'
+           rights: 'Modify'
+           inherit: 'None'
+           propagation: 'None'
+         - user: 'NT AUTHORITY\SYSTEM'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit,ObjectInherit'
+           propagation: 'InheritOnly'
+         - user: 'BUILTIN\Administrators'
+           rights: 'Modify'
+           inherit: 'None'
+           propagation: 'None'
+         - user: 'BUILTIN\Administrators'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit,ObjectInherit'
+           propagation: 'InheritOnly'
+         - user: 'CREATOR OWNER'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit,ObjectInherit'
+           propagation: 'InheritOnly'
+         - user: 'ALL APPLICATION PACKAGES'
+           rights: 'FullControl'
+           inherit: 'ContainerInherit,ObjectInherit'
+           propagation: 'None'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-40179
+
+  when: "ansible_architecture == '64-bit' and path_not_found not in windows_installationx86_audit.stderr and windows_installationx86_audit"
+######################################### block end #####################################################
+
+   
