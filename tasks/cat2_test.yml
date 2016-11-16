@@ -2925,3 +2925,28 @@ me: "MEDIUM | V-16008 | AUDIT | Windows will elevate all applications in User Ac
       - V-26606
 
 
+- name: "MEDIUM | V-36439 | AUDIT | Local administrator accounts must have their privileged token filtered to prevent elevated privileges from being used over the network on domain systems."
+  win_command: reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v LocalAccountTokenFilterPolicy
+  register: token_filter_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "token_filter_audit.stderr and reg_not_found not in token_filter_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36439
+
+- name: "MEDIUM | V-36439 | PATCH | Local administrator accounts must have their privileged token filtered to prevent elevated privileges from being used over the network on domain systems."
+  win_regedit:
+      key: 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+      value: LocalAccountTokenFilterPolicy
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36439
+
+
