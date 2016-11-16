@@ -208,3 +208,87 @@
       - medium
       - patch
       - V-1150
+
+- name: "MEDIUM | V-1154 | AUDIT | The Ctrl+Alt+Del security attention sequence for logons will be enabled."
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System /v DisableCAD
+  register: disable_CAD_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in disable_CAD_audit.stderr and disable_CAD_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1154
+
+- name: "MEDIUM | V-1154 | PATCH | The Ctrl+Alt+Del security attention sequence for logons will be enabled."
+  win_regedit: 
+      key: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System'
+      value: DisableCAD
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1154
+
+- name: "MEDIUM | V-1162 | AUDIT | The Windows SMB server will perform SMB packet signing when possible."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\LanManServer\Parameters /v EnableSecuritySignature
+  register: SMB_server_packet_signing_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in SMB_server_packet_signing_audit.stderr and SMB_server_packet_signing_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1162
+
+- name: "MEDIUM | V-1163 | AUDIT | Outgoing secure channel traffic will be encrypted when possible."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\Netlogon\Parameters /v SealSecureChannel
+  register: encrypt_outgoing_secure_channel_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in encrypt_outgoing_secure_channel_audit.stderr and encrypt_outgoing_secure_channel_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1163
+
+- name: "MEDIUM | V-1163 | PATCH | Outgoing secure channel traffic will be encrypted when possible."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters'
+      value: SealSecureChannel
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1163
+
+- name: "MEDIUM | V-1164 | AUDIT | Outgoing secure channel traffic will be signed when possible."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\Netlogon\Parameters /v SignSecureChannel
+  register: sign_outgoing_secure_channel_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in sign_outgoing_secure_channel_audit.stderr and sign_outgoing_secure_channel_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1164
+
+- name: "MEDIUM | V-1164 | PATCH | Outgoing secure channel traffic will be signed when possible."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters'
+      value: SignSecureChannel
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1164
