@@ -692,3 +692,28 @@
       - patch
       - V-15719
 
+- name: "LOW | V-16005 | AUDIT | The system will be configured to remove the Disconnect option from the Shut Down Windows dialog box on the Remote Desktop Client. (Remote Desktop Services Role)"
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer /v NoDisconnect
+  register: no_disconnect_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in no_disconnect_audit.stderr and no_disconnect_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-16005
+
+- name: "LOW | V-16005 | PATCH | The system will be configured to remove the Disconnect option from the Shut Down Windows dialog box on the Remote Desktop Client. (Remote Desktop Services Role)"
+  win_regedit:
+      key: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
+      value: NoDisconnect
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-16005
+
+
