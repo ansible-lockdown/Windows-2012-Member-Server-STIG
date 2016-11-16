@@ -2078,6 +2078,17 @@
       - patch
       - V-21980
 
+- name: "MEDIUM | V-26529 | AUDIT | The system will be configured to audit 'Account Logon -> Credential Validation' successes."
+  win_shell: AuditPol /get /subcategory:"Credential Validation"
+  register: success_cred_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26529
+
 - name: "MEDIUM | V-26529 | PATCH | The system will be configured to audit 'Account Logon -> Credential Validation' successes."
   win_shell: AuditPol /set /subcategory:"Credential Validation" /success:enable
   when: "'Success' not in success_cred_audit.stdout"
