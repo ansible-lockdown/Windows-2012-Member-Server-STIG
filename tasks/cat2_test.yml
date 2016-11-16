@@ -2054,4 +2054,28 @@ me: "MEDIUM | V-16008 | AUDIT | Windows will elevate all applications in User Ac
       - patch
       - V-21954
 
+- name: "MEDIUM | V-21980 | AUDIT | Explorer Data Execution Prevention will be enabled."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\Explorer /v NoDataExecutionPrevention
+  register: DEP_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in DEP_audit.stderr and DEP_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-21980
+
+- name: "MEDIUM | V-21980 | PATCH | Explorer Data Execution Prevention will be enabled."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\Explorer'
+      value: NoDataExecutionPrevention
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-21980
+
 
