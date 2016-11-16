@@ -1313,4 +1313,52 @@ me: "MEDIUM | V-14259 | AUDIT | Printing over HTTP will be prevented."
       - patch
       - V-14269
 
+- name: "MEDIUM | V-15666 | AUDIT | Windows Peer-to-Peer networking services will be turned off."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Peernet /v Disabled
+  register: p2p_net_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in p2p_net_audit.stderr and p2p_net_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15666
+
+- name: "MEDIUM | V-15666 | PATCH | Windows Peer-to-Peer networking services will be turned off."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Peernet'
+      value: Disabled
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-15666
+
+- name: "MEDIUM | V-15667 | AUDIT | Network Bridges will be prohibited in Windows."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows\Network Connections\" /v NC_AllowNetBridge_NLA
+  register: network_bridge_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in network_bridge_audit.stderr and network_bridge_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15667
+
+- name: "MEDIUM | V-15667 | PATCH | Network Bridges will be prohibited in Windows."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\Network Connections'
+      value: NC_AllowNetBridge_NLA
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-15667
+
 
