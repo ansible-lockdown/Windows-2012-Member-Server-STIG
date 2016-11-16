@@ -3037,4 +3037,124 @@ me: "MEDIUM | V-16008 | AUDIT | Windows will elevate all applications in User Ac
       - patch
       - V-36668
 
+- name: "MEDIUM | V-36679 | AUDIT | Early Launch Antimalware, Boot-Start Driver Initialization Policy must be enabled and configured to only Good and Unknown."
+  win_command: reg query HKLM\System\CurrentControlSet\Policies\EarlyLaunch\ /v DriverLoadPolicy
+  register: early_initialization_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in early_initialization_audit.stderr and early_initialization_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36679
+
+- name: "MEDIUM | V-36679 | PATCH | Early Launch Antimalware, Boot-Start Driver Initialization Policy must be enabled and configured to only Good and Unknown."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Policies\EarlyLaunch\'
+      value: DriverLoadPolicy
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36679
+
+- name: "MEDIUM | V-36680 | AUDIT | Access to the Windows Store must be turned off."
+  win_command: reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer\ /v NoUseStoreOpenWith
+  register: windows_store_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in windows_store_audit.stderr and windows_store_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36680
+
+- name: "MEDIUM | V-36680 | PATCH | Access to the Windows Store must be turned off."
+  win_regedit:
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer\'
+      value: NoUseStoreOpenWith
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36680
+
+- name: "MEDIUM | V-36681 | AUDIT | Copying of user input methods to the system account for sign-in must be prevented."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Control Panel\International\" /v BlockUserInputMethodsForSignIn
+  register: copy_user_system_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in copy_user_system_audit.stderr and copy_user_system_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36681
+
+- name: "MEDIUM | V-36681 | PATCH | Copying of user input methods to the system account for sign-in must be prevented."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Control Panel\International\'
+      value: BlockUserInputMethodsForSignIn
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36681
+
+- name: "MEDIUM | V-36684 | AUDIT | Local users on domain-joined computers must not be enumerated."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\System\ /v EnumerateLocalUsers
+  register: local_domain_joined_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in local_domain_joined_audit.stderr and local_domain_joined_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36684
+
+- name: "MEDIUM | V-36684 | PATCH | Local users on domain-joined computers must not be enumerated."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\System\'
+      value: EnumerateLocalUsers
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36684
+
+- name: "MEDIUM | V-36687 | AUDIT | App notifications on the lock screen must be turned off."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\System\ /v DisableLockScreenAppNotifications
+  register: app_notifications_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in app_notifications_audit.stderr and app_notifications_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36687
+
+- name: "MEDIUM | V-36687 | PATCH | App notifications on the lock screen must be turned off."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\System\'
+      value: DisableLockScreenAppNotifications
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36687
+
 
