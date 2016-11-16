@@ -819,3 +819,75 @@
       - medium
       - patch
       - V-3666
+
+- name: "MEDIUM | V-4446 | AUDIT | Software certificate restriction policies will be enforced."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\Safer\CodeIdentifiers /v AuthenticodeEnabled
+  register: software_restricition_policies_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in software_restricition_policies_audit.stderr and software_restricition_policies_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-4446
+
+- name: "MEDIUM | V-4446 | PATCH | Software certificate restriction policies will be enforced."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\Safer\CodeIdentifiers'
+      value: AuthenticodeEnabled
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-4446
+
+- name: "MEDIUM | V-4447 | AUDIT | The Remote Desktop Session Host will require secure RPC communications."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v fEncryptRPCTraffic
+  register: encrypt_RPC_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in encrypt_RPC_audit.stderr and encrypt_RPC_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-4447
+
+- name: "MEDIUM | V-4447 | PATCH | The Remote Desktop Session Host will require secure RPC communications."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+      value: fEncryptRPCTraffic
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-4447
+
+- name: "MEDIUM | V-4448 | AUDIT | Group Policy objects will be reprocessed even if they have not changed."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}\" /v NoGPOListChanges
+  register: reprocess_GPO_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in reprocess_GPO_audit.stderr and reprocess_GPO_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-4448
+
+- name: "MEDIUM | V-4448 | PATCH | Group Policy objects will be reprocessed even if they have not changed."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}'
+      value: NoGPOListChanges
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-4448
