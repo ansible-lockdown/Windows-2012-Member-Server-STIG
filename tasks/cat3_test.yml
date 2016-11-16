@@ -1,9 +1,33 @@
+- name: "LOW | V-1075 | AUDIT | The shutdown option will not be available from the logon dialog box."
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System /v ShutdownWithoutLogon
+  register: shutdown_button_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in shutdown_button_audit.stderr and shutdown_button_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-1075
+
+- name: "LOW | V-1075 | PATCH | The shutdown option will not be available from the logon dialog box."
+  win_regedit:
+      key: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System'
+      value: ShutdownWithoutLogon
+      data: 0
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-1075
+
 - name: "LOW | V-1090 | AUDIT | Caching of logon credentials must be limited."
   win_command: reg query \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\" /v CachedLogonsCount
   register: cached_logons_audit
   check_mode: no
   changed_when: no
-  ignore_errors: yes
+  failed_when: "reg_not_found not in cached_logons_audit.stderr and cached_logons_audit.stderr"
   tags:
       - cat3
       - low
@@ -12,12 +36,48 @@
 
 - name: "LOW | V-1090 | PATCH | Caching of logon credentials must be limited."
   win_regedit:
-    key: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
-    value: CachedLogonsCount
-    data: 0
+      key: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
+      value: CachedLogonsCount
+      data: 0
   tags:
       - cat3
       - low
       - patch
       - V-1090
+
+- name: "LOW | V-1112 | AUDIT | Outdated or unused accounts must be removed from the system or disabled."
+  win_shell: Search-ADAccount -AccountInactive -UsersOnly -TimeSpan 30.00:00:00
+  register: outdated_accounts_audit
+  check_mode: no
+  changed_when: no
+  ignore_errors: yes
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-1112
+
+- name: "LOW | V-1151 | AUDIT | The print driver installation privilege will be restricted to administrators."
+  win_command: reg query \"HKLM\System\CurrentControlSet\Control\Print\Providers\LanMan Print Services\Servers\" /v AddPrinterDrivers
+  register: add_printer_driver_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in add_printer_driver_audit.stderr and add_printer_driver_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-1151
+
+- name: "LOW | V-1151 | PATCH | The print driver installation privilege will be restricted to administrators."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Print\Providers\LanMan Print Services\Servers'
+      value: AddPrinterDrivers
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-1151
 
