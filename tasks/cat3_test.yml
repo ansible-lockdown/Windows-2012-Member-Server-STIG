@@ -1256,3 +1256,26 @@
       - patch
       - V-36776
 
+- name: "LOW | V-43241 | AUDIT | The setting to allow Microsoft accounts to be optional for modern style apps must be enabled (Windows 2012 R2)."
+  win_command: reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v MSAOptional
+  register: modern_style_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in modern_style_audit.stderr and modern_style_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-43241
+
+- name: "LOW | V-43241 | PATCH | The setting to allow Microsoft accounts to be optional for modern style apps must be enabled (Windows 2012 R2)."
+  win_regedit:
+      key: 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+      value: MSAOptional
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-43241
