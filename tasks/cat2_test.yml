@@ -1193,7 +1193,7 @@
       - patch
       - V-14254
 
-me: "MEDIUM | V-14259 | AUDIT | Printing over HTTP will be prevented."
+- name: "MEDIUM | V-14259 | AUDIT | Printing over HTTP will be prevented."
   win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Printers\" /v DisableHTTPPrinting
   register: disable_HTTP_printing_audit
   check_mode: no
