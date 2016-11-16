@@ -303,3 +303,28 @@
       - medium
       - audit
       - V-1166
+
+- name: "MEDIUM | V-1171 | AUDIT | Ejection of removable NTFS media is not restricted to Administrators."
+  win_command: reg query \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\" /v AllocateDASD
+  register: eject_removable_media_audit
+  check_mode: no
+  changed_when: no
+  ignore_errors: yes
+  failed_when: "reg_not_found not in eject_removable_media_audit.stderr and eject_removable_media_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1171
+
+- name: "MEDIUM | V-1171 | PATCH | Ejection of removable NTFS media is not restricted to Administrators."
+  win_regedit:
+      key: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
+      value: AllocateDASD
+      data: 0
+  ignore_errors: yes
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1171
