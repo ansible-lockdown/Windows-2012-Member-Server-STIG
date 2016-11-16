@@ -716,4 +716,255 @@
       - patch
       - V-16005
 
+- name: "LOW | V-21955 | AUDIT | IPv6 source routing will be configured to highest protection."
+  win_command: reg query HKLM\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters /v DisableIPSourceRouting
+  register: IPv6_source_routing_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in IPv6_source_routing_audit.stderr and IPv6_source_routing_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-21955
+
+- name: "LOW | V-21955 | PATCH | IPv6 source routing will be configured to highest protection."
+  win_regedit:
+      key: 'HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters'
+      value: DisableIPSourceRouting
+      data: 2
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-21955
+
+- name: "LOW | V-21956 | AUDIT | IPv6 TCP data retransmissions must be configured to prevent resources from becoming exhausted."
+  win_command: reg query HKLM\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters /v TcpMaxDataRetransmissions
+  register: IPv6_retransmit_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in IPv6_retransmit_audit.stderr and IPv6_retransmit_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-21956
+
+- name: "LOW | V-21956 | PATCH | IPv6 TCP data retransmissions must be configured to prevent resources from becoming exhausted."
+  win_regedit:
+      key: 'HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters'
+      value: TcpMaxDataRetransmissions
+      data: 3
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-21956
+
+- name: "LOW | V-21960 | AUDIT | Domain users will be required to elevate when setting a network's location."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows\Network Connections\" /v NC_StdDomainUserSetLocation
+  register: elevate_setting_network_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in elevate_setting_network_audit.stderr and elevate_setting_network_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-21960
+
+- name: "LOW | V-21960 | PATCH | Domain users will be required to elevate when setting a network's location."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\Network Connections'
+      value: NC_StdDomainUserSetLocation
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-21960
+
+- name: "LOW | V-21961 | AUDIT | All Direct Access traffic will be routed through the internal network."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\TCPIP\v6Transition /v Force_Tunneling
+  register: force_tunneling_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in force_tunneling_audit.stderr and force_tunneling_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-21961
+
+- name: "LOW | V-21963 | AUDIT | Windows Update will be prevented from searching for point and print drivers."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Printers\" /v DoNotInstallCompatibleDriverFromWindowsUpdate
+  register: windows_update_search_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in windows_update_search_audit.stderr and windows_update_search_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-21963
+
+- name: "LOW | V-21963 | PATCH | Windows Update will be prevented from searching for point and print drivers."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Printers'
+      value: DoNotInstallCompatibleDriverFromWindowsUpdate
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-21963
+
+- name: "LOW | V-21964 | AUDIT | Device metadata retrieval from the Internet must be prevented."
+  win_command: reg query \"HKLM\SOFTWARE\Policies\Microsoft\Windows\Device Metadata\" /v PreventDeviceMetadataFromNetwork
+  register: device_metadata_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in device_metadata_audit.stderr and device_metadata_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-21964
+
+- name: "LOW | V-21964 | PATCH | Device metadata retrieval from the Internet must be prevented."
+  win_regedit:
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata'
+      value: PreventDeviceMetadataFromNetwork
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-21964
+
+- name: "LOW | V-21965 | AUDIT | Device driver searches using Windows Update will be prevented."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\DriverSearching /v SearchOrderConfig
+  register: windows_update_device_driver_search_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in windows_update_device_driver_search_audit.stderr and windows_update_device_driver_search_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-21965
+
+- name: "LOW | V-21965 | PATCH | Device driver searches using Windows Update will be prevented."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\DriverSearching'
+      value: SearchOrderConfig
+      data: 0
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-21965
+
+- name: "LOW | V-21967 | AUDIT | Microsoft Support Diagnostic Tool (MSDT) interactive communication with Microsoft will be prevented."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\ScriptedDiagnosticsProvider\Policy /v DisableQueryRemoteServer
+  register: MSDT_communication_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in MSDT_communication_audit.stderr and MSDT_communication_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-21967
+
+- name: "LOW | V-21967 | PATCH | Microsoft Support Diagnostic Tool (MSDT) interactive communication with Microsoft will be prevented."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\ScriptedDiagnosticsProvider\Policy'
+      value: DisableQueryRemoteServer
+      data: 0
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-21967
+
+- name: "LOW | V-21969 | AUDIT | Access to Windows Online Troubleshooting Service (WOTS) will be prevented."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\ScriptedDiagnosticsProvider\Policy /v EnableQueryRemoteServer
+  register: WOTS_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in WOTS_audit.stderr and WOTS_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-21969
+
+- name: "LOW | V-21969 | PATCH | Access to Windows Online Troubleshooting Service (WOTS) will be prevented."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\ScriptedDiagnosticsProvider\Policy'
+      value: EnableQueryRemoteServer
+      data: 0
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-21969
+
+- name: "LOW | V-21970 | AUDIT | Responsiveness events will be prevented from being aggregated and sent to Microsoft."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\WDI\{9c5a40da-b965-4fc3-8781-88dd50a6299d} /v ScenarioExecutionEnabled
+  register: WOTS_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in WOTS_audit.stderr and WOTS_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-21970
+
+- name: "LOW | V-21970 | PATCH | Responsiveness events will be prevented from being aggregated and sent to Microsoft."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\WDI\{9c5a40da-b965-4fc3-8781-88dd50a6299d}'
+      value: ScenarioExecutionEnabled
+      data: 0
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-21970
+
+- name: "LOW | V-21971 | AUDIT | The Application Compatibility Program Inventory will be prevented from collecting data and sending the information to Microsoft."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\AppCompat /v DisableInventory
+  register: ACPI_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in ACPI_audit.stderr and ACPI_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-21971
+
+- name: "LOW | V-21971 | PATCH | The Application Compatibility Program Inventory will be prevented from collecting data and sending the information to Microsoft."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\AppCompat'
+      value: DisableInventory
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-21971
 
