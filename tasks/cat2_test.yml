@@ -532,3 +532,183 @@
       - medium
       - patch
       - V-3449
+
+- name: "MEDIUM | V-3453 | AUDIT | Remote Desktop Services will always prompt a client for passwords upon connection."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v fPromptForPassword
+  register: rdp_password_prompt_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in rdp_password_prompt_audit.stderr and rdp_password_prompt_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3453
+
+- name: "MEDIUM | V-3453 | PATCH | Remote Desktop Services will always prompt a client for passwords upon connection."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+      value: fPromptForPassword
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3453
+
+- name: "MEDIUM | V-3454 | AUDIT | Remote Desktop Services will be configured with the client connection encryption set to the required level."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v MinEncryptionLevel
+  register: min_encrypt_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in min_encrypt_audit.stderr and min_encrypt_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3454
+
+- name: "MEDIUM | V-3455 | AUDIT | Remote Desktop Services will be configured to use session-specific temporary folders."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v PerSessionTempDir
+  register: temp_folder_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in temp_folder_audit.stderr and temp_folder_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3455
+
+- name: "MEDIUM | V-3455 | PATCH | Remote Desktop Services will be configured to use session-specific temporary folders."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+      value: PerSessionTempDir
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3455
+
+- name: "MEDIUM | V-3456 | AUDIT | Remote Desktop Services will delete temporary folders when a session is terminated."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v DeleteTempDirsOnExit
+  register: delete_temp_folder_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in delete_temp_folder_audit.stderr and delete_temp_folder_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3456
+
+- name: "MEDIUM | V-3456 | PATCH | Remote Desktop Services will delete temporary folders when a session is terminated."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+      value: DeleteTempDirsOnExit
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3456
+
+- name: "MEDIUM | V-3457 | AUDIT | Remote Desktop Services will be configured to set a time limit for disconnected sessions."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v MaxDisconnectionTime
+  register: max_disconnection_time_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in max_disconnection_time_audit.stderr and max_disconnection_time_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3457
+
+- name: "MEDIUM | V-3457 | PATCH | Remote Desktop Services will be configured to set a time limit for disconnected sessions."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+      value: MaxDisconnectionTime
+      data: 0x0000ea60
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3457
+
+- name: "MEDIUM | V-3458 | AUDIT | Remote Desktop Services will be configured to disconnect an idle session after the specified time period."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v MaxIdleTime
+  register: max_idle_time_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in max_idle_time_audit.stderr and max_idle_time_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3458
+
+- name: "MEDIUM | V-3458 | PATCH | Remote Desktop Services will be configured to disconnect an idle session after the specified time period."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+      value: MaxIdleTime
+      data: 0x000dbba0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3458
+
+- name: "MEDIUM | V-3469 | AUDIT | The system will be configured to enable the background refresh of Group Policy."
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\system /v DisableBkGndGroupPolicy
+  register: background_group_policy_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in background_group_policy_audit.stderr and background_group_policy_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3469
+
+- name: "MEDIUM | V-3469 | PATCH | The system will be configured to enable the background refresh of Group Policy."
+  win_regedit:
+      key: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\system'
+      value: DisableBkGndGroupPolicy
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3469
+
+- name: "MEDIUM | V-3470 | AUDIT | The system will be configured to prevent unsolicited remote assistance offers."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v fAllowUnsolicited
+  register: unsolicited_remote_assistance_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in unsolicited_remote_assistance_audit.stderr and unsolicited_remote_assistance_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3470
+
+- name: "MEDIUM | V-3470 | PATCH | The system will be configured to prevent unsolicited remote assistance offers."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+      value: fAllowUnsolicited
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3470
