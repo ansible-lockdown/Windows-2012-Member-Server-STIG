@@ -1874,4 +1874,87 @@ me: "MEDIUM | V-14259 | AUDIT | Printing over HTTP will be prevented."
       - patch
       - V-16000
 
+me: "MEDIUM | V-16008 | AUDIT | Windows will elevate all applications in User Account Control, not just signed ones."
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System /v ValidateAdminCodeSignatures
+  register: elevate_all_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in elevate_all_audit.stderr and elevate_all_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-16008
+
+- name: "MEDIUM | V-16020 | AUDIT | The Windows Customer Experience Improvement Program will be disabled."
+  win_command: reg query HKLM\Software\Policies\Microsoft\SQMClient\Windows /v CEIPEnable
+  register: CEIP_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in CEIP_audit.stderr and CEIP_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-16020
+
+- name: "MEDIUM | V-16020 | PATCH | The Windows Customer Experience Improvement Program will be disabled."
+  win_regedit:
+    key: 'HKLM:\Software\Policies\Microsoft\SQMClient\Windows'
+    value: CEIPEnable
+    data: 0
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-16020
+
+- name: "MEDIUM | V-16021 | AUDIT | The Windows Help Experience Improvement Program will be disabled"
+  win_command: reg query HKCU\Software\Policies\Microsoft\Assistance\Client\1.0 /v NoImplicitFeedback
+  register: WHEIP_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in WHEIP_audit.stderr and WHEIP_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-16021
+
+- name: "MEDIUM | V-16021 | PATCH | The Windows Help Experience Improvement Program will be disabled"
+  win_regedit:
+    key: 'HKCU:\Software\Policies\Microsoft\Assistance\Client\1.0'
+    value: NoImplicitFeedback
+    data: 1
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-16021
+
+- name: "MEDIUM | V-16048 | AUDIT | Windows Help Ratings feedback will be turned off."
+  win_command: reg query HKCU\Software\Policies\Microsoft\Assistance\Client\1.0 /v NoExplicitFeedback
+  register: help_ratings_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in help_ratings_audit.stderr and help_ratings_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-16048
+
+- name: "MEDIUM | V-16048 | PATCH | Windows Help Ratings feedback will be turned off."
+  win_regedit:
+    key: 'HKCU:\Software\Policies\Microsoft\Assistance\Client\1.0'
+    value: NoExplicitFeedback
+    data: 1
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-16048
 
