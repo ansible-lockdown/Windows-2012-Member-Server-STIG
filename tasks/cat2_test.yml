@@ -1874,7 +1874,7 @@
       - patch
       - V-16000
 
-me: "MEDIUM | V-16008 | AUDIT | Windows will elevate all applications in User Account Control, not just signed ones."
+- name: "MEDIUM | V-16008 | AUDIT | Windows will elevate all applications in User Account Control, not just signed ones."
   win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System /v ValidateAdminCodeSignatures
   register: elevate_all_audit
   check_mode: no
@@ -3157,7 +3157,7 @@ me: "MEDIUM | V-16008 | AUDIT | Windows will elevate all applications in User Ac
       - patch
       - V-36687
 
-me: "MEDIUM | V-36698 | AUDIT | The use of biometrics must be disabled."
+- name: "MEDIUM | V-36698 | AUDIT | The use of biometrics must be disabled."
   win_command: reg query HKLM\SOFTWARE\Policies\Microsoft\Biometrics\ /v Enabled
   register: biometrics_audit
   check_mode: no
@@ -4169,7 +4169,7 @@ me: "MEDIUM | V-36698 | AUDIT | The use of biometrics must be disabled."
       - patch
       - V-40202
 
-me: "MEDIUM | V-43238 | AUDIT | The display of slide shows on the lock screen must be disabled (Windows 2012 R2)."
+- name: "MEDIUM | V-43238 | AUDIT | The display of slide shows on the lock screen must be disabled (Windows 2012 R2)."
   win_command: reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization\ /v NoLockScreenSlideshow
   register: display_lock_audit
   check_mode: no
