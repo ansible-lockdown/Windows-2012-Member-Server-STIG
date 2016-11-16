@@ -1958,3 +1958,100 @@ me: "MEDIUM | V-16008 | AUDIT | Windows will elevate all applications in User Ac
       - patch
       - V-16048
 
+- name: "MEDIUM | V-21950 | AUDIT | The service principal name (SPN) target name validation level will be turned off."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters /v SmbServerNameHardeningLevel
+  register: SMB_server_name_level_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in SMB_server_name_level_audit.stderr and SMB_server_name_level_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-21950
+
+- name: "MEDIUM | V-21951 | AUDIT | Services using Local System that use negotiate when reverting to NTLM authentication will use the computer identity vs. authenticating anonymously."
+  win_command: reg query HKLM\System\CurrentControlSet\Control\LSA /v UseMachineId
+  register: use_machine_ID_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in use_machine_ID_audit.stderr and use_machine_ID_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-21951
+
+- name: "MEDIUM | V-21952 | AUDIT | NTLM will be prevented from falling back to a Null session."
+  win_command: reg query HKLM\System\CurrentControlSet\Control\LSA\MSV1_0 /v allownullsessionfallback
+  register: null_session_fallback_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in null_session_fallback_audit.stderr and null_session_fallback_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-21952
+
+- name: "MEDIUM | V-21952 | PATCH | NTLM will be prevented from falling back to a Null session."
+  win_regedit:
+    key: 'HKLM:\System\CurrentControlSet\Control\LSA\MSV1_0'
+    value: allownullsessionfallback
+    data: 0
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-21952
+
+- name: "MEDIUM | V-21953 | AUDIT | PKU2U authentication using online identities will be prevented."
+  win_command: reg query HKLM\System\CurrentControlSet\Control\LSA\pku2u /v AllowOnlineID
+  register: online_ID_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in online_ID_audit.stderr and online_ID_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-21953
+
+- name: "MEDIUM | V-21953 | PATCH | PKU2U authentication using online identities will be prevented."
+  win_regedit:
+    key: 'HKLM:\System\CurrentControlSet\Control\LSA\pku2u'
+    value: AllowOnlineID
+    data: 0
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-21953
+
+- name: "MEDIUM | V-21954 | AUDIT | Kerberos encryption types must be configured to prevent the use of DES encryption suites."
+  win_command: reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters /v SupportedEncryptionTypes
+  register: kerberos_encryption_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in kerberos_encryption_audit.stderr and kerberos_encryption_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-21954
+
+- name: "MEDIUM | V-21954 | PATCH | Kerberos encryption types must be configured to prevent the use of DES encryption suites."
+  win_regedit:
+    key: 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters'
+    value: SupportedEncryptionTypes
+    data: 0x7ffffffc
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-21954
+
+
