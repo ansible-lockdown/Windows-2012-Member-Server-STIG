@@ -1621,4 +1621,75 @@ me: "MEDIUM | V-14259 | AUDIT | Printing over HTTP will be prevented."
       - patch
       - V-15706
 
+- name: "MEDIUM | V-15713 | AUDIT | Windows Defender SpyNet membership will be disabled."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows Defender\Spynet\" /v SpyNetReporting
+  register: disable_spynet_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in disable_spynet_audit.stderr and disable_spynet_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15713
+
+- name: "MEDIUM | V-15713 | PATCH | Windows Defender SpyNet membership will be disabled."
+  win_regedit:
+    key: 'HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet'
+    value: SpyNetReporting
+    state: absent
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-15713
+
+- name: "MEDIUM | V-15714 | AUDIT | The system must be configured to save Error Reporting events and messages to the system event log."
+  win_command: reg query \"HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting\" /v LoggingDisabled
+  register: save_error_logging_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in save_error_logging_audit.stderr and save_error_logging_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15714
+
+- name: "MEDIUM | V-15714 | PATCH | The system must be configured to save Error Reporting events and messages to the system event log."
+  win_regedit:
+    key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting'
+    value: LoggingDisabled
+    data: 0
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-15714
+
+- name: "MEDIUM | V-15715 | AUDIT | The system must be configured to generate error reports."
+  win_command: reg query \"HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting\" /v Disabled
+  register: enable_error_logging_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in enable_error_logging_audit.stderr and enable_error_logging_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15715
+
+- name: "MEDIUM | V-15715 | PATCH | The system must be configured to generate error reports."
+  win_regedit:
+    key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting'
+    value: Disabled
+    data: 0
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-15715
+
 
