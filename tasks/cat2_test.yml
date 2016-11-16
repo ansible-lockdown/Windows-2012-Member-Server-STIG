@@ -3277,4 +3277,330 @@ me: "MEDIUM | V-36698 | AUDIT | The use of biometrics must be disabled."
       - patch
       - V-36711
 
+- name: "MEDIUM | V-36713 | AUDIT | The Windows Remote Management (WinRM) client must not allow unencrypted traffic."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\WinRM\Client\ /v AllowUnencryptedTraffic
+  register: winrm_unencrypted_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in winrm_unencrypted_audit.stderr and winrm_unencrypted_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36713
+
+- name: "MEDIUM | V-36713 | PATCH | The Windows Remote Management (WinRM) client must not allow unencrypted traffic."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client\'
+      value: AllowUnencryptedTraffic
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36713
+
+- name: "MEDIUM | V-36714 | AUDIT | The Windows Remote Management (WinRM) client must not use Digest authentication."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\WinRM\Client\ /v AllowDigest
+  register: winrm_digest_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in winrm_digest_audit.stderr and winrm_digest_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36714
+
+- name: "MEDIUM | V-36714 | PATCH | The Windows Remote Management (WinRM) client must not use Digest authentication."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client\'
+      value: AllowDigest
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36714
+
+- name: "MEDIUM | V-36719 | AUDIT | The Windows Remote Management (WinRM) service must not allow unencrypted traffic."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\WinRM\Service\ /v AllowUnencryptedTraffic
+  register: winrm_unencrypted_traffic_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in winrm_unencrypted_traffic_audit.stderr and winrm_unencrypted_traffic_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36719
+
+- name: "MEDIUM | V-36719 | PATCH | The Windows Remote Management (WinRM) service must not allow unencrypted traffic."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service\'
+      value: AllowUnencryptedTraffic
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36719
+
+- name: "MEDIUM | V-36720 | AUDIT | The Windows Remote Management (WinRM) service must not store RunAs credentials."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\WinRM\Service\ /v DisableRunAs
+  register: winrm_store_runas_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in winrm_store_runas_audit.stderr and winrm_store_runas_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36720
+
+- name: "MEDIUM | V-36720 | PATCH | The Windows Remote Management (WinRM) service must not store RunAs credentials."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service\'
+      value: DisableRunAs
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36720
+
+- name: "MEDIUM | V-36722 | AUDIT | Permissions for the Application event log must prevent access by nonprivileged accounts."
+  win_shell: Get-Acl -PATH 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx' | Format-List
+  register: eventlog_permissions_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in eventlog_permissions_audit.stderr and eventlog_permissions_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36722
+
+- name: "MEDIUM | V-36722 | AUDIT | Permissions for the Application event log must prevent access by nonprivileged accounts."
+  win_shell: (Get-Acl -PATH 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx').Access.IdentityReference.Value
+  register: eventlog_permissions_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in eventlog_permissions_audit.stderr and eventlog_permissions_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36722
+
+###################### block start - conditionally apply patches if path exists #########################
+
+- block:
+
+   - name: "REMOVAL MEDIUM | V-36722 | PATCH | Permissions for the Application event log must prevent access by nonprivileged accounts."
+     win_acl_inheritance:
+        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
+        state: 'absent'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-36722
+
+   - name: "REMOVAL MEDIUM | V-36722 | PATCH | Permissions for the Application event log must prevent access by nonprivileged accounts."
+     win_acl:
+        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
+        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
+        rights: 'FullControl'
+        type: '{{ item[1] }}'
+        state: 'absent'
+     when: "not('EventLog' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
+     with_nested:
+         - "{{ eventlog_permissions_audit.stdout_lines }}"
+         - [ allow, deny ]
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-36722
+
+   - name: "MEDIUM | V-36722 | PATCH | Permissions for the Application event log must prevent access by nonprivileged accounts."
+     win_acl:
+        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
+        user: '{{ item }}'
+        rights: 'FullControl'
+        type: 'allow'
+        state: 'present'
+        inherit: 'ContainerInherit, ObjectInherit'
+        propagation: 'None'
+     with_items:
+         - 'NT SERVICE\EventLog'
+         - 'NT AUTHORITY\SYSTEM'
+         - 'BUILTIN\Administrators'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-36722
+
+  when: "path_not_found not in eventlog_permissions_audit.stderr and eventlog_permissions_audit"
+######################################### block end #####################################################
+
+- name: "MEDIUM | V-36723 | AUDIT | Permissions for the Security event log must prevent access by nonprivileged accounts."
+  win_shell: Get-Acl -PATH 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx' | Format-List
+  register: security_evtx_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in security_evtx_audit.stderr and security_evtx_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36723
+
+- name: "MEDIUM | V-36723 | AUDIT | Permissions for the Security event log must prevent access by nonprivileged accounts."
+  win_shell: (Get-Acl -PATH 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx').Access.IdentityReference.Value
+  register: security_evtx_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in security_evtx_audit.stderr and security_evtx_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36723
+
+###################### block start - conditionally apply patches if path exists #########################
+
+- block:
+
+   - name: "REMOVAL MEDIUM | V-36723 | PATCH | Permissions for the Security event log must prevent access by nonprivileged accounts."
+     win_acl_inheritance:
+        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
+        state: 'absent'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-36723
+
+   - name: "REMOVAL MEDIUM | V-36723 | PATCH | Permissions for the Security event log must prevent access by nonprivileged accounts."
+     win_acl:
+        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
+        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
+        rights: 'FullControl'
+        type: '{{ item[1] }}'
+        state: 'absent'
+     when: "not('EventLog' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
+     with_nested:
+         - "{{ security_evtx_audit.stdout_lines }}"
+         - [ allow, deny ]
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-36723
+
+   - name: "MEDIUM | V-36723 | PATCH | Permissions for the Security event log must prevent access by nonprivileged accounts."
+     win_acl:
+        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
+        user: '{{ item }}'
+        rights: 'FullControl'
+        type: 'allow'
+        state: 'present'
+        inherit: 'ContainerInherit, ObjectInherit'
+        propagation: 'None'
+     with_items:
+         - 'NT SERVICE\Eventlog'
+         - 'NT AUTHORITY\SYSTEM'
+         - 'BUILTIN\Administrators'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-36723
+  when: "path_not_found not in security_evtx_audit.stderr and security_evtx_audit"
+######################################### block end #####################################################
+
+- name: "MEDIUM | V-36724 | AUDIT | Permissions for the System event log must prevent access by nonprivileged accounts."
+  win_shell: Get-Acl -PATH 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx' | Format-List
+  register: system_evtx_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in system_evtx_audit.stderr and system_evtx_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36724
+
+- name: "MEDIUM | V-36724 | AUDIT | Permissions for the System event log must prevent access by nonprivileged accounts."
+  win_shell: (Get-Acl -PATH 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx').Access.IdentityReference.Value 
+  register: system_evtx_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_not_found not in system_evtx_audit.stderr and system_evtx_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36724
+
+###################### block start - conditionally apply patches if path exists #########################
+
+- block:
+
+   - name: "REMOVAL MEDIUM | V-36724 | PATCH | Permissions for the System event log must prevent access by nonprivileged accounts."
+     win_acl_inheritance:
+        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
+        state: 'absent'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-36724
+
+   - name: "REMOVAL MEDIUM | V-36724 | PATCH | Permissions for the System event log must prevent access by nonprivileged accounts."
+     win_acl:
+        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
+        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
+        rights: 'FullControl'
+        type: '{{ item[1] }}'
+        state: 'absent'
+     when: "not('EventLog' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
+     with_nested:
+         - "{{ system_evtx_audit.stdout_lines }}"
+         - [ allow, deny ]
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-36724
+
+   - name: "MEDIUM | V-36724 | PATCH | Permissions for the System event log must prevent access by nonprivileged accounts."
+     win_acl:
+        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
+        user: '{{ item }}'
+        rights: 'FullControl'
+        type: 'allow'
+        state: 'present'
+        inherit: 'ContainerInherit, ObjectInherit'
+        propagation: 'None'
+     with_items:
+         - 'NT SERVICE\EventLog'
+         - 'NT AUTHORITY\SYSTEM'
+         - 'BUILTIN\Administrators'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-36724
+
+  when: "path_not_found not in system_evtx_audit.stderr and system_evtx_audit"
+######################################### block end #####################################################
+
 
