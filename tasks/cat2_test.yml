@@ -3157,4 +3157,124 @@ me: "MEDIUM | V-16008 | AUDIT | Windows will elevate all applications in User Ac
       - patch
       - V-36687
 
+me: "MEDIUM | V-36698 | AUDIT | The use of biometrics must be disabled."
+  win_command: reg query HKLM\SOFTWARE\Policies\Microsoft\Biometrics\ /v Enabled
+  register: biometrics_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in biometrics_audit.stderr and biometrics_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36698
+
+- name: "MEDIUM | V-36698 | PATCH | The use of biometrics must be disabled."
+  win_regedit:
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Biometrics\'
+      value: Enabled
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36698
+
+- name: "MEDIUM | V-36700 | AUDIT | The password reveal button must not be displayed."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\CredUI\ /v DisablePasswordReveal
+  register: password_reveal_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in password_reveal_audit.stderr and password_reveal_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36700
+
+- name: "MEDIUM | V-36700 | PATCH | The password reveal button must not be displayed."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\CredUI\'
+      value: DisablePasswordReveal
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36700
+
+- name: "MEDIUM | V-36708 | AUDIT | The location feature must be turned off."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\LocationAndSensors\ /v DisableLocation
+  register: location_feature_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in location_feature_audit.stderr and location_feature_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36708
+
+- name: "MEDIUM | V-36708 | PATCH | The location feature must be turned off."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\LocationAndSensors\'
+      value: DisableLocation
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36708
+
+- name: "MEDIUM | V-36709 | AUDIT | Basic authentication for RSS feeds over HTTP must be turned off."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Internet Explorer\Feeds\" /v AllowBasicAuthInClear
+  register: authentication_rss_http_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in authentication_rss_http_audit.stderr and authentication_rss_http_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36709
+
+- name: "MEDIUM | V-36709 | PATCH | Basic authentication for RSS feeds over HTTP must be turned off."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Internet Explorer\Feeds\'
+      value: AllowBasicAuthInClear
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36709
+
+- name: "MEDIUM | V-36711 | AUDIT | The Windows Store application must be turned off."
+  win_command: reg query HKLM\SOFTWARE\Policies\Microsoft\WindowsStore\ /v RemoveWindowsStore
+  register: windows_store_app_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in windows_store_app_audit.stderr and windows_store_app_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36711
+
+- name: "MEDIUM | V-36711 | PATCH | The Windows Store application must be turned off."
+  win_regedit:
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\WindowsStore\'
+      value: RemoveWindowsStore
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36711
+
 
