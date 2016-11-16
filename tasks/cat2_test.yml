@@ -2949,4 +2949,92 @@ me: "MEDIUM | V-16008 | AUDIT | Windows will elevate all applications in User Ac
       - patch
       - V-36439
 
+- name: "MEDIUM | V-36656 | AUDIT | A screen saver must be enabled on the system."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows\Control Panel\Desktop\" /v ScreenSaveActive
+  register: screen_saver_enabled_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in screen_saver_enabled_audit.stderr and screen_saver_enabled_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36656
+
+- name: "MEDIUM | V-36656 | PATCH | A screen saver must be enabled on the system."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\Control Panel\Desktop\'
+      value: ScreenSaveActive
+      data: 1
+      datatype: string
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36656
+
+- name: "MEDIUM | V-36657 | AUDIT | The screen saver must be password protected."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows\Control Panel\Desktop\" /v ScreenSaverIsSecure
+  register: screen_saver_secure_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in screen_saver_secure_audit.stderr and screen_saver_secure_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36657
+
+- name: "MEDIUM | V-36657 | PATCH | The screen saver must be password protected."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\Control Panel\Desktop\'
+      value: ScreenSaverIsSecure
+      data: 1
+      datatype: string
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36657
+
+- name: "MEDIUM | V-36667 | AUDIT | The system must be configured to audit Object Access - Removable Storage failures."
+  win_shell: "AuditPol /get /subcategory:'Removable Storage'"
+  register: removable_storage_failures_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36667
+
+- name: "MEDIUM | V-36667 | PATCH | The system must be configured to audit Object Access - Removable Storage failures."
+  win_shell: AuditPol /set /subcategory:"Removable Storage" /failure:enable
+  when: "'Failure' not in removable_storage_failures_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36667
+
+- name: "MEDIUM | V-36668 | AUDIT | The system must be configured to audit Object Access - Removable Storage successes."
+  win_shell: "AuditPol /get /subcategory:'Removable Storage'"
+  register: removable_storage_successes_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36668
+
+- name: "MEDIUM | V-36668 | PATCH | The system must be configured to audit Object Access - Removable Storage successes."
+  win_shell: AuditPol /set /subcategory:"Removable Storage" /success:enable
+  when: "'Success' not in removable_storage_successes_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36668
+
 
