@@ -968,3 +968,51 @@
       - patch
       - V-21971
 
+- name: "LOW | V-28504 | AUDIT | Windows will be prevented from sending an error report when a device driver requests additional software during installation."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\DeviceInstall\Settings /v DisableSendRequestAdditionalSoftwareToWER
+  register: send_error_report_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "send_error_report_audit.stderr and reg_not_found not in send_error_report_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-28504
+
+- name: "LOW | V-28504 | PATCH | Windows will be prevented from sending an error report when a device driver requests additional software during installation."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\DeviceInstall\Settings'
+      value: DisableSendRequestAdditionalSoftwareToWER
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-28504
+
+- name: "LOW | V-36673 | AUDIT | IP stateless autoconfiguration limits state must be enabled."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\Tcpip\Parameters\ /v EnableIPAutoConfigurationLimits
+  register: ip_config_limits_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in ip_config_limits_audit.stderr and ip_config_limits_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-36673
+
+- name: "LOW | V-36673 | PATCH | IP stateless autoconfiguration limits state must be enabled."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters\'
+      value: EnableIPAutoConfigurationLimits
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-36673
+
