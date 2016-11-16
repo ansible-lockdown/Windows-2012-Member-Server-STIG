@@ -1013,3 +1013,86 @@
       - patch
       - V-14230
 
+- name: "MEDIUM | V-14234 | AUDIT | User Account Control approval mode for the built-in Administrator will be enabled."
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System /v FilterAdministratorToken
+  register: admin_approval_mode_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in admin_approval_mode_audit.stderr and admin_approval_mode_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14234
+
+- name: "MEDIUM | V-14235 | AUDIT | User Account Control will, at a minimum, prompt administrators for consent."
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System /v ConsentPromptBehaviorAdmin
+  register: admin_consent_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in admin_consent_audit.stderr and admin_consent_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14235
+
+- name: "MEDIUM | V-14236 | AUDIT | User Account Control will automatically deny standard user requests for elevation."
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System /v ConsentPromptBehaviorUser
+  register: user_consent_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in user_consent_audit.stderr and user_consent_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14236
+
+- name: "MEDIUM | V-14239 | AUDIT | User Account Control will only elevate UIAccess applications that are installed in secure locations"
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System /v EnableSecureUIAPaths
+  register: enable_secure_UIA_paths_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in enable_secure_UIA_paths_audit.stderr and enable_secure_UIA_paths_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14239
+
+- name: "MEDIUM | V-14240 | AUDIT | User Account Control will run all administrators in Admin Approval Mode, enabling UAC."
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA
+  register: enable_UAC
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in enable_UAC.stderr and enable_UAC.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14240
+
+- name: "MEDIUM | V-14241 | AUDIT | User Account Control will switch to the secure desktop when prompting for elevation."
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System /v PromptOnSecureDesktop
+  register: prompt_on_secure_desktop_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in prompt_on_secure_desktop_audit.stderr and prompt_on_secure_desktop_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14241
+
+- name: "MEDIUM | V-14242 | AUDIT | User Account Control will virtualize file and registry write failures to per-user locations."
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System /v EnableVirtualization
+  register: UAC_virtualization_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in UAC_virtualization_audit.stderr and UAC_virtualization_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14242
