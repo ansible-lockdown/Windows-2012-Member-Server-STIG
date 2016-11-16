@@ -416,3 +416,27 @@
       - patch
       - V-4445
 
+- name: "LOW | V-11806 | AUDIT | The system will be configured to prevent the display of the last user name on the logon screen."
+  win_command: reg query \"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\" /v DontDisplayLastUserName
+  register: last_name_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in last_name_audit.stderr and last_name_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-11806
+
+- name: "LOW | V-11806 | PATCH | The system will be configured to prevent the display of the last user name on the logon screen."
+  win_regedit:
+      key: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System'
+      value: DontDisplayLastUserName
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-11806
+
