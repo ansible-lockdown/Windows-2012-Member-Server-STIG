@@ -1692,4 +1692,186 @@ me: "MEDIUM | V-14259 | AUDIT | Printing over HTTP will be prevented."
       - patch
       - V-15715
 
+- name: "MEDIUM | V-15722 | AUDIT | Windows Media Digital Rights Management will be prevented from accessing the Internet."
+  win_command: reg query HKLM\Software\Policies\Microsoft\WMDRM /v DisableOnline
+  register: DRM_online_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in DRM_online_audit.stderr and DRM_online_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15722
+
+- name: "MEDIUM | V-15722 | PATCH | Windows Media Digital Rights Management will be prevented from accessing the Internet."
+  win_regedit:
+    key: 'HKLM:\Software\Policies\Microsoft\WMDRM'
+    value: DisableOnline
+    data: 1
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-15722
+
+- name: "MEDIUM | V-15727 | AUDIT | Users will be prevented from sharing files in their profiles."
+  win_command: reg query HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer /v NoInPlaceSharing
+  register: sharing_files_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in sharing_files_audit.stderr and sharing_files_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15727
+
+- name: "MEDIUM | V-15727 | PATCH | Users will be prevented from sharing files in their profiles."
+  win_regedit:
+    key: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
+    value: NoInPlaceSharing
+    data: 1
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-15727
+
+- name: "MEDIUM | V-15823 | AUDIT | Software certificate installation files will be removed from a system."
+  win_command: wmic logicaldisk get name
+  register: list_of_drives_audit
+  check_mode: no
+  changed_when: no
+  ignore_errors: yes
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15823
+
+- name: "MEDIUM | V-15823 | AUDIT | Software certificate installation files will be removed from a system."
+  win_shell: 'Get-ChildItem {{ item|trim }}\\*.p12, {{ item|trim }}\\*.pfx -recurse'
+  register: certificate_installation_files_audit
+  check_mode: no
+  changed_when: no
+  when: "'Name' not in item and item"
+  with_items:
+    - "{{ list_of_drives_audit.stdout_lines }}"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15823
+
+- name: "MEDIUM | V-15991 | AUDIT | UIAccess applications will not be allowed to prompt for elevation without using the secure desktop."
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System /v EnableUIADesktopToggle
+  register: UIA_desktop_toggle_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in UIA_desktop_toggle_audit.stderr and UIA_desktop_toggle_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15991
+
+- name: "MEDIUM | V-15997 | AUDIT | The system will be configured to prevent users from mapping local COM ports and redirecting data from the Remote Desktop Session Host to local COM ports. (Remote Desktop Services Role)"
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v fDisableCcm
+  register: COM_port_redirection_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in COM_port_redirection_audit.stderr and COM_port_redirection_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15997
+
+- name: "MEDIUM | V-15997 | PATCH | The system will be configured to prevent users from mapping local COM ports and redirecting data from the Remote Desktop Session Host to local COM ports. (Remote Desktop Services Role)"
+  win_regedit:
+    key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+    value: fDisableCcm
+    data: 1
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-15997
+
+- name: "MEDIUM | V-15998 | AUDIT | The system will be configured to prevent users from mapping local LPT ports and redirecting data from the Remote Desktop Session Host to local LPT ports. (Remote Desktop Services Role)"
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v fDisableLPT
+  register: disable_LPT_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in disable_LPT_audit.stderr and disable_LPT_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15998
+
+- name: "MEDIUM | V-15998 | PATCH | The system will be configured to prevent users from mapping local LPT ports and redirecting data from the Remote Desktop Session Host to local LPT ports. (Remote Desktop Services Role)"
+  win_regedit:
+    key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+    value: fDisableLPT
+    data: 1
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-15998
+
+- name: "MEDIUM | V-15999 | AUDIT | The system will be configured to prevent users from redirecting Plug and Play devices to the Remote Desktop Session Host. (Remote Desktop Services Role)"
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v fDisablePNPRedir
+  register: PnP_redirect_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in PnP_redirect_audit.stderr and PnP_redirect_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15999
+
+- name: "MEDIUM | V-15999 | PATCH | The system will be configured to prevent users from redirecting Plug and Play devices to the Remote Desktop Session Host. (Remote Desktop Services Role)"
+  win_regedit:
+    key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+    value: fDisablePNPRedir
+    data: 1
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-15999
+
+- name: "MEDIUM | V-16000 | AUDIT | The system will be configured to ensure smart card devices can be redirected to the Remote Desktop Session. (Remote Desktop Services Role)"
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v fEnableSmartCard
+  register: smart_card_redirect_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in smart_card_redirect_audit.stderr and smart_card_redirect_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-16000
+
+- name: "MEDIUM | V-16000 | PATCH | The system will be configured to ensure smart card devices can be redirected to the Remote Desktop Session. (Remote Desktop Services Role)"
+  win_regedit:
+    key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+    value: fEnableSmartCard
+    data: 1
+    datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-16000
+
 
