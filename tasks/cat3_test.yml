@@ -345,3 +345,74 @@
       - patch
       - V-4116
 
+- name: "LOW | V-4438 | AUDIT | The system must limit how many times unacknowledged TCP data is retransmitted."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\Tcpip\Parameters /v TcpMaxDataRetransmissions
+  register: max_TCP_retransmit_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in max_TCP_retransmit_audit.stderr and max_TCP_retransmit_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-4438
+
+- name: "LOW | V-4438 | PATCH | The system must limit how many times unacknowledged TCP data is retransmitted."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters'
+      value: TcpMaxDataRetransmissions
+      data: 3
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-4438
+
+- name: "LOW | V-4442 | AUDIT | The system will be configured to have password protection take effect within a limited time frame when the screen saver becomes active."
+  win_command: reg query \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\" /v ScreenSaverGracePeriod
+  register: screen_saver_password_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in screen_saver_password_audit.stderr and screen_saver_password_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-4442
+
+- name: "LOW | V-4442 | PATCH | The system will be configured to have password protection take effect within a limited time frame when the screen saver becomes active."
+  win_regedit:
+      key: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
+      value: ScreenSaverGracePeriod
+      data: 0
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-4442
+
+- name: "LOW | V-4445 | AUDIT | Optional Subsystems will not be permitted to operate on the system."
+  win_command: reg query \"HKLM\System\CurrentControlSet\Control\Session Manager\Subsystems\" /v Optional
+  register: optional_subsystem_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in optional_subsystem_audit.stderr and optional_subsystem_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-4445
+
+- name: "LOW | V-4445 | PATCH | Optional Subsystems will not be permitted to operate on the system."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Session Manager\Subsystems'
+      value: Optional
+      data: ''
+      datatype: string
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-4445
+
