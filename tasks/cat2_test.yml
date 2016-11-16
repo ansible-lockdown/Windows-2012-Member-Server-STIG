@@ -328,3 +328,15 @@
       - medium
       - patch
       - V-1171
+
+- name: "MEDIUM | V-3245 | AUDIT | File share ACLs will be reconfigured to remove the Everyone group."
+  win_shell:  Get-WmiObject -Class Win32_Share | Get-Acl | fl
+  register: eject_removable_media_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "path_is_null not in eject_removable_media_audit.stderr and eject_removable_media_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3245
