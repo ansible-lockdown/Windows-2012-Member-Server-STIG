@@ -2078,4 +2078,740 @@ me: "MEDIUM | V-16008 | AUDIT | Windows will elevate all applications in User Ac
       - patch
       - V-21980
 
+- name: "MEDIUM | V-26529 | PATCH | The system will be configured to audit 'Account Logon -> Credential Validation' successes."
+  win_shell: AuditPol /set /subcategory:"Credential Validation" /success:enable
+  when: "'Success' not in success_cred_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26529
 
+- name: "MEDIUM | V-26530 | AUDIT | The system will be configured to audit 'Account Logon -> Credential Validation' failures."
+  win_shell: AuditPol /get /subcategory:"Credential Validation"
+  register: failure_cred_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26530
+
+- name: "MEDIUM | V-26530 | PATCH | The system will be configured to audit 'Account Logon -> Credential Validation' failures."
+  win_shell: AuditPol /set /subcategory:"Credential Validation" /failure:enable
+  when: "'Failure' not in failure_cred_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26530
+
+- name: "MEDIUM | V-26531 | AUDIT | The system will be configured to audit 'Account Management -> Computer Account Management' successes."
+  win_shell: AuditPol /get /subcategory:"Computer Account Management"
+  register: success_computer_account_management_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26531
+
+- name: "MEDIUM | V-26531 | PATCH | The system will be configured to audit 'Account Management -> Computer Account Management' successes."
+  win_shell: AuditPol /set /subcategory:"Computer Account Management" /success:enable
+  when: "'Success' not in success_computer_account_management_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26531
+
+- name: "MEDIUM | V-26532 | AUDIT | The system will be configured to audit 'Account Management -> Computer Account Management' failures."
+  win_shell: AuditPol /get /subcategory:"Computer Account Management"
+  register: failure_computer_account_management_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26532
+
+- name: "MEDIUM | V-26532 | PATCH | The system will be configured to audit 'Account Management -> Computer Account Management' failures."
+  win_shell: AuditPol /set /subcategory:"Computer Account Management" /failure:enable
+  when: "'Failure' not in failure_computer_account_management_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26532
+
+- name: "MEDIUM | V-26533 | AUDIT | The system will be configured to audit 'Account Management -> Other Account Management Events' successes."
+  win_shell: AuditPol /get /subcategory:"Other Account Management Events"
+  register: success_other_account_management_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26533
+
+- name: "MEDIUM | V-26533 | PATCH | The system will be configured to audit 'Account Management -> Other Account Management Events' successes."
+  win_shell: AuditPol /set /subcategory:"Other Account Management Events" /success:enable
+  when: "'Success' not in success_other_account_management_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26533
+
+- name: "MEDIUM | V-26534 | AUDIT | The system will be configured to audit 'Account Management -> Other Account Management Events' failures."
+  win_shell: AuditPol /get /subcategory:"Other Account Management Events"
+  register: failure_other_account_management_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26534
+
+- name: "MEDIUM | V-26534 | PATCH | The system will be configured to audit 'Account Management -> Other Account Management Events' failures."
+  win_shell: AuditPol /set /subcategory:"Other Account Management Events" /failure:enable
+  when: "'Failure' not in failure_other_account_management_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26534
+
+- name: "MEDIUM | V-26535 | AUDIT | The system will be configured to audit 'Account Management -> Security Group Management' successes."
+  win_shell: AuditPol /get /subcategory:"Security Group Management"
+  register: success_security_group_management_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26535
+
+- name: "MEDIUM | V-26535 | PATCH | The system will be configured to audit 'Account Management -> Security Group Management' successes."
+  win_shell: AuditPol /set /subcategory:"Security Group Management" /success:enable
+  when: "'Success' not in success_security_group_management_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26535
+
+- name: "MEDIUM | V-26536 | AUDIT | The system will be configured to audit 'Account Management -> Security Group Management' failures."
+  win_shell: AuditPol /get /subcategory:"Security Group Management"
+  register: failure_security_group_management_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26536
+
+- name: "MEDIUM | V-26536 | PATCH | The system will be configured to audit 'Account Management -> Security Group Management' failures."
+  win_shell: AuditPol /set /subcategory:"Security Group Management" /failure:enable
+  when: "'Failure' not in failure_security_group_management_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26536
+
+- name: "MEDIUM | V-26537 | AUDIT | The system will be configured to audit 'Account Management -> User Account Management' successes."
+  win_shell: AuditPol /get /subcategory:"User Account Management"
+  register: success_user_account_management_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26537
+
+- name: "MEDIUM | V-26537 | PATCH | The system will be configured to audit 'Account Management -> User Account Management' successes."
+  win_shell: AuditPol /set /subcategory:"User Account Management" /success:enable
+  when: "'Success' not in success_user_account_management_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26537
+
+- name: "MEDIUM | V-26538 | AUDIT | The system will be configured to audit 'Account Management -> User Account Management' failures."
+  win_shell: AuditPol /get /subcategory:"User Account Management"
+  register: failure_user_account_management_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26538
+
+- name: "MEDIUM | V-26538 | PATCH | The system will be configured to audit 'Account Management -> User Account Management' failures."
+  win_shell: AuditPol /set /subcategory:"User Account Management" /failure:enable
+  when: "'Failure' not in failure_user_account_management_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26538
+
+- name: "MEDIUM | V-26539 | AUDIT | The system will be configured to audit 'Detailed Tracking -> Process Creation' successes."
+  win_shell: AuditPol /get /subcategory:"Process Creation"
+  register: success_process_creation_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26539
+
+- name: "MEDIUM | V-26539 | PATCH | The system will be configured to audit 'Detailed Tracking -> Process Creation' successes."
+  win_shell: AuditPol /set /subcategory:"Process Creation" /success:enable
+  when: "'Success' not in success_process_creation_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26539
+
+- name: "MEDIUM | V-26540 | AUDIT | The system will be configured to audit 'Logon/Logoff -> Logoff' successes."
+  win_shell: AuditPol /get /subcategory:"Logoff"
+  register: success_logoff_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26540
+
+- name: "MEDIUM | V-26540 | PATCH | The system will be configured to audit 'Logon/Logoff -> Logoff' successes."
+  win_shell: AuditPol /set /subcategory:"Logoff" /success:enable
+  when: "'Success' not in success_logoff_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26540
+
+- name: "MEDIUM | V-26541 | AUDIT | The system will be configured to audit 'Logon/Logoff -> Logon' successes."
+  win_shell: AuditPol /get /subcategory:"Logon"
+  register: success_logon_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26541
+
+- name: "MEDIUM | V-26541 | PATCH | The system will be configured to audit 'Logon/Logoff -> Logon' successes."
+  win_shell: AuditPol /set /subcategory:"Logon" /success:enable
+  when: "'Success' not in success_logon_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26541
+
+- name: "MEDIUM | V-26542 | AUDIT | The system will be configured to audit 'Logon/Logoff -> Logon' failures."
+  win_shell: AuditPol /get /subcategory:"Logon"
+  register: failure_logon_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26542
+
+- name: "MEDIUM | V-26542 | PATCH | The system will be configured to audit 'Logon/Logoff -> Logon' failures."
+  win_shell: AuditPol /set /subcategory:"Logon" /failure:enable
+  when: "'Failure' not in failure_logon_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26542
+
+- name: "MEDIUM | V-26543 | AUDIT | The system will be configured to audit 'Logon/Logoff -> Special Logon' successes."
+  win_shell: AuditPol /get /subcategory:"Special Logon"
+  register: success_special_logon_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26543
+
+- name: "MEDIUM | V-26543 | PATCH | The system will be configured to audit 'Logon/Logoff -> Special Logon' successes."
+  win_shell: AuditPol /set /subcategory:"Special Logon" /success:enable
+  when: "'Success' not in success_special_logon_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26543
+
+- name: "MEDIUM | V-26546 | AUDIT | The system will be configured to audit 'Policy Change -> Audit Policy Change' successes."
+  win_shell: AuditPol /get /subcategory:"Audit Policy Change"
+  register: success_audit_policy_change_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26546
+
+- name: "MEDIUM | V-26546 | PATCH | The system will be configured to audit 'Policy Change -> Audit Policy Change' successes."
+  win_shell: AuditPol /set /subcategory:"Audit Policy Change" /success:enable
+  when: "'Success' not in success_audit_policy_change_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26546
+
+- name: "MEDIUM | V-26547 | AUDIT | The system will be configured to audit 'Policy Change -> Audit Policy Change' failures."
+  win_shell: AuditPol /get /subcategory:"Audit Policy Change"
+  register: failure_audit_policy_change_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26547
+
+- name: "MEDIUM | V-26547 | PATCH | The system will be configured to audit 'Policy Change -> Audit Policy Change' failures."
+  win_shell: AuditPol /set /subcategory:"Audit Policy Change" /failure:enable
+  when: "'Failure' not in failure_audit_policy_change_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26547
+
+- name: "MEDIUM | V-26548 | AUDIT | The system will be configured to audit 'Policy Change -> Authentication Policy Change' successes."
+  win_shell: AuditPol /get /subcategory:"Authentication Policy Change"
+  register: success_authentication_policy_change_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26548
+
+- name: "MEDIUM | V-26548 | PATCH | The system will be configured to audit 'Policy Change -> Authentication Policy Change' successes."
+  win_shell: AuditPol /set /subcategory:"Authentication Policy Change" /success:enable
+  when: "'Success' not in success_authentication_policy_change_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26548
+
+- name: "MEDIUM | V-26549 | AUDIT | The system will be configured to audit 'Privilege Use -> Sensitive Privilege Use' successes."
+  win_shell: AuditPol /get /subcategory:"Sensitive Privilege Use"
+  register: success_sensitive_privilege_use_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26549
+
+- name: "MEDIUM | V-26549 | PATCH | The system will be configured to audit 'Privilege Use -> Sensitive Privilege Use' successes."
+  win_shell: AuditPol /set /subcategory:"Sensitive Privilege Use" /success:enable
+  when: "'Success' not in success_sensitive_privilege_use_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26549
+
+- name: "MEDIUM | V-26550 | AUDIT | The system will be configured to audit 'Privilege Use -> Sensitive Privilege Use' failures."
+  win_shell: AuditPol /get /subcategory:"Sensitive Privilege Use"
+  register: failure_sensitive_privilege_use_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26550
+
+- name: "MEDIUM | V-26550 | PATCH | The system will be configured to audit 'Privilege Use -> Sensitive Privilege Use' failures."
+  win_shell: AuditPol /set /subcategory:"Sensitive Privilege Use" /failure:enable
+  when: "'Failure' not in failure_sensitive_privilege_use_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26550
+
+- name: "MEDIUM | V-26551 | AUDIT | The system will be configured to audit 'System -> IPSec Driver' successes."
+  win_shell: AuditPol /get /subcategory:"IPSec Driver"
+  register: success_IPSec_driver_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26551
+
+- name: "MEDIUM | V-26551 | PATCH | The system will be configured to audit 'System -> IPSec Driver' successes."
+  win_shell: AuditPol /set /subcategory:"IPSec Driver" /success:enable
+  when: "'Success' not in success_IPSec_driver_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26551
+
+- name: "MEDIUM | V-26552 | AUDIT | The system will be configured to audit 'System -> IPSec Driver' failures."
+  win_shell: AuditPol /get /subcategory:"IPSec Driver"
+  register: failure_IPSec_driver_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26552
+
+- name: "MEDIUM | V-26552 | PATCH | The system will be configured to audit 'System -> IPSec Driver' failures."
+  win_shell: AuditPol /set /subcategory:"IPSec Driver" /failure:enable
+  when: "'Failure' not in failure_IPSec_driver_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26552
+
+- name: "MEDIUM | V-26553 | AUDIT | The system will be configured to audit 'System -> Security State Change' successes."
+  win_shell: AuditPol /get /subcategory:"Security State Change"
+  register: success_security_state_change_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26553
+
+- name: "MEDIUM | V-26553 | PATCH | The system will be configured to audit 'System -> Security State Change' successes."
+  win_shell: AuditPol /set /subcategory:"Security State Change" /success:enable
+  when: "'Success' not in success_security_state_change_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26553
+
+- name: "MEDIUM | V-26554 | AUDIT | The system will be configured to audit 'System -> Security State Change' failures."
+  win_shell: AuditPol /get /subcategory:"Security State Change"
+  register: failure_security_state_change_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26554
+
+- name: "MEDIUM | V-26554 | PATCH | The system will be configured to audit 'System -> Security State Change' failures."
+  win_shell: AuditPol /set /subcategory:"Security State Change" /failure:enable
+  when: "'Failure' not in failure_security_state_change_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26554
+
+- name: "MEDIUM | V-26555 | AUDIT | The system will be configured to audit 'System -> Security System Extension' successes."
+  win_shell: AuditPol /get /subcategory:"Security System Extension"
+  register: success_security_system_extension_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26555
+
+- name: "MEDIUM | V-26555 | PATCH | The system will be configured to audit 'System -> Security System Extension' successes."
+  win_shell: AuditPol /set /subcategory:"Security System Extension" /success:enable
+  when: "'Success' not in success_security_system_extension_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26555
+
+- name: "MEDIUM | V-26556 | AUDIT | The system will be configured to audit 'System -> Security System Extension' failures."
+  win_shell: AuditPol /get /subcategory:"Security System Extension"
+  register: failure_security_system_extension_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26556
+
+- name: "MEDIUM | V-26556 | PATCH | The system will be configured to audit 'System -> Security System Extension' failures."
+  win_shell: AuditPol /set /subcategory:"Security System Extension" /failure:enable
+  when: "'Failure' not in failure_security_system_extension_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26556
+
+- name: "MEDIUM | V-26557 | AUDIT | The system will be configured to audit 'System -> System Integrity' successes."
+  win_shell: AuditPol /get /subcategory:"System Integrity"
+  register: success_system_integrity_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26557
+
+- name: "MEDIUM | V-26557 | PATCH | The system will be configured to audit 'System -> System Integrity' successes."
+  win_shell: AuditPol /set /subcategory:"System Integrity" /success:enable
+  when: "'Success' not in success_system_integrity_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26557
+
+- name: "MEDIUM | V-26558 | AUDIT | The system will be configured to audit 'System -> System Integrity' failures."
+  win_shell: AuditPol /get /subcategory:"System Integrity"
+  register: failure_system_integrity_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26558
+
+- name: "MEDIUM | V-26558 | PATCH | The system will be configured to audit 'System -> System Integrity' failures."
+  win_shell: AuditPol /set /subcategory:"System Integrity" /failure:enable
+  when: "'Failure' not in failure_system_integrity_audit.stdout"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26558
+
+- name: "MEDIUM | V-26575 | AUDIT | The 6to4 IPv6 transition technology will be disabled."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\TCPIP\v6Transition /v 6to4_State
+  register: six_to_four_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "six_to_four_audit.stderr and reg_not_found not in six_to_four_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26575
+
+- name: "MEDIUM | V-26575 | PATCH | The 6to4 IPv6 transition technology will be disabled."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\TCPIP\v6Transition'
+      value: 6to4_State
+      data: Disabled
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26575
+
+- name: "MEDIUM | V-26576 | AUDIT | The IP-HTTPS IPv6 transition technology will be disabled."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\TCPIP\v6Transition\IPHTTPS\IPHTTPSInterface /v IPHTTPS_ClientState
+  register: IPv6_transition_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "IPv6_transition_audit.stderr and reg_not_found not in IPv6_transition_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26576
+
+- name: "MEDIUM | V-26576 | PATCH | The IP-HTTPS IPv6 transition technology will be disabled."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\TCPIP\v6Transition\IPHTTPS\IPHTTPSInterface'
+      value: IPHTTPS_ClientState
+      data: 3
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26576
+
+- name: "MEDIUM | V-26577 | AUDIT | The ISATAP IPv6 transition technology will be disabled."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\TCPIP\v6Transition /v ISATAP_State
+  register: ISATAP_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "ISATAP_audit.stderr and reg_not_found not in ISATAP_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26577
+
+- name: "MEDIUM | V-26577 | PATCH | The ISATAP IPv6 transition technology will be disabled."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\TCPIP\v6Transition'
+      value: ISATAP_State
+      data: Disabled
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26577
+
+- name: "MEDIUM | V-26578 | AUDIT | The Teredo IPv6 transition technology will be disabled."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\TCPIP\v6Transition /v Teredo_State
+  register: Teredo_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "Teredo_audit.stderr and reg_not_found not in Teredo_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26578
+
+- name: "MEDIUM | V-26578 | PATCH | The Teredo IPv6 transition technology will be disabled."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\TCPIP\v6Transition'
+      value: Teredo_State
+      data: Disabled
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26578
+
+- name: "MEDIUM | V-26579 | AUDIT | The Application event log must be configured to a minimum size requirement."
+  win_command: reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\EventLog\Application /v MaxSize
+  register: application_log_max_size_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "application_log_max_size_audit.stderr and reg_not_found not in application_log_max_size_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26579
+
+- name: "MEDIUM | V-26579 | PATCH | The Application event log must be configured to a minimum size requirement."
+  win_regedit:
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\Application'
+      value: MaxSize
+      data: 0x00008000
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26579
+
+- name: "MEDIUM | V-26580 | AUDIT | The Security event log must be configured to a minimum size requirement."
+  win_command: reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\EventLog\Security /v MaxSize
+  register: security_log_max_size_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "security_log_max_size_audit.stderr and reg_not_found not in security_log_max_size_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26580
+
+- name: "MEDIUM | V-26580 | PATCH | The Security event log must be configured to a minimum size requirement."
+  win_regedit:
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\Security'
+      value: MaxSize
+      data: 0x00030000
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26580
+
+- name: "MEDIUM | V-26581 | AUDIT | The Setup event log must be configured to a minimum size requirement."
+  win_command: reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\EventLog\Setup /v MaxSize
+  register: setup_log_max_size_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "setup_log_max_size_audit.stderr and reg_not_found not in setup_log_max_size_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26581
+
+- name: "MEDIUM | V-26581 | PATCH | The Setup event log must be configured to a minimum size requirement."
+  win_regedit:
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\Setup'
+      value: MaxSize
+      data: 0x00008000
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26581
+
+- name: "MEDIUM | V-26582 | AUDIT | The System event log must be configured to a minimum size requirement."
+  win_command: reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\EventLog\System /v MaxSize
+  register: system_log_max_size_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "system_log_max_size_audit.stderr and reg_not_found not in system_log_max_size_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26582
+
+- name: "MEDIUM | V-26582 | PATCH | The System event log must be configured to a minimum size requirement."
+  win_regedit:
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\System'
+      value: MaxSize
+      data: 0x00008000
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26582
