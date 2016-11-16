@@ -81,3 +81,122 @@
       - patch
       - V-1151
 
+- name: "LOW | V-1158 | AUDIT | The Recovery Console SET command must be disabled."
+  win_command: reg query \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Setup\RecoveryConsole\" /v SetCommand
+  register: set_command_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in set_command_audit.stderr and set_command_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-1158
+
+- name: "LOW | V-1158 | PATCH | The Recovery Console SET command must be disabled."
+  win_regedit:
+      key: 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Setup\RecoveryConsole'
+      value: SetCommand
+      data: 0
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-1158
+
+- name: "LOW | V-1165 | AUDIT | The computer account password will not be prevented from being reset."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\Netlogon\Parameters /v DisablePasswordChange
+  register: disable_password_change_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in disable_password_change_audit.stderr and disable_password_change_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-1165
+
+- name: "LOW | V-1165 | PATCH | The computer account password will not be prevented from being reset."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters'
+      value: DisablePasswordChange
+      data: 0
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-1165
+
+- name: "LOW | V-1172 | AUDIT | Users will be warned in advance that their passwords will expire."
+  win_command: reg query \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\" /v PasswordExpiryWarning
+  register: password_expiry_warning_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in password_expiry_warning_audit.stderr and password_expiry_warning_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-1172
+
+- name: "LOW | V-1172 | PATCH | Users will be warned in advance that their passwords will expire."
+  win_regedit:
+      key: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
+      value: PasswordExpiryWarning
+      data: 7
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-1172
+
+- name: "LOW | V-1173 | AUDIT | The default permissions of Global system objects will be increased."
+  win_command: reg query \"HKLM\System\CurrentControlSet\Control\Session Manager\" /v ProtectionMode
+  register: protection_mode_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in protection_mode_audit.stderr and protection_mode_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-1173
+
+- name: "LOW | V-1173 | PATCH | The default permissions of Global system objects will be increased."
+  win_regedit:
+      key: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
+      value: ProtectionMode
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-1173
+
+- name: "LOW | V-1174 | AUDIT | The amount of idle time required before suspending a session must be properly set."
+  win_command: reg query HKLM\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters /v autodisconnect
+  register: auto_disconnect_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in auto_disconnect_audit.stderr and auto_disconnect_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-1174
+
+- name: "LOW | V-1174 | PATCH | The amount of idle time required before suspending a session must be properly set."
+  win_regedit:
+      key: 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
+      value: autodisconnect
+      data: 0x0000000f
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-1174
