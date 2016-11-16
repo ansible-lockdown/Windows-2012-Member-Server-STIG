@@ -436,3 +436,99 @@
       - medium
       - patch
       - V-3378
+
+- name: "MEDIUM | V-3381 | AUDIT | The system will be configured to the required LDAP client signing level."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\LDAP /v LDAPClientIntegrity
+  register: LDAP_client_integrity_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in LDAP_client_integrity_audit.stderr and LDAP_client_integrity_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3381
+
+- name: "MEDIUM | V-3381 | PATCH | The system will be configured to the required LDAP client signing level."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Services\LDAP'
+      value: LDAPClientIntegrity
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3381
+
+- name: "MEDIUM | V-3382 | AUDIT | The system will be configured to meet the minimum session security requirement for NTLM SSP based clients."
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa\MSV1_0 /v NTLMMinClientSec
+  register: NTLM_min_client_sec_audit
+  check_mode: no
+  changed_when: "'0x20080000' not in NTLM_min_client_sec_audit.stdout"
+  failed_when: "reg_not_found not in NTLM_min_client_sec_audit.stderr and NTLM_min_client_sec_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3382
+
+- name: "MEDIUM | V-3382 | PATCH | The system will be configured to meet the minimum session security requirement for NTLM SSP based clients."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0'
+      value: NTLMMinClientSec
+      data: 0x20080000
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3382
+
+- name: "MEDIUM | V-3385 | AUDIT | The system must be configured to require case insensitivity for non-Windows subsystems."
+  win_command: reg query \"HKLM\System\CurrentControlSet\Control\Session Manager\Kernel\" /v ObCaseInsensitive
+  register: case_insensitive_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in case_insensitive_audit.stderr and case_insensitive_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3385
+
+- name: "MEDIUM | V-3385 | PATCH | The system must be configured to require case insensitivity for non-Windows subsystems."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Session Manager\Kernel'
+      value: ObCaseInsensitive
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3385
+
+- name: "MEDIUM | V-3449 | AUDIT | Remote Desktop Services will limit users to one remote session."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v fSingleSessionPerUser
+  register: single_rdp_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in single_rdp_audit.stderr and single_rdp_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3449
+
+- name: "MEDIUM | V-3449 | PATCH | Remote Desktop Services will limit users to one remote session."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+      value: fSingleSessionPerUser
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3449
