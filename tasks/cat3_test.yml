@@ -225,3 +225,123 @@
       - patch
       - V-3373
 
+- name: "LOW | V-3472 | AUDIT | If the time service is configured, it will use an authorized time server."
+  win_command: reg query HKLM\Software\Policies\Microsoft\W32time\Parameters /v Type
+  register: time_type_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in time_type_audit.stderr and time_type_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-3472
+
+- name: "LOW | V-3472 | AUDIT | If the time service is configured, it will use an authorized time server."
+  win_command: reg query HKLM\Software\Policies\Microsoft\W32time\Parameters /v NTPServer
+  register: NTP_server_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in NTP_server_audit.stderr and NTP_server_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-3472
+
+- name: "LOW | V-4110 | AUDIT | The system will be configured to prevent IP source routing."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\Tcpip\Parameters /v DisableIPSourceRouting
+  register: disable_ip_routing_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in disable_ip_routing_audit.stderr and disable_ip_routing_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-4110
+
+- name: "LOW | V-4110 | PATCH | The system will be configured to prevent IP source routing."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters'
+      value: DisableIPSourceRouting
+      data: 2
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-4110
+
+- name: "LOW | V-4112 | AUDIT | The system will be configured to disable the Internet Router Discover Protocol (IRDP)."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\Tcpip\Parameters /v PerformRouterDiscovery
+  register: disable_IRDP_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in disable_IRDP_audit.stderr and disable_IRDP_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-4112
+
+- name: "LOW | V-4112 | PATCH | The system will be configured to disable the Internet Router Discover Protocol (IRDP)."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters'
+      value: PerformRouterDiscovery
+      data: 0
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-4112
+
+- name: "LOW | V-4113 | AUDIT | The system will be configured to limit how often keep-alive packets are sent."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\Tcpip\Parameters /v KeepAliveTime
+  register: keep_alive_time_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in keep_alive_time_audit.stderr and keep_alive_time_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-4113
+
+- name: "LOW | V-4113 | PATCH | The system will be configured to limit how often keep-alive packets are sent."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters'
+      value: KeepAliveTime
+      data: 300000
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-4113
+
+- name: "LOW | V-4116 | AUDIT | The system must be configured to ignore NetBIOS name release requests except from WINS servers."
+  win_command: reg query HKLM\SYSTEM\CurrentControlSet\Services\Netbt\Parameters /v NoNameReleaseOnDemand
+  register: name_release_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in name_release_audit.stderr and name_release_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-4116
+
+- name: "LOW | V-4116 | PATCH | The system must be configured to ignore NetBIOS name release requests except from WINS servers."
+  win_regedit:
+      key: 'HKLM:\SYSTEM\CurrentControlSet\Services\Netbt\Parameters'
+      value: NoNameReleaseOnDemand
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-4116
+
