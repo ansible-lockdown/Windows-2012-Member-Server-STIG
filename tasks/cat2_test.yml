@@ -2815,3 +2815,113 @@ me: "MEDIUM | V-16008 | AUDIT | Windows will elevate all applications in User Ac
       - medium
       - patch
       - V-26582
+
+- name: "MEDIUM | V-26600 | AUDIT | The Fax service will be disabled."
+  win_shell: Get-Service -name fax
+  register: fax_service_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "fax_service_audit.stderr and service_not_found not in fax_service_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26600
+
+- name: "MEDIUM | V-26600 | PATCH | The Fax service will be disabled."
+  win_service:
+      name: fax
+      start_mode: disabled
+      state: stopped
+  when: not fax_service_audit.stderr
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26600
+
+- name: "MEDIUM | V-26602 | AUDIT | The Microsoft FTP service will be disabled."
+  win_shell: Get-Service -name *ftpsvc
+  register: ftp_service_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "ftp_service_audit.stderr and service_not_found not in ftp_service_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26602
+
+- name: "MEDIUM | V-26604 | AUDIT | The Peer Networking Identity Manager service will be disabled."
+  win_shell: Get-Service -name p2pimsvc
+  register: p2p_service_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "p2p_service_audit.stderr and service_not_found not in p2p_service_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26604
+
+- name: "MEDIUM | V-26604 | PATCH | The Peer Networking Identity Manager service will be disabled."
+  win_service:
+      name: p2pimsvc
+      start_mode: disabled
+      state: stopped
+  when: not p2p_service_audit.stderr
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26604
+
+- name: "MEDIUM | V-26605 | AUDIT | The Simple TCP/IP Services service will be disabled."
+  win_shell: Get-Service -name simptcp
+  register: simtcp_service_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "simtcp_service_audit.stderr and service_not_found not in simtcp_service_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26605
+
+- name: "MEDIUM | V-26605 | PATCH | The Simple TCP/IP Services service will be disabled."
+  win_service:
+      name: simptcp
+      start_mode: disabled
+      state: stopped
+  when: not simtcp_service_audit.stderr
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26605
+
+- name: "MEDIUM | V-26606 | AUDIT | The Telnet service will be disabled."
+  win_shell: Get-Service -name tlntsvr
+  register: telnet_service_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "telnet_service_audit.stderr and service_not_found not in telnet_service_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26606
+
+- name: "MEDIUM | V-26606 | PATCH | The Telnet service will be disabled."
+  win_service:
+      name: tlntsvr
+      start_mode: disabled
+      state: stopped
+  when: not telnet_service_audit.stderr
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26606
+
+
