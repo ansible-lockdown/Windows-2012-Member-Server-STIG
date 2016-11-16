@@ -712,3 +712,110 @@
       - medium
       - patch
       - V-3470
+
+- name: "MEDIUM | V-3479 | AUDIT | The system will be configured to use Safe DLL Search Mode."
+  win_command: reg query \"HKLM\System\CurrentControlSet\Control\Session Manager\" /v SafeDllSearchMode
+  register: safe_DLL_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in safe_DLL_audit.stderr and safe_DLL_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3479
+
+- name: "MEDIUM | V-3479 | PATCH | The system will be configured to use Safe DLL Search Mode."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Session Manager'
+      value: SafeDllSearchMode
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3479
+
+- name: "MEDIUM | V-3480 | AUDIT | Media Player must be configured to prevent automatic checking for updates."
+  win_command: reg query HKLM\Software\Policies\Microsoft\WindowsMediaPlayer /v DisableAutoupdate
+  register: WMP_auto_update_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in WMP_auto_update_audit.stderr and WMP_auto_update_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3480
+
+- name: "MEDIUM | V-3480 | PATCH | Media Player must be configured to prevent automatic checking for updates."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\WindowsMediaPlayer'
+      value: DisableAutoupdate
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3480
+
+- name: "MEDIUM | V-3481 | AUDIT | Media Player will be configured to prevent automatic Codec downloads."
+  win_command: reg query HKCU\Software\Policies\Microsoft\WindowsMediaPlayer /v PreventCodecDownload
+  register: WMP_codec_download_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in WMP_codec_download_audit.stderr and WMP_codec_download_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3481
+
+- name: "MEDIUM | V-3481 | PATCH | Media Player will be configured to prevent automatic Codec downloads."
+  win_regedit:
+      key: 'HKCU:\Software\Policies\Microsoft\WindowsMediaPlayer'
+      value: PreventCodecDownload
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3481
+
+- name: "MEDIUM | V-3487 | AUDIT | Services will be documented and unnecessary services will not be installed or will be disabled."
+  win_shell: Get-Service | Where-Object {$_.Status -eq "Running"}
+  register: running_services_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3487
+
+- name: "MEDIUM | V-3666 | AUDIT | The system will be configured to meet the minimum session security requirement for NTLM SSP based servers."
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa\MSV1_0 /v NTLMMinServerSec
+  register: NTLM_min_server_sec_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in NTLM_min_server_sec_audit.stderr and NTLM_min_server_sec_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3666
+
+- name: "MEDIUM | V-3666 | PATCH | The system will be configured to meet the minimum session security requirement for NTLM SSP based servers."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0'
+      value: NTLMMinServerSec
+      data: 0x20080000
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3666
