@@ -3603,4 +3603,26 @@ me: "MEDIUM | V-36698 | AUDIT | The use of biometrics must be disabled."
   when: "path_not_found not in system_evtx_audit.stderr and system_evtx_audit"
 ######################################### block end #####################################################
 
+- name: "MEDIUM | V-36773 | AUDIT | The machine inactivity limit must be set to 15 minutes, locking the system with the screensaver."
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\ /v InactivityTimeoutSecs
+  register: inactivity_limit_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in inactivity_limit_audit.stderr and inactivity_limit_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-36773
 
+- name: "MEDIUM | V-36773 | PATCH | The machine inactivity limit must be set to 15 minutes, locking the system with the screensaver."
+  win_regedit:
+     key: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\'
+     value: InactivityTimeout
+     data: 0x00000384
+     datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36773
