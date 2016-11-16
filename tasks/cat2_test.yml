@@ -1096,3 +1096,51 @@
       - medium
       - audit
       - V-14242
+
+- name: "MEDIUM | V-14247 | AUDIT | Passwords will not be saved in the Remote Desktop Client."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v DisablePasswordSaving
+  register: disable_RDC_password_saving_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in disable_RDC_password_saving_audit.stderr and disable_RDC_password_saving_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14247
+
+- name: "MEDIUM | V-14247 | PATCH | Passwords will not be saved in the Remote Desktop Client."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+      value: DisablePasswordSaving
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-14247
+
+- name: "MEDIUM | V-14249 | AUDIT | Local drives will be prevented from sharing with Remote Desktop Session Hosts (Remote Desktop Services Role)."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Terminal Services\" /v fDisableCdm
+  register: disable_local_drive_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in disable_local_drive_audit.stderr and disable_local_drive_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14249
+
+- name: "MEDIUM | V-14249 | PATCH | Local drives will be prevented from sharing with Remote Desktop Session Hosts (Remote Desktop Services Role)."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+      value: fDisableCdm
+      data: 1
+      datatype: dword
+  tags:
+    - cat2
+    - medium
+    - patch
+    - V-14249
