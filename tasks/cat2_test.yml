@@ -1193,4 +1193,124 @@
       - patch
       - V-14254
 
+me: "MEDIUM | V-14259 | AUDIT | Printing over HTTP will be prevented."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Printers\" /v DisableHTTPPrinting
+  register: disable_HTTP_printing_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in disable_HTTP_printing_audit.stderr and disable_HTTP_printing_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14259
+
+- name: "MEDIUM | V-14259 | PATCH | Printing over HTTP will be prevented."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Printers'
+      value: DisableHTTPPrinting
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-14259
+
+- name: "MEDIUM | V-14260 | AUDIT | Downloading print driver packages over HTTP will be prevented."
+  win_command: reg query \"HKLM\Software\Policies\Microsoft\Windows NT\Printers\" /v DisableWebPnPDownload
+  register: disable_HTTP_printer_drivers_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in disable_HTTP_printer_drivers_audit.stderr and disable_HTTP_printer_drivers_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14260
+
+- name: "MEDIUM | V-14260 | PATCH | Downloading print driver packages over HTTP will be prevented."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Printers'
+      value: DisableWebPnPDownload
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-14260
+
+- name: "MEDIUM | V-14261 | AUDIT | Windows will be prevented from using Windows Update to search for drivers."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\DriverSearching /v DontSearchWindowsUpdate
+  register: windows_update_driver_search_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in windows_update_driver_search_audit.stderr and windows_update_driver_search_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14261
+
+- name: "MEDIUM | V-14261 | PATCH | Windows will be prevented from using Windows Update to search for drivers."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\DriverSearching'
+      value: DontSearchWindowsUpdate
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-14261
+
+- name: "MEDIUM | V-14268 | AUDIT | Zone information will be preserved when saving attachments."
+  win_command: reg query HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments /v SaveZoneInformation
+  register: save_zone_info_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in save_zone_info_audit.stderr and save_zone_info_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14268
+
+- name: "MEDIUM | V-14268 | PATCH | Zone information will be preserved when saving attachments."
+  win_regedit:
+      key: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments'
+      value: SaveZoneInformation
+      data: 2
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-14268
+
+- name: "MEDIUM | V-14269 | AUDIT | Mechanisms for removing zone information from file attachments will be hidden."
+  win_command: reg query HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments /v HideZoneInfoOnProperties
+  register: hide_zone_info_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in hide_zone_info_audit.stderr and hide_zone_info_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-14269
+
+- name: "MEDIUM | V-14269 | PATCH | Mechanisms for removing zone information from file attachments will be hidden."
+  win_regedit:
+      key: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments'
+      value: HideZoneInfoOnProperties
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-14269
+
 
