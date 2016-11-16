@@ -200,3 +200,28 @@
       - low
       - patch
       - V-1174
+
+- name: "LOW | V-3373 | AUDIT | The maximum age for machine account passwords will be set to requirements."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\Netlogon\Parameters /v MaximumPasswordAge
+  register: max_password_age_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in max_password_age_audit.stderr and max_password_age_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-3373
+
+- name: "LOW | V-3373 | PATCH | The maximum age for machine account passwords will be set to requirements."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters'
+      value: MaximumPasswordAge
+      data: 30
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-3373
+
