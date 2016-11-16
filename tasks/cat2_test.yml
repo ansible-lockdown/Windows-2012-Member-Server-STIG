@@ -340,3 +340,99 @@
       - medium
       - audit
       - V-3245
+
+- name: "MEDIUM | V-3374 | AUDIT | The system must be configured to require a strong session key."
+  win_command: reg query HKLM\System\CurrentControlSet\Services\Netlogon\Parameters\ /v RequireStrongKey
+  register: strong_sessionkey_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in strong_sessionkey_audit.stderr and strong_sessionkey_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3374
+
+- name: "MEDIUM | V-3374 | PATCH | The system must be configured to require a strong session key."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters\'
+      value: RequireStrongKey
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3374
+
+- name: "MEDIUM | V-3376 | AUDIT | The system will be configured to prevent the storage of passwords and credentials"
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v DisableDomainCreds
+  register: creds_storage_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in creds_storage_audit.stderr and creds_storage_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3376
+
+- name: "MEDIUM | V-3376 | PATCH | The system will be configured to prevent the storage of passwords and credentials"
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Lsa'
+      value: DisableDomainCreds
+      data: 1
+      datatype: dword
+      tags:
+          - cat2
+          - medium
+          - patch
+          - V-3376
+
+- name: "MEDIUM | V-3377 | AUDIT | The system will be configured to prevent anonymous users from having the same rights as the Everyone group."
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v EveryoneIncludesAnonymous
+  register: everyone_includes_anon_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in everyone_includes_anon_audit.stderr and everyone_includes_anon_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3377
+
+- name: "MEDIUM | V-3377 | PATCH | The system will be configured to prevent anonymous users from having the same rights as the Everyone group."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Lsa'
+      value: EveryoneIncludesAnonymous
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3377
+
+- name: "MEDIUM | V-3378 | AUDIT | The system will be configured to use the Classic security model."
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v ForceGuest
+  register: classic_security_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in classic_security_audit.stderr and classic_security_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3378
+
+- name: "MEDIUM | V-3378 | PATCH | The system will be configured to use the Classic security model."
+  win_regedit:
+      key: 'HKLM:\System\CurrentControlSet\Control\Lsa'
+      value: ForceGuest
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3378
