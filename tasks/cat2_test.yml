@@ -1361,4 +1361,64 @@ me: "MEDIUM | V-14259 | AUDIT | Printing over HTTP will be prevented."
       - patch
       - V-15667
 
+- name: "MEDIUM | V-15682 | AUDIT | Attachments must be prevented from being downloaded from RSS feeds."
+  win_command: reg query \"HKLM\SOFTWARE\Policies\Microsoft\Internet Explorer\Feeds\" /v DisableEnclosureDownload
+  register: no_attachments_from_RSS_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in no_attachments_from_RSS_audit.stderr and no_attachments_from_RSS_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15682
+
+- name: "MEDIUM | V-15682 | PATCH | Attachments must be prevented from being downloaded from RSS feeds."
+  win_regedit:
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Internet Explorer\Feeds'
+      value: DisableEnclosureDownload
+      data: 1
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-15682
+
+- name: "MEDIUM | V-15683 | AUDIT | Windows Explorer shell protocol will run in protected mode."
+  win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer /v PreXPSP2ShellProtocolBehavior
+  register: shell_protocol_protected_mode_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in shell_protocol_protected_mode_audit.stderr and shell_protocol_protected_mode_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15683
+
+- name: "MEDIUM | V-15684 | AUDIT | Users will be notified if a web-based program attempts to install software."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\Installer /v SafeForScripting
+  register: install_notification_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in install_notification_audit.stderr and install_notification_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15684
+
+- name: "MEDIUM | V-15684 | PATCH | Users will be notified if a web-based program attempts to install software."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\Installer'
+      value: SafeForScripting
+      data: 0
+      datatype: dword
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-15684
+
 
