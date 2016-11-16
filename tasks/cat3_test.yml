@@ -440,3 +440,99 @@
       - patch
       - V-11806
 
+- name: "LOW | V-15672 | AUDIT | Event Viewer Events.asp links will be turned off."
+  win_command: reg query HKLM\Software\Policies\Microsoft\EventViewer /v MicrosoftEventVwrDisableLinks
+  register: event_viewer_links_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in event_viewer_links_audit.stderr and event_viewer_links_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-15672
+
+- name: "LOW | V-15672 | PATCH | Event Viewer Events.asp links will be turned off."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\EventViewer'
+      value: MicrosoftEventVwrDisableLinks
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-15672
+
+- name: "LOW | V-15680 | AUDIT | The classic logon screen must be required for user logons."
+  win_command: reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v LogonType
+  register: classic_logon_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in classic_logon_audit.stderr and classic_logon_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-15680
+
+- name: "LOW | V-15680 | PATCH | The classic logon screen must be required for user logons."
+  win_regedit:
+      key: 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+      value: LogonType
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-15680
+
+- name: "LOW | V-15686 | AUDIT | Non-administrators will be prevented from applying vendor signed updates."
+  win_command: reg query HKLM\Software\Policies\Microsoft\Windows\Installer /v DisableLUAPatching
+  register: diable_user_patching_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in diable_user_patching_audit.stderr and diable_user_patching_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-15686
+
+- name: "LOW | V-15686 | PATCH | Non-administrators will be prevented from applying vendor signed updates."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\Installer'
+      value: DisableLUAPatching
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-15686
+
+- name: "LOW | V-15687 | AUDIT | Users will not be presented with Privacy and Installation options on first use of Windows Media Player."
+  win_command: reg query HKLM\Software\Policies\Microsoft\WindowsMediaPlayer /v GroupPrivacyAcceptance
+  register: group_privacy_acceptance_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in group_privacy_acceptance_audit.stderr and group_privacy_acceptance_audit.stderr"
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-15687
+
+- name: "LOW | V-15687 | PATCH | Users will not be presented with Privacy and Installation options on first use of Windows Media Player."
+  win_regedit:
+      key: 'HKLM:\Software\Policies\Microsoft\WindowsMediaPlayer'
+      value: GroupPrivacyAcceptance
+      data: 1
+      datatype: dword
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-15687
+
