@@ -2152,6 +2152,121 @@
       - patch
       - V-21980
 
+- name: "MEDIUM | V-26469 | AUDIT | Unauthorized accounts must not have the Access Credential Manager as a trusted caller user right."
+  debug: var=secedit_rules.Privilege_Rights.SeTrustedCredManAccessPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26469
+
+- name: "MEDIUM | V-26469 | PATCH | Unauthorized accounts must not have the Access Credential Manager as a trusted caller user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeTrustedCredManAccessPrivilege
+      value: ''
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26469
+
+- name: "MEDIUM | V-26470 | AUDIT | Unauthorized accounts must not have the Access this computer from the network user right on member servers."
+  debug: var=secedit_rules.Privilege_Rights.SeNetworkLogonRight
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26470
+
+- name: "MEDIUM | V-26470 | PATCH | Unauthorized accounts must not have the Access this computer from the network user right on member servers."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeNetworkLogonRight
+      value: '*S-1-5-11,*S-1-5-32-544' #Authenticated Users, Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26470
+
+- name: "MEDIUM | V-26471 | AUDIT | Unauthorized accounts must not have the Adjust memory quotas for a process user right."
+  debug: var=secedit_rules.Privilege_Rights.SeIncreaseQuotaPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26471
+
+- name: "MEDIUM | V-26471 | PATCH | Unauthorized accounts must not have the Adjust memory quotas for a process user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeIncreaseQuotaPrivilege
+      value: '*S-1-5-19,*S-1-5-20,*S-1-5-32-544' #Local Service, Network Service, Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26471
+
+- name: "MEDIUM | V-26472 | AUDIT | Unauthorized accounts must not have the Allow log on locally user right."
+  debug: var=secedit_rules.Privilege_Rights.SeInteractiveLogonRight
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26472
+
+- name: "MEDIUM | V-26472 | PATCH | Unauthorized accounts must not have the Allow log on locally user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeInteractiveLogonRight
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26472
+
+- name: "MEDIUM | V-26473 | AUDIT | The Allow log on through Remote Desktop Services user right must only be assigned to the Administrators group and other approved groups."
+  debug: var=secedit_rules.Privilege_Rights.SeRemoteInteractiveLogonRight
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26473
+
+- name: "MEDIUM | V-26473 | PATCH | The Allow log on through Remote Desktop Services user right must only be assigned to the Administrators group and other approved groups."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeRemoteInteractiveLogonRight
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26473
+
 - name: "MEDIUM | V-26529 | AUDIT | The system will be configured to audit 'Account Logon -> Credential Validation' successes."
   win_shell: AuditPol /get /subcategory:"Credential Validation"
   register: success_cred_audit
