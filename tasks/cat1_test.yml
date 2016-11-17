@@ -183,7 +183,6 @@
 
   when: "path_not_found not in anon_registry_access_audit.stderr and anon_registry_access_audit"
 ###################################### block end ########################################################  
-
 - name: "HIGH | V-1153 | AUDIT | The LanMan authentication level must be set to send NTLMv2 response only, and to refuse LM and NTLM."
   win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v LMCompatibilityLevel
   register: lanMan_authentication_audit
@@ -255,6 +254,29 @@
       - high
       - patch
       - V-2374
+
+- name: "HIGH | V-3337 | AUDIT | Anonymous SID/Name translation will not be allowed."
+  debug: var=secedit_rules.System_Access.LSAAnonymousNameLookup
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-3337
+
+- name: "HIGH | V-3337 | PATCH | Anonymous SID/Name translation will not be allowed."
+  win_secedit:
+      category: 'System Access'
+      key: LSAAnonymousNameLookup
+      value: '0'
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat1
+      - high
+      - patch
+      - V-3337
 
 - name: "HIGH | V-3338 | AUDIT | Named pipes that can be accessed anonymously must be configured with limited values on domain controllers."
   win_command: reg query HKLM\System\CurrentControlSet\Services\LanManServer\Parameters\ /v NullSessionPipes
