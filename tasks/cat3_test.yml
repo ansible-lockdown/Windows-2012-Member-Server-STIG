@@ -968,6 +968,31 @@
       - patch
       - V-21971
 
+- name: "LOW | V-26475 | AUDIT | Unauthorized accounts must not have the Bypass traverse checking user right."
+  debug: var=secedit_rules.Privilege_Rights.SeChangeNotifyPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-26475
+
+# Well-known security identifiers in Windows operating systems
+# https://support.microsoft.com/en-us/kb/243330
+- name: "LOW | V-26475 | PATCH | Unauthorized accounts must not have the Bypass traverse checking user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeChangeNotifyPrivilege
+      value: '*S-1-5-11,*S-1-5-19,*S-1-5-20,*S-1-5-32-544' #Authenticated Users, Local Service, Network Service, Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-26475
+
 - name: "LOW | V-28504 | AUDIT | Windows will be prevented from sending an error report when a device driver requests additional software during installation."
   win_command: reg query HKLM\Software\Policies\Microsoft\Windows\DeviceInstall\Settings /v DisableSendRequestAdditionalSoftwareToWER
   register: send_error_report_audit
