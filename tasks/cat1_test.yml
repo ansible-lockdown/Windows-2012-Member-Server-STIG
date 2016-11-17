@@ -10,8 +10,9 @@
       - audit
       - V-1073
 
+# need to include certificate update information
 - name: "HIGH | V-1074 | AUDIT | An approved DoD antivirus program must be installed and used."
-  win_command: reg query HKLM\Software\McAfee\DesktopProtection /v szProductVer
+  win_command: reg query \"HKLM\Software\Wow6432Node\Network Associates\ePolicy Orchestrator\Application Plugins\VIRUSCAN8800\” /v Version
   register: mcafee_approved_audit
   check_mode: no
   changed_when: no
