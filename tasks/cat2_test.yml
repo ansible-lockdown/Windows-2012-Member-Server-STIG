@@ -28,18 +28,44 @@
       - audit
       - V-1099
 
-#- name: "MEDIUM | V-1099 | PATCH | The account lockout duration must be configured to require an administrator to unlock an account."
-#  win_secedit: 
-#      category: 'System Access'
-#      key: LockoutDuration
-#      value: -1
-#  register: secedit
-#  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
-#  tags:
-#      - cat2
-#      - medium
-#      - patch
-#      - V-1099
+- name: "MEDIUM | V-1099 | PATCH | The account lockout duration must be configured to require an administrator to unlock an account."
+  win_secedit: 
+      category: 'System Access'
+      key: LockoutDuration
+      value: -1
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1099
+
+# V-1098 must run after V-1099 because Windows won't allow setting ResetLockoutCount higher than LockoutDuration or setting LockoutDuration
+# lower than ResetLockoutCount unless it's set to -1, which is done in V-1099.
+
+- name: "MEDIUM | V-1098 | AUDIT | The period of time before the invalid logon counter is reset must be configured to at least 60 minutes."
+  debug: var=secedit_rules.System_Access.ResetLockoutCount
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1098
+
+- name: "MEDIUM | V-1098 | PATCH | The period of time before the invalid logon counter is reset must be configured to at least 60 minutes."
+  win_secedit: 
+      category: 'System Access'
+      key: ResetLockoutCount
+      value: 99999
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1098
 
 - name: "MEDIUM | V-1104 | AUDIT | The maximum password age must be configured to 60 days or less."
   win_shell: net accounts | Select-String -Pattern "Max"
