@@ -380,6 +380,29 @@
       - patch
       - V-1171
 
+- name: "MEDIUM | V-2372 | AUDIT | Reversible password encryption will be disabled."
+  debug: var=secedit_rules.System_Access.ClearTextPassword
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-2372
+
+- name: "MEDIUM | V-2372 | PATCH | Reversible password encryption will be disabled."
+  win_secedit:
+      category: 'System Access'
+      key: ClearTextPassword
+      value: '0'
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-2372
+
 - name: "MEDIUM | V-3245 | AUDIT | File share ACLs will be reconfigured to remove the Everyone group."
   win_shell:  Get-WmiObject -Class Win32_Share | Get-Acl | fl
   register: eject_removable_media_audit
