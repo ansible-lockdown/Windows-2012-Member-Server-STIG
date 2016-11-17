@@ -2267,6 +2267,52 @@
       - patch
       - V-26473
 
+- name: "MEDIUM | V-26474 | AUDIT | Unauthorized accounts must not have the Back up files and directories user right."
+  debug: var=secedit_rules.Privilege_Rights.SeBackupPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26474
+
+- name: "MEDIUM | V-26474 | PATCH | Unauthorized accounts must not have the Back up files and directories user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeBackupPrivilege
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26474
+
+- name: "MEDIUM | V-26476 | AUDIT | Unauthorized accounts must not have the Change the system time user right."
+  debug: var=secedit_rules.Privilege_Rights.SeSystemtimePrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26476
+
+- name: "MEDIUM | V-26476 | PATCH | Unauthorized accounts must not have the Change the system time user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeSystemtimePrivilege
+      value: '*S-1-5-19,*S-1-5-32-544' #Local Service, Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26476
+
 - name: "MEDIUM | V-26529 | AUDIT | The system will be configured to audit 'Account Logon -> Credential Validation' successes."
   win_shell: AuditPol /get /subcategory:"Credential Validation"
   register: success_cred_audit
