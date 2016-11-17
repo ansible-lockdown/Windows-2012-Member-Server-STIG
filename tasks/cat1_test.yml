@@ -475,6 +475,31 @@
       - patch
       - V-6834
 
+- name: "HIGH | V-18010 | AUDIT | Unauthorized accounts must not have the Debug programs user right."
+  debug: var=secedit_rules.Privilege_Rights.SeDebugPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-18010
+
+# Well-known security identifiers in Windows operating systems
+# https://support.microsoft.com/en-us/kb/243330
+- name: "HIGH | V-18010 | PATCH | Unauthorized accounts must not have the Debug programs user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeDebugPrivilege
+      value: '*S-1-5-32-544' # Administrators group
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat1
+      - high
+      - patch
+      - V-18010
+
 - name: "HIGH | V-21973 | AUDIT | Autoplay must be turned off for non-volume devices."
   win_command: reg query HKLM\Software\Policies\Microsoft\Windows\Explorer\ /v NoAutoplayfornonVolume
   register: autoplay_nonvolume_audit
