@@ -58,6 +58,40 @@
       - patch
       - V-1093
 
+- name: "HIGH | V-1102 | AUDIT | Unauthorized accounts must not have the Act as part of the operating system user right."
+  debug: var=secedit_rules.Privilege_Rights.SeTcbPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-1102
+
+- name: "HIGH | V-1102 | PATCH | Unauthorized accounts must not have the Act as part of the operating system user right."
+  win_secedit: 
+      category: 'Privilege Rights'
+      key: SeTcbPrivilege
+      value: ''
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat1
+      - high
+      - patch
+      - V-1102
+
+- name: "HIGH | V-1127 | AUDIT | Only administrators responsible for the system must have Administrator rights on the system."
+  win_command: net localgroup Administrators
+  register: administrators_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-1127
+
 - name: "HIGH | V-1152 | AUDIT | Anonymous access to the registry must be restricted."
   win_shell: Get-Acl -PATH 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg' | Format-List
   register: anon_registry_access_audit
