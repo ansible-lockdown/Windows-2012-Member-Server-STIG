@@ -1037,6 +1037,17 @@
       - patch
       - V-6836
 
+- name: "MEDIUM | V-6840 | AUDIT | System mechanisms will be implemented to enforce automatic expiration of passwords."
+  win_shell: (Get-WmiObject -Class Win32_UserAccount -Filter "PasswordExpires=$False and Domain='$env:computername'").Name
+  register: password_expiry_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-6840
+
 - name: "MEDIUM | V-14228 | AUDIT | Auditing Access of Global System Objects must be turned off."
   win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v AuditBaseObjects
   register: audit_base_objects_audit
