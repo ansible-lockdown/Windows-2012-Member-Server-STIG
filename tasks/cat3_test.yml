@@ -993,6 +993,29 @@
       - patch
       - V-26475
 
+- name: "LOW | V-26477 | AUDIT | Unauthorized accounts must not have the Change the time zone user right."
+  debug: var=secedit_rules.Privilege_Rights.SeTimeZonePrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat3
+      - low
+      - audit
+      - V-26477
+
+- name: "LOW | V-26477 | PATCH | Unauthorized accounts must not have the Change the time zone user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeTimeZonePrivilege
+      value: '*S-1-5-19,*S-1-5-32-544' #Local Service, Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat3
+      - low
+      - patch
+      - V-26477
+
 - name: "LOW | V-28504 | AUDIT | Windows will be prevented from sending an error report when a device driver requests additional software during installation."
   win_command: reg query HKLM\Software\Policies\Microsoft\Windows\DeviceInstall\Settings /v DisableSendRequestAdditionalSoftwareToWER
   register: send_error_report_audit
