@@ -139,18 +139,18 @@
       - audit
       - V-1113
 
-#- name: "MEDIUM | V-1113 | PATCH | The built-in guest account must be disabled."
-#  win_secedit:
-#      category: 'System Access'
-#      key: EnableGuestAccount
-#      value: '0'
-#  register: secedit
-#  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
-#  tags:
-#      - cat2
-#      - medium
-#      - patch
-#      - V-1113
+- name: "MEDIUM | V-1113 | PATCH | The built-in guest account must be disabled."
+  win_secedit:
+      category: 'System Access'
+      key: EnableGuestAccount
+      value: '0'
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1113
 
 - name: "MEDIUM | V-1119 | AUDIT | Booting into alternate non STIG compliant operating systems will not be permitted."
   win_command: bcdedit
