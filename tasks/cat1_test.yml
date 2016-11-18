@@ -487,6 +487,17 @@
       - patch
       - V-6834
 
+- name: "HIGH | V-7002 | AUDIT | DoD information system access will require the use of a password."
+  win_shell: (([ADSI]"WinNT://$env:computername").Children | Where-Object {$_.schemaclassname -eq 'user' -and $_.PasswordRequired -eq $False}).Name
+  register: no_password_users_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-7002
+
 - name: "HIGH | V-18010 | AUDIT | Unauthorized accounts must not have the Debug programs user right."
   debug: var=secedit_rules.Privilege_Rights.SeDebugPrivilege
   check_mode: no
