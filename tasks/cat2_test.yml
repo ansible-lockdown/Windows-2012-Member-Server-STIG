@@ -221,18 +221,18 @@
       - audit
       - V-1150
 
-#- name: "MEDIUM | V-1150 | PATCH | The built-in Windows password complexity policy must be enabled."
-#  win_secedit:
-#      category: 'System Access'
-#      key: PasswordComplexity
-#      value: '1'
-#  register: secedit
-#  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
-#  tags:
-#      - cat2
-#      - medium
-#      - patch
-#      - V-1150
+- name: "MEDIUM | V-1150 | PATCH | The built-in Windows password complexity policy must be enabled."
+  win_secedit:
+      category: 'System Access'
+      key: PasswordComplexity
+      value: '1'
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1150
 
 - name: "MEDIUM | V-1154 | AUDIT | The Ctrl+Alt+Del security attention sequence for logons will be enabled."
   win_command: reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System /v DisableCAD
