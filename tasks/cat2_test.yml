@@ -2347,6 +2347,627 @@
       - patch
       - V-26476
 
+- name: "MEDIUM | V-26478 | AUDIT | Unauthorized accounts must not have the Create a pagefile user right."
+  debug: var=secedit_rules.Privilege_Rights.SeCreatePagefilePrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26478
+
+- name: "MEDIUM | V-26478 | PATCH | Unauthorized accounts must not have the Create a pagefile user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeCreatePagefilePrivilege
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26478
+
+- name: "MEDIUM | V-26480 | AUDIT | Unauthorized accounts must not have the Create global objects user right."
+  debug: var=secedit_rules.Privilege_Rights.SeCreateGlobalPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26480
+
+- name: "MEDIUM | V-26480 | PATCH | Unauthorized accounts must not have the Create global objects user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeCreateGlobalPrivilege
+      value: '*S-1-5-19,*S-1-5-20,*S-1-5-32-544,*S-1-5-6' #Local Service, Network Service, Administrators, Service
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26480
+
+- name: "MEDIUM | V-26481 | AUDIT | Unauthorized accounts must not have the Create permanent shared objects user right."
+  debug: var=secedit_rules.Privilege_Rights.SeCreatePermanentPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26481
+
+- name: "MEDIUM | V-26481 | PATCH | Unauthorized accounts must not have the Create permanent shared objects user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeCreatePermanentPrivilege
+      value: ''
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26481
+
+- name: "MEDIUM | V-26482 | AUDIT | Unauthorized accounts must not have the Create symbolic links user right."
+  debug: var=secedit_rules.Privilege_Rights.SeCreateSymbolicLinkPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26482
+
+- name: "MEDIUM | V-26482 | PATCH | Unauthorized accounts must not have the Create symbolic links user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeCreateSymbolicLinkPrivilege
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26482
+
+- name: "MEDIUM | V-26483 | AUDIT | The Deny log on as a batch job user right on member servers must be configured to prevent access from highly privileged domain accounts on domain systems and unauthenticated access on all systems."
+  debug: var=secedit_rules.Privilege_Rights.SeDenyBatchLogonRight
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26483
+
+- name: "MEDIUM | V-26483 | PATCH | The Deny log on as a batch job user right on member servers must be configured to prevent access from highly privileged domain accounts on domain systems and unauthenticated access on all systems."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeDenyBatchLogonRight
+      value: '*S-1-5-32-546' #Guests
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26483
+
+- name: "MEDIUM | V-26484 | AUDIT | The Deny log on as a service user right on member servers must be configured to prevent access from highly privileged domain accounts on domain systems.  No other groups or accounts must be assigned this right."
+  debug: var=secedit_rules.Privilege_Rights.SeDenyServiceLogonRight
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26484
+
+- name: "MEDIUM | V-26484 | PATCH | The Deny log on as a service user right on member servers must be configured to prevent access from highly privileged domain accounts on domain systems.  No other groups or accounts must be assigned this right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeDenyServiceLogonRight
+      value: ''
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26484
+
+- name: "MEDIUM | V-26485 | AUDIT | The Deny log on locally user right on member servers must be configured to prevent access from highly privileged domain accounts on domain systems and unauthenticated access on all systems."
+  debug: var=secedit_rules.Privilege_Rights.SeDenyInteractiveLogonRight
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26485
+
+- name: "MEDIUM | V-26485 | PATCH | The Deny log on locally user right on member servers must be configured to prevent access from highly privileged domain accounts on domain systems and unauthenticated access on all systems."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeDenyInteractiveLogonRight
+      value: '*S-1-5-32-546' #Guests
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26485
+
+- name: "MEDIUM | V-26486 | AUDIT | The Deny log on through Remote Desktop Services user right on member servers must be configured to prevent access from highly privileged domain accounts and all local accounts on domain systems and unauthenticated access on all systems."
+  debug: var=secedit_rules.Privilege_Rights.SeDenyRemoteInteractiveLogonRight
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26486
+
+- name: "MEDIUM | V-26486 | PATCH | The Deny log on through Remote Desktop Services user right on member servers must be configured to prevent access from highly privileged domain accounts and all local accounts on domain systems and unauthenticated access on all systems."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeDenyRemoteInteractiveLogonRight
+      value: '*S-1-5-32-546' #Guests
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26486
+
+- name: "MEDIUM | V-26487 | AUDIT | Unauthorized accounts must not have the Enable computer and user accounts to be trusted for delegation user right."
+  debug: var=secedit_rules.Privilege_Rights.SeEnableDelegationPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26487
+
+- name: "MEDIUM | V-26487 | PATCH | Unauthorized accounts must not have the Enable computer and user accounts to be trusted for delegation user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeEnableDelegationPrivilege
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26487
+
+- name: "MEDIUM | V-26488 | AUDIT | Unauthorized accounts must not have the Force shutdown from a remote system user right."
+  debug: var=secedit_rules.Privilege_Rights.SeRemoteShutdownPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26488
+
+- name: "MEDIUM | V-26488 | PATCH | Unauthorized accounts must not have the Force shutdown from a remote system user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeRemoteShutdownPrivilege
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26488
+
+- name: "MEDIUM | V-26489 | AUDIT | Unauthorized accounts must not have the Generate security audits user right."
+  debug: var=secedit_rules.Privilege_Rights.SeAuditPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26489
+
+- name: "MEDIUM | V-26489 | PATCH | Unauthorized accounts must not have the Generate security audits user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeAuditPrivilege
+      value: '*S-1-5-19,*S-1-5-20' #Local Service, Network Service
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26489
+
+- name: "MEDIUM | V-26490 | AUDIT | Unauthorized accounts must not have the Impersonate a client after authentication user right."
+  debug: var=secedit_rules.Privilege_Rights.SeImpersonatePrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26490
+
+- name: "MEDIUM | V-26490 | PATCH | Unauthorized accounts must not have the Impersonate a client after authentication user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeImpersonatePrivilege
+      value: '*S-1-5-19,*S-1-5-20,*S-1-5-32-544,*S-1-5-6' #Local Service, Network Service, Administrators, Service
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26490
+
+- name: "MEDIUM | V-26491 | AUDIT | Unauthorized accounts must not have the Increase a process working set user right."
+  debug: var=secedit_rules.Privilege_Rights.SeIncreaseWorkingSetPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26491
+
+- name: "MEDIUM | V-26491 | PATCH | Unauthorized accounts must not have the Increase a process working set user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeIncreaseWorkingSetPrivilege
+      value: '*S-1-5-19,*S-1-5-32-544' #Local Service, Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26491
+
+- name: "MEDIUM | V-26492 | AUDIT | Unauthorized accounts must not have the Increase scheduling priority user right."
+  debug: var=secedit_rules.Privilege_Rights.SeIncreaseBasePriorityPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26492
+
+- name: "MEDIUM | V-26492 | PATCH | Unauthorized accounts must not have the Increase scheduling priority user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeIncreaseBasePriorityPrivilege
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26492
+
+- name: "MEDIUM | V-26493 | AUDIT | Unauthorized accounts must not have the Load and unload device drivers user right."
+  debug: var=secedit_rules.Privilege_Rights.SeLoadDriverPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26493
+
+- name: "MEDIUM | V-26493 | PATCH | Unauthorized accounts must not have the Load and unload device drivers user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeLoadDriverPrivilege
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26493
+
+- name: "MEDIUM | V-26494 | AUDIT | Unauthorized accounts must not have the Lock pages in memory user right."
+  debug: var=secedit_rules.Privilege_Rights.SeLockMemoryPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26494
+
+- name: "MEDIUM | V-26494 | PATCH | Unauthorized accounts must not have the Lock pages in memory user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeLockMemoryPrivilege
+      value: ''
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26494
+
+- name: "MEDIUM | V-26495 | AUDIT | Unauthorized accounts must not have the Log on as a batch job user right."
+  debug: var=secedit_rules.Privilege_Rights.SeBatchLogonRight
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26495
+
+- name: "MEDIUM | V-26495 | PATCH | Unauthorized accounts must not have the Log on as a batch job user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeBatchLogonRight
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26495
+
+- name: "MEDIUM | V-26496 | AUDIT | Unauthorized accounts must not have the Manage auditing and security log user right."
+  debug: var=secedit_rules.Privilege_Rights.SeSecurityPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26496
+
+- name: "MEDIUM | V-26496 | PATCH | Unauthorized accounts must not have the Manage auditing and security log user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeSecurityPrivilege
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26496
+
+- name: "MEDIUM | V-26497 | AUDIT | Unauthorized accounts must not have the Modify an object label user right."
+  debug: var=secedit_rules.Privilege_Rights.SeRelabelPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26497
+
+- name: "MEDIUM | V-26497 | PATCH | Unauthorized accounts must not have the Modify an object label user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeRelabelPrivilege
+      value: ''
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26497
+
+- name: "MEDIUM | V-26498 | AUDIT | Unauthorized accounts must not have the Modify firmware environment values user right."
+  debug: var=secedit_rules.Privilege_Rights.SeSystemEnvironmentPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26498
+
+- name: "MEDIUM | V-26498 | PATCH | Unauthorized accounts must not have the Modify firmware environment values user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeSystemEnvironmentPrivilege
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26498
+
+- name: "MEDIUM | V-26499 | AUDIT | Unauthorized accounts must not have the Perform volume maintenance tasks user right."
+  debug: var=secedit_rules.Privilege_Rights.SeManageVolumePrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26499
+
+- name: "MEDIUM | V-26499 | PATCH | Unauthorized accounts must not have the Perform volume maintenance tasks user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeManageVolumePrivilege
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26499
+
+- name: "MEDIUM | V-26500 | AUDIT | Unauthorized accounts must not have the Profile single process user right."
+  debug: var=secedit_rules.Privilege_Rights.SeProfileSingleProcessPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26500
+
+- name: "MEDIUM | V-26500 | PATCH | Unauthorized accounts must not have the Profile single process user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeProfileSingleProcessPrivilege
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26500
+
+- name: "MEDIUM | V-26501 | AUDIT | Unauthorized accounts must not have the Profile system performance user right."
+  debug: var=secedit_rules.Privilege_Rights.SeSystemProfilePrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26501
+
+- name: "MEDIUM | V-26501 | PATCH | Unauthorized accounts must not have the Profile system performance user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeSystemProfilePrivilege
+      value: '*S-1-5-32-544,*S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420' #Administrators, NT Service\WdiServiceHost
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26501
+
+- name: "MEDIUM | V-26503 | AUDIT | Unauthorized accounts must not have the Replace a process level token user right."
+  debug: var=secedit_rules.Privilege_Rights.SeAssignPrimaryTokenPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26503
+
+- name: "MEDIUM | V-26503 | PATCH | Unauthorized accounts must not have the Replace a process level token user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeAssignPrimaryTokenPrivilege
+      value: '*S-1-5-19,*S-1-5-20' #Local Service, Network Service
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26503
+
+- name: "MEDIUM | V-26504 | AUDIT | Unauthorized accounts must not have the Restore files and directories user right."
+  debug: var=secedit_rules.Privilege_Rights.SeRestorePrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26504
+
+- name: "MEDIUM | V-26504 | PATCH | Unauthorized accounts must not have the Restore files and directories user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeRestorePrivilege
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26504
+
+- name: "MEDIUM | V-26505 | AUDIT | Unauthorized accounts must not have the Shut down the system user right."
+  debug: var=secedit_rules.Privilege_Rights.SeShutdownPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26505
+
+- name: "MEDIUM | V-26505 | PATCH | Unauthorized accounts must not have the Shut down the system user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeShutdownPrivilege
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26505
+
+- name: "MEDIUM | V-26506 | AUDIT | Unauthorized accounts must not have the Take ownership of files or other objects user right."
+  debug: var=secedit_rules.Privilege_Rights.SeTakeOwnershipPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26506
+
+- name: "MEDIUM | V-26506 | PATCH | Unauthorized accounts must not have the Take ownership of files or other objects user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeTakeOwnershipPrivilege
+      value: '*S-1-5-32-544' #Administrators
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26506
+
 - name: "MEDIUM | V-26529 | AUDIT | The system will be configured to audit 'Account Logon -> Credential Validation' successes."
   win_shell: AuditPol /get /subcategory:"Credential Validation"
   register: success_cred_audit
