@@ -680,6 +680,29 @@
       - patch
       - V-26283
 
+- name: "HIGH | V-26479 | AUDIT | Unauthorized accounts must not have the Create a token object user right."
+  debug: var=secedit_rules.Privilege_Rights.SeCreateTokenPrivilege
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-26479
+
+- name: "HIGH | V-26479 | PATCH | Unauthorized accounts must not have the Create a token object user right."
+  win_secedit:
+      category: 'Privilege Rights'
+      key: SeCreateTokenPrivilege
+      value: ''
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat1
+      - high
+      - patch
+      - V-26479
+
 - name: "HIGH | V-32282 | AUDIT | Standard user accounts must only have Read permissions to the Active Setup Installed Components registry key."
   win_shell: (Get-Acl -PATH 'HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components').Access.IdentityReference.Value
   register: standard_read_active_audit
