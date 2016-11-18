@@ -97,14 +97,14 @@
       - audit
       - V-1105
 
-#- name: "MEDIUM | V-1105 | PATCH | The minimum password age must be configured to at least 1 day."
-#  win_command: net accounts /minpwage:0
-#  when: secedit_rules.System_Access.MinimumPasswordAge != "0"
-#  tags:
-#      - cat2
-#      - medium
-#      - patch
-#      - V-1105
+- name: "MEDIUM | V-1105 | PATCH | The minimum password age must be configured to at least 1 day."
+  win_command: net accounts /minpwage:0
+  when: secedit_rules.System_Access.MinimumPasswordAge != "0"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-1105
 
 - name: "MEDIUM | V-1107 | AUDIT | The password history must be configured to 24 passwords remembered."
   debug: var=secedit_rules.System_Access.PasswordHistorySize
