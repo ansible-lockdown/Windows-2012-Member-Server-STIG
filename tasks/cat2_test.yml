@@ -1014,6 +1014,29 @@
       - audit
       - V-6833
 
+- name: "MEDIUM | V-6836 | AUDIT | For systems utilizing a logon ID as the individual identifier, passwords will, at a minimum, be 14 characters."
+  debug: var=secedit_rules.System_Access.MinimumPasswordLength
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-6836
+
+- name: "MEDIUM | V-6836 | PATCH | For systems utilizing a logon ID as the individual identifier, passwords will, at a minimum, be 14 characters."
+  win_secedit: 
+      category: 'System Access'
+      key: MinimumPasswordLength
+      value: '8'
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-6836
+
 - name: "MEDIUM | V-14228 | AUDIT | Auditing Access of Global System Objects must be turned off."
   win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v AuditBaseObjects
   register: audit_base_objects_audit
