@@ -1,0 +1,24 @@
+- name: "MEDIUM | V-26506 | AUDIT | Unauthorized accounts must not have the Take ownership of files or other objects user right."
+  debug: var=
+  register: unauthorized_ownership_audit
+  check_mode: no
+  changed_when: no
+  ignore_errors: yes
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-26506
+
+- name: "MEDIUM | V-26506 | PATCH | Unauthorized accounts must not have the Take ownership of files or other objects user right."
+   win_secedit:
+      category: 'Privilege Rights'
+      key: SeTrustedCredManAccessPrivilege
+      value: ''
+  register: secedit
+  failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-26506
