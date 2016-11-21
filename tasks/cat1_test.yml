@@ -291,14 +291,7 @@
       - V-3338
 
 - name: "HIGH | V-3338 | PATCH | Named pipes that can be accessed anonymously must be configured with limited values on domain controllers."
-  win_regedit:
-    key: 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters\'
-    value: NullSessionPipes
-    data: ''
-    datatype: multistring 
- # with_items:
- #     - string
- #     - multistring
+  win_command: reg add HKLM\System\CurrentControlSet\Services\LanManServer\Parameters /v NullSessionPipes /t REG_MULTI_SZ /f
   tags:
       - cat1
       - high
@@ -319,11 +312,9 @@
 
 - name: "HIGH | V-3339 | PATCH | Unauthorized remotely accessible registry paths must not be configured."
   win_regedit:
-    key: 'HKLM:\System\CurrentControlSet\Control\SecurePipeServers\ winreg'
+    key: 'HKLM:\System\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedExactPaths'
     value: Machine
-    data: System\CurrentControlSet\Control\ProductOptions\0
-          \"System\CurrentControlSet\Control\Server Applications\"\0
-          \"Software\Microsoft\Windows NT\CurrentVersion\"\0\0
+    data: "System\\CurrentControlSet\\Control\\ProductOptions\0System\\CurrentControlSet\\Control\\Server Applications\0Software\\Microsoft\\Windows NT\\CurrentVersion"
     datatype: multistring
   changed_when: no
   tags:
