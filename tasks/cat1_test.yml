@@ -104,16 +104,6 @@
       - audit
       - V-1152
 
-- name: "HIGH | V-1152 | PATCH | Anonymous access to the registry must be restricted."
-  win_regedit:
-     key: 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg'
-  when: "'Registry' not in anon_registry_access_audit.stdout"
-  tags:
-      - cat1
-      - high
-      - patch
-      - V-1152
-
 - name: "HIGH | V-1152 | AUDIT | Anonymous access to the registry must be restricted."
   win_shell: (Get-Acl -PATH 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg').Access.IdentityReference.Value
   register: anon_registry_access_audit
