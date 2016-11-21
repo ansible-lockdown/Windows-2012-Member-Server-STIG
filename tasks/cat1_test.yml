@@ -107,7 +107,7 @@
 - name: "HIGH | V-1152 | PATCH | Anonymous access to the registry must be restricted."
   win_regedit:
      key: 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg'
-  when: "reg_not_found not in anon_registry_access_audit.stderr and anon_registry_access.stderr"
+  when: "reg_not_found not in anon_registry_access_audit.stderr and anon_registry_access_audit.stderr"
   tags:
       - cat1
       - high
