@@ -1,0 +1,7 @@
+---
+reg_not_found: "ERROR: The system was unable to find the specified registry key or value"
+service_not_found: 'Cannot find any service with service name'
+path_not_found: 'PathNotFound_Exception'
+path_is_null: "Cannot validate argument on parameter 'Path'. The argument is null"
+service_not_installed: "The specified service does not exist as an installed service."
+
