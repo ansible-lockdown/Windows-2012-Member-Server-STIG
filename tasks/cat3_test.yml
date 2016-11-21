@@ -46,11 +46,10 @@
       - V-1090
 
 - name: "LOW | V-1112 | AUDIT | Outdated or unused accounts must be removed from the system or disabled."
-  win_shell: Search-ADAccount -AccountInactive -UsersOnly -TimeSpan 30.00:00:00
+  script: v1112.ps1
   register: outdated_accounts_audit
   check_mode: no
   changed_when: no
-  ignore_errors: yes
   tags:
       - cat3
       - low
