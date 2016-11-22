@@ -432,17 +432,17 @@
   win_regedit:
       key: 'HKLM:\System\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedPaths\'
       value: Machine
-      data: \"Software\Microsoft\OLAP Server\"\0
-            \"Software\Microsoft\Windows NT\CurrentVersion\Perflib\"\0
-            \"Software\Microsoft\Windows NT\CurrentVersion\Print\"\0
-            \"Software\Microsoft\Windows NT\CurrentVersion\Windows\"\0
-            System\CurrentControlSet\Control\ContentIndex\0
-            System\CurrentControlSet\Control\Print\Printers\0
-            \"System\CurrentControlSet\Control\Terminal Server\"\0
-            \"System\CurrentControlSet\Control\Terminal Server\UserConfig\"\0
-            \"System\CurrentControlSet\Control\Terminal Server\DefaultUserConfiguration\"\0
-            System\CurrentControlSet\Services\Eventlog\0
-            System\CurrentControlSet\Services\Sysmonlog\0\0
+      data: "Software\\Microsoft\\OLAP Server\0\
+            Software\\Microsoft\\Windows NT\\CurrentVersion\\Perflib\0\
+            Software\\Microsoft\\Windows NT\\CurrentVersion\\Print\0\
+            Software\\Microsoft\\Windows NT\\CurrentVersion\\Windows\0\
+            System\\CurrentControlSet\\Control\\ContentIndex\0\
+            System\\CurrentControlSet\\Control\\Print\\Printers\0\
+            System\\CurrentControlSet\\Control\\Terminal Server\0\
+            System\\CurrentControlSet\\Control\\Terminal Server\\UserConfig\0\
+            System\\CurrentControlSet\\Control\\Terminal Server\\DefaultUserConfiguration\0\
+            System\\CurrentControlSet\\Services\\Eventlog\0\
+            System\\CurrentControlSet\\Services\\Sysmonlog"
       datatype: multistring
   tags:
       - cat1
