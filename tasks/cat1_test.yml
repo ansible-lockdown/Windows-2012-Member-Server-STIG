@@ -299,7 +299,7 @@
       - V-3338
 
 - name: "HIGH | V-3339 | AUDIT | Unauthorized remotely accessible registry paths must not be configured."
-  win_command: reg query \"HKLM\System\CurrentControlSet\Control\SecurePipeServers\ winreg\" /v Machine
+  win_command: reg query 'HKLM\System\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedExactPaths' /v Machine
   register: remotely_accessible_registry_audit
   check_mode: no
   changed_when: no
@@ -336,7 +336,7 @@
       - V-3340
 
 - name: "HIGH | V-3340 | PATCH | Network shares that can be accessed anonymously will not be allowed."
-  win_command: reg add HKLM\System\CurrentControlSet\Services\LanManServer\Parameters /v test /t REG_MULTI_SZ /f
+  win_command: reg add HKLM\System\CurrentControlSet\Services\LanManServer\Parameters /v NullSessionShares /t REG_MULTI_SZ /f
   tags:
       - cat1
       - high
