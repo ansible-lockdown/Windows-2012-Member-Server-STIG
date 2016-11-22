@@ -404,11 +404,7 @@
       - V-4445
 
 - name: "LOW | V-4445 | PATCH | Optional Subsystems will not be permitted to operate on the system."
-  win_regedit:
-      key: 'HKLM:\System\CurrentControlSet\Control\Session Manager\Subsystems'
-      value: Optional
-      data: ''
-      datatype: string
+  win_command: reg add \"HKLM\System\CurrentControlSet\Control\Session Manager\Subsystems\" /v Optional /t REG_MULTI_SZ /f
   tags:
       - cat3
       - low
