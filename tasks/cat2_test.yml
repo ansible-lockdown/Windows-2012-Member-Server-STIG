@@ -4301,16 +4301,6 @@
 - block:
 
    - name: "REMOVAL MEDIUM | V-36722 | PATCH | Permissions for the Application event log must prevent access by nonprivileged accounts."
-     win_acl_inheritance:
-         path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
-         state: 'absent'
-     tags:
-         - cat2
-         - medium
-         - patch
-         - V-36722
-
-   - name: "REMOVAL MEDIUM | V-36722 | PATCH | Permissions for the Application event log must prevent access by nonprivileged accounts."
      win_acl:
          path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
          user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
@@ -4340,6 +4330,16 @@
          - 'NT SERVICE\EventLog'
          - 'NT AUTHORITY\SYSTEM'
          - 'BUILTIN\Administrators'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-36722
+
+   - name: "REMOVAL MEDIUM | V-36722 | PATCH | Permissions for the Application event log must prevent access by nonprivileged accounts."
+     win_acl_inheritance:
+         path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
+         state: 'absent'
      tags:
          - cat2
          - medium
@@ -4378,16 +4378,6 @@
 - block:
 
    - name: "REMOVAL MEDIUM | V-36723 | PATCH | Permissions for the Security event log must prevent access by nonprivileged accounts."
-     win_acl_inheritance:
-         path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
-         state: 'absent'
-     tags:
-         - cat2
-         - medium
-         - patch
-         - V-36723
-
-   - name: "REMOVAL MEDIUM | V-36723 | PATCH | Permissions for the Security event log must prevent access by nonprivileged accounts."
      win_acl:
          path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
          user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
@@ -4417,6 +4407,16 @@
          - 'NT SERVICE\Eventlog'
          - 'NT AUTHORITY\SYSTEM'
          - 'BUILTIN\Administrators'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-36723
+
+   - name: "REMOVAL MEDIUM | V-36723 | PATCH | Permissions for the Security event log must prevent access by nonprivileged accounts."
+     win_acl_inheritance:
+         path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
+         state: 'absent'
      tags:
          - cat2
          - medium
@@ -4455,16 +4455,6 @@
 - block:
 
    - name: "REMOVAL MEDIUM | V-36724 | PATCH | Permissions for the System event log must prevent access by nonprivileged accounts."
-     win_acl_inheritance:
-         path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
-         state: 'absent'
-     tags:
-         - cat2
-         - medium
-         - patch
-         - V-36724
-
-   - name: "REMOVAL MEDIUM | V-36724 | PATCH | Permissions for the System event log must prevent access by nonprivileged accounts."
      win_acl:
          path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
          user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
@@ -4494,6 +4484,16 @@
          - 'NT SERVICE\EventLog'
          - 'NT AUTHORITY\SYSTEM'
          - 'BUILTIN\Administrators'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-36724
+
+   - name: "REMOVAL MEDIUM | V-36724 | PATCH | Permissions for the System event log must prevent access by nonprivileged accounts."
+     win_acl_inheritance:
+         path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
+         state: 'absent'
      tags:
          - cat2
          - medium
@@ -4578,19 +4578,6 @@
 ###################### block start - conditionally apply patches if paths exist #########################
 
 - block:
-
-  - name: "REMOVAL MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
-    win_acl_inheritance:
-        path: '{{ item }}'
-        state: absent
-    with_items:
-        - '\Program Files'
-        - '\Program Files (x86)'
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-40177
 
   - name: "REMOVAL MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
     win_acl:
@@ -4722,6 +4709,19 @@
         - patch
         - V-40177
 
+  - name: "REMOVAL MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
+    win_acl_inheritance:
+        path: '{{ item }}'
+        state: absent
+    with_items:
+        - '\Program Files'
+        - '\Program Files (x86)'
+    tags:
+        - cat2
+        - medium
+        - patch
+        - V-40177
+
   when: "path_not_found not in (program_files_minimum_audit.stderr and program_filesx86_minimum_audit.stderr) and program_files_minimum_audit and program_filesx86_minimum_audit"
 ######################################### block end #####################################################
 
@@ -4752,16 +4752,6 @@
 ###################### block start - conditionally apply patches if paths exist #########################
 
 - block:
-
-   - name: "MEDIUM | V-40178 | PATCH | Permissions for system drive root directory must conform to minimum requirements."
-     win_acl_inheritance:
-         path: 'C:'
-         state: 'absent'
-     tags:
-         - cat2
-         - medium
-         - patch
-         - V-40178
 
    - name: "REMOVAL MEDIUM | V-40178 | PATCH | Permissions for system drive root directory must conform to minimum requirements."
      win_acl:
@@ -4820,6 +4810,16 @@
          - patch
          - V-40178
 
+   - name: "MEDIUM | V-40178 | PATCH | Permissions for system drive root directory must conform to minimum requirements."
+     win_acl_inheritance:
+         path: 'C:'
+         state: 'absent'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-40178
+
   when: "path_not_found not in root_permissions_audit.stderr and root_permissions_audit"
 ######################################### block end #####################################################
 
@@ -4850,16 +4850,6 @@
 ###################### block start - conditionally apply patches if path exists #########################
 
 - block:
-
-   - name: "REMOVAL MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
-     win_acl_inheritance:
-         path: 'C:\Windows'
-         state: 'absent'
-     tags:
-         - cat2
-         - medium
-         - patch
-         - V-40179
 
    - name: "REMOVAL MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
      win_acl:
@@ -4916,6 +4906,16 @@
            rights: 'FullControl'
            inherit: 'ContainerInherit,ObjectInherit'
            propagation: 'None'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-40179
+
+   - name: "REMOVAL MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
+     win_acl_inheritance:
+         path: 'C:\Windows'
+         state: 'absent'
      tags:
          - cat2
          - medium
@@ -5532,16 +5532,6 @@
 
 - block:
 
-   - name: "REMOVAL MEDIUM | V-57721 | PATCH | Event Viewer must be protected from unauthorized modification and deletion."
-     win_acl_inheritance:
-         path: 'C:\Windows\System32\Eventvwr.exe'
-         state: absent
-     tags:
-         - cat2
-         - medium
-         - patch
-         - V-57721
-
    - name: "MEDIUM | V-57721 | PATCH | Event Viewer must be protected from unauthorized modification and deletion."
      win_acl:
          path: 'C:\Windows\System32\Eventvwr.exe'
@@ -5585,6 +5575,16 @@
            rights: 'ReadAndExecute'
            inherit: 'None'
            propagation: 'None'
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-57721
+
+   - name: "REMOVAL MEDIUM | V-57721 | PATCH | Event Viewer must be protected from unauthorized modification and deletion."
+     win_acl_inheritance:
+         path: 'C:\Windows\System32\Eventvwr.exe'
+         state: absent
      tags:
          - cat2
          - medium
