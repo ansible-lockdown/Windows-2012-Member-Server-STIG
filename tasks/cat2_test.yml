@@ -192,7 +192,6 @@
   register: disable_automatic_logons_audit
   check_mode: no
   changed_when: no
-  ignore_errors: yes
   failed_when: "reg_not_found not in disable_automatic_logons_audit.stderr and disable_automatic_logons_audit.stderr"
   tags:
       - cat2
@@ -202,9 +201,10 @@
 
 - name: "MEDIUM | V-1145 | PATCH | Automatic logons must be disabled."
   win_regedit:
-    key: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
-    value: AutoAdminLogon
-    data: 0
+      key: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
+      value: AutoAdminLogon
+      data: 0
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -360,7 +360,6 @@
   register: eject_removable_media_audit
   check_mode: no
   changed_when: no
-  ignore_errors: yes
   failed_when: "reg_not_found not in eject_removable_media_audit.stderr and eject_removable_media_audit.stderr"
   tags:
       - cat2
@@ -373,7 +372,7 @@
       key: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
       value: AllocateDASD
       data: 0
-  ignore_errors: yes
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -457,11 +456,11 @@
       value: DisableDomainCreds
       data: 1
       datatype: dword
-      tags:
-          - cat2
-          - medium
-          - patch
-          - V-3376
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-3376
 
 - name: "MEDIUM | V-3377 | AUDIT | The system will be configured to prevent anonymous users from having the same rights as the Everyone group."
   win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v EveryoneIncludesAnonymous
@@ -1647,10 +1646,10 @@
 
 - name: "MEDIUM | V-15699 | PATCH | The Windows Connect Now wizards will be disabled."
   win_regedit:
-    key: 'HKLM:\Software\Policies\Microsoft\Windows\WCN\UI'
-    value: DisableWcnUi
-    data: 1
-    datatype: dword
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\WCN\UI'
+      value: DisableWcnUi
+      data: 1
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -1671,10 +1670,10 @@
 
 - name: "MEDIUM | V-15700 | PATCH | Remote access to the Plug and Play interface will be disabled for device installation."
   win_regedit:
-    key: 'HKLM:\Software\Policies\Microsoft\Windows\DeviceInstall\Settings'
-    value: AllowRemoteRPC
-    data: 0
-    datatype: dword
+      key: 'HKLM:\Software\Policies\Microsoft\Windows\DeviceInstall\Settings'
+      value: AllowRemoteRPC
+      data: 0
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -1695,10 +1694,10 @@
 
 - name: "MEDIUM | V-15705 | PATCH | Users will be prompted for a password on resume from sleep (on battery).  (Applicable to Server 2008 R2 if the system is configured to sleep.)"
   win_regedit:
-    key: 'HKLM:\Software\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51'
-    value: DCSettingIndex
-    data: 1
-    datatype: dword
+      key: 'HKLM:\Software\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51'
+      value: DCSettingIndex
+      data: 1
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -1719,10 +1718,10 @@
 
 - name: "MEDIUM | V-15706 | PATCH | The user will be prompted for a password on resume from sleep (Plugged In).  (Applicable on Server 2008 R2 if the system is configured to sleep.)"
   win_regedit:
-    key: 'HKLM:\Software\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51'
-    value: ACSettingIndex
-    data: 1
-    datatype: dword
+      key: 'HKLM:\Software\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51'
+      value: ACSettingIndex
+      data: 1
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -1743,9 +1742,9 @@
 
 - name: "MEDIUM | V-15713 | PATCH | Windows Defender SpyNet membership will be disabled."
   win_regedit:
-    key: 'HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet'
-    value: SpyNetReporting
-    state: absent
+      key: 'HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet'
+      value: SpyNetReporting
+      state: absent
   tags:
       - cat2
       - medium
@@ -1766,10 +1765,10 @@
 
 - name: "MEDIUM | V-15714 | PATCH | The system must be configured to save Error Reporting events and messages to the system event log."
   win_regedit:
-    key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting'
-    value: LoggingDisabled
-    data: 0
-    datatype: dword
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting'
+      value: LoggingDisabled
+      data: 0
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -1790,10 +1789,10 @@
 
 - name: "MEDIUM | V-15715 | PATCH | The system must be configured to generate error reports."
   win_regedit:
-    key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting'
-    value: Disabled
-    data: 0
-    datatype: dword
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting'
+      value: Disabled
+      data: 0
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -1814,10 +1813,10 @@
 
 - name: "MEDIUM | V-15722 | PATCH | Windows Media Digital Rights Management will be prevented from accessing the Internet."
   win_regedit:
-    key: 'HKLM:\Software\Policies\Microsoft\WMDRM'
-    value: DisableOnline
-    data: 1
-    datatype: dword
+      key: 'HKLM:\Software\Policies\Microsoft\WMDRM'
+      value: DisableOnline
+      data: 1
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -1838,10 +1837,10 @@
 
 - name: "MEDIUM | V-15727 | PATCH | Users will be prevented from sharing files in their profiles."
   win_regedit:
-    key: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
-    value: NoInPlaceSharing
-    data: 1
-    datatype: dword
+      key: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
+      value: NoInPlaceSharing
+      data: 1
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -1900,10 +1899,10 @@
 
 - name: "MEDIUM | V-15997 | PATCH | The system will be configured to prevent users from mapping local COM ports and redirecting data from the Remote Desktop Session Host to local COM ports. (Remote Desktop Services Role)"
   win_regedit:
-    key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
-    value: fDisableCcm
-    data: 1
-    datatype: dword
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+      value: fDisableCcm
+      data: 1
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -1924,10 +1923,10 @@
 
 - name: "MEDIUM | V-15998 | PATCH | The system will be configured to prevent users from mapping local LPT ports and redirecting data from the Remote Desktop Session Host to local LPT ports. (Remote Desktop Services Role)"
   win_regedit:
-    key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
-    value: fDisableLPT
-    data: 1
-    datatype: dword
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+      value: fDisableLPT
+      data: 1
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -1948,10 +1947,10 @@
 
 - name: "MEDIUM | V-15999 | PATCH | The system will be configured to prevent users from redirecting Plug and Play devices to the Remote Desktop Session Host. (Remote Desktop Services Role)"
   win_regedit:
-    key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
-    value: fDisablePNPRedir
-    data: 1
-    datatype: dword
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+      value: fDisablePNPRedir
+      data: 1
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -1972,10 +1971,10 @@
 
 - name: "MEDIUM | V-16000 | PATCH | The system will be configured to ensure smart card devices can be redirected to the Remote Desktop Session. (Remote Desktop Services Role)"
   win_regedit:
-    key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
-    value: fEnableSmartCard
-    data: 1
-    datatype: dword
+      key: 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'
+      value: fEnableSmartCard
+      data: 1
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -2008,10 +2007,10 @@
 
 - name: "MEDIUM | V-16020 | PATCH | The Windows Customer Experience Improvement Program will be disabled."
   win_regedit:
-    key: 'HKLM:\Software\Policies\Microsoft\SQMClient\Windows'
-    value: CEIPEnable
-    data: 0
-    datatype: dword
+      key: 'HKLM:\Software\Policies\Microsoft\SQMClient\Windows'
+      value: CEIPEnable
+      data: 0
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -2032,10 +2031,10 @@
 
 - name: "MEDIUM | V-16021 | PATCH | The Windows Help Experience Improvement Program will be disabled"
   win_regedit:
-    key: 'HKCU:\Software\Policies\Microsoft\Assistance\Client\1.0'
-    value: NoImplicitFeedback
-    data: 1
-    datatype: dword
+      key: 'HKCU:\Software\Policies\Microsoft\Assistance\Client\1.0'
+      value: NoImplicitFeedback
+      data: 1
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -2056,10 +2055,10 @@
 
 - name: "MEDIUM | V-16048 | PATCH | Windows Help Ratings feedback will be turned off."
   win_regedit:
-    key: 'HKCU:\Software\Policies\Microsoft\Assistance\Client\1.0'
-    value: NoExplicitFeedback
-    data: 1
-    datatype: dword
+      key: 'HKCU:\Software\Policies\Microsoft\Assistance\Client\1.0'
+      value: NoExplicitFeedback
+      data: 1
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -2104,10 +2103,10 @@
 
 - name: "MEDIUM | V-21952 | PATCH | NTLM will be prevented from falling back to a Null session."
   win_regedit:
-    key: 'HKLM:\System\CurrentControlSet\Control\LSA\MSV1_0'
-    value: allownullsessionfallback
-    data: 0
-    datatype: dword
+      key: 'HKLM:\System\CurrentControlSet\Control\LSA\MSV1_0'
+      value: allownullsessionfallback
+      data: 0
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -2128,10 +2127,10 @@
 
 - name: "MEDIUM | V-21953 | PATCH | PKU2U authentication using online identities will be prevented."
   win_regedit:
-    key: 'HKLM:\System\CurrentControlSet\Control\LSA\pku2u'
-    value: AllowOnlineID
-    data: 0
-    datatype: dword
+      key: 'HKLM:\System\CurrentControlSet\Control\LSA\pku2u'
+      value: AllowOnlineID
+      data: 0
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -2152,10 +2151,10 @@
 
 - name: "MEDIUM | V-21954 | PATCH | Kerberos encryption types must be configured to prevent the use of DES encryption suites."
   win_regedit:
-    key: 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters'
-    value: SupportedEncryptionTypes
-    data: 0x7ffffffc
-    datatype: dword
+      key: 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters'
+      value: SupportedEncryptionTypes
+      data: 0x7ffffffc
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -4304,8 +4303,8 @@
 
    - name: "REMOVAL MEDIUM | V-36722 | PATCH | Permissions for the Application event log must prevent access by nonprivileged accounts."
      win_acl_inheritance:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
-        state: 'absent'
+         path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
+         state: 'absent'
      tags:
          - cat2
          - medium
@@ -4314,11 +4313,11 @@
 
    - name: "REMOVAL MEDIUM | V-36722 | PATCH | Permissions for the Application event log must prevent access by nonprivileged accounts."
      win_acl:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
-        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
-        rights: 'FullControl'
-        type: '{{ item[1] }}'
-        state: 'absent'
+         path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
+         user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
+         rights: 'FullControl'
+         type: '{{ item[1] }}'
+         state: 'absent'
      when: "not('EventLog' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
      with_nested:
          - "{{ eventlog_permissions_audit.stdout_lines }}"
@@ -4331,13 +4330,13 @@
 
    - name: "MEDIUM | V-36722 | PATCH | Permissions for the Application event log must prevent access by nonprivileged accounts."
      win_acl:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
-        user: '{{ item }}'
-        rights: 'FullControl'
-        type: 'allow'
-        state: 'present'
-        inherit: 'ContainerInherit, ObjectInherit'
-        propagation: 'None'
+         path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
+         user: '{{ item }}'
+         rights: 'FullControl'
+         type: 'allow'
+         state: 'present'
+         inherit: 'ContainerInherit, ObjectInherit'
+         propagation: 'None'
      with_items:
          - 'NT SERVICE\EventLog'
          - 'NT AUTHORITY\SYSTEM'
@@ -4381,8 +4380,8 @@
 
    - name: "REMOVAL MEDIUM | V-36723 | PATCH | Permissions for the Security event log must prevent access by nonprivileged accounts."
      win_acl_inheritance:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
-        state: 'absent'
+         path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
+         state: 'absent'
      tags:
          - cat2
          - medium
@@ -4391,11 +4390,11 @@
 
    - name: "REMOVAL MEDIUM | V-36723 | PATCH | Permissions for the Security event log must prevent access by nonprivileged accounts."
      win_acl:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
-        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
-        rights: 'FullControl'
-        type: '{{ item[1] }}'
-        state: 'absent'
+         path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
+         user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
+         rights: 'FullControl'
+         type: '{{ item[1] }}'
+         state: 'absent'
      when: "not('EventLog' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
      with_nested:
          - "{{ security_evtx_audit.stdout_lines }}"
@@ -4408,13 +4407,13 @@
 
    - name: "MEDIUM | V-36723 | PATCH | Permissions for the Security event log must prevent access by nonprivileged accounts."
      win_acl:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
-        user: '{{ item }}'
-        rights: 'FullControl'
-        type: 'allow'
-        state: 'present'
-        inherit: 'ContainerInherit, ObjectInherit'
-        propagation: 'None'
+         path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
+         user: '{{ item }}'
+         rights: 'FullControl'
+         type: 'allow'
+         state: 'present'
+         inherit: 'ContainerInherit, ObjectInherit'
+         propagation: 'None'
      with_items:
          - 'NT SERVICE\Eventlog'
          - 'NT AUTHORITY\SYSTEM'
@@ -4424,6 +4423,7 @@
          - medium
          - patch
          - V-36723
+
   when: "path_not_found not in security_evtx_audit.stderr and security_evtx_audit"
 ######################################### block end #####################################################
 
@@ -4440,7 +4440,7 @@
       - V-36724
 
 - name: "MEDIUM | V-36724 | AUDIT | Permissions for the System event log must prevent access by nonprivileged accounts."
-  win_shell: (Get-Acl -PATH 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx').Access.IdentityReference.Value 
+  win_shell: (Get-Acl -PATH 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx').Access.IdentityReference.Value
   register: system_evtx_audit
   check_mode: no
   changed_when: no
@@ -4457,8 +4457,8 @@
 
    - name: "REMOVAL MEDIUM | V-36724 | PATCH | Permissions for the System event log must prevent access by nonprivileged accounts."
      win_acl_inheritance:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
-        state: 'absent'
+         path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
+         state: 'absent'
      tags:
          - cat2
          - medium
@@ -4467,11 +4467,11 @@
 
    - name: "REMOVAL MEDIUM | V-36724 | PATCH | Permissions for the System event log must prevent access by nonprivileged accounts."
      win_acl:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
-        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
-        rights: 'FullControl'
-        type: '{{ item[1] }}'
-        state: 'absent'
+         path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
+         user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
+         rights: 'FullControl'
+         type: '{{ item[1] }}'
+         state: 'absent'
      when: "not('EventLog' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
      with_nested:
          - "{{ system_evtx_audit.stdout_lines }}"
@@ -4484,13 +4484,13 @@
 
    - name: "MEDIUM | V-36724 | PATCH | Permissions for the System event log must prevent access by nonprivileged accounts."
      win_acl:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
-        user: '{{ item }}'
-        rights: 'FullControl'
-        type: 'allow'
-        state: 'present'
-        inherit: 'ContainerInherit, ObjectInherit'
-        propagation: 'None'
+         path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
+         user: '{{ item }}'
+         rights: 'FullControl'
+         type: 'allow'
+         state: 'present'
+         inherit: 'ContainerInherit, ObjectInherit'
+         propagation: 'None'
      with_items:
          - 'NT SERVICE\EventLog'
          - 'NT AUTHORITY\SYSTEM'
@@ -4518,10 +4518,10 @@
 
 - name: "MEDIUM | V-36773 | PATCH | The machine inactivity limit must be set to 15 minutes, locking the system with the screensaver."
   win_regedit:
-     key: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\'
-     value: InactivityTimeout
-     data: 0x00000384
-     datatype: dword
+      key: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\'
+      value: InactivityTimeout
+      data: 0x00000384
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -4582,8 +4582,8 @@
 
   - name: "REMOVAL MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
     win_acl_inheritance:
-       path: '{{ item }}'
-       state: absent
+        path: '{{ item }}'
+        state: absent
     with_items:
         - '\Program Files'
         - '\Program Files (x86)'
@@ -4595,11 +4595,11 @@
 
   - name: "REMOVAL MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
     win_acl:
-       path: '\Program Files'
-       user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
-       rights: 'FullControl'
-       type: '{{ item[1] }}'
-       state: 'absent'
+        path: '\Program Files'
+        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
+        rights: 'FullControl'
+        type: '{{ item[1] }}'
+        state: 'absent'
     when: "not('TrustedInstaller' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
     with_nested:
         - '{{ program_files_minimum_audit.stdout_lines }}'
@@ -4612,11 +4612,11 @@
 
   - name: "REMOVAL MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
     win_acl:
-       path: '\Program Files (x86)'
-       user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
-       rights: 'FullControl'
-       type: '{{ item[1] }}'
-       state: 'absent'
+        path: '\Program Files (x86)'
+        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
+        rights: 'FullControl'
+        type: '{{ item[1] }}'
+        state: 'absent'
     when: "not('TrustedInstaller' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
     with_nested:
         - '{{ program_filesx86_minimum_audit.stdout_lines }}'
@@ -4629,13 +4629,13 @@
  
   - name: "MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
     win_acl:
-       path: '\Program Files'
-       user: '{{ item.user }}'
-       rights: '{{ item.rights }}'
-       type: 'allow'
-       state: 'present'
-       inherit: '{{ item.inherit }}'
-       propagation: '{{ item.propagation }}'
+        path: '\Program Files'
+        user: '{{ item.user }}'
+        rights: '{{ item.rights }}'
+        type: 'allow'
+        state: 'present'
+        inherit: '{{ item.inherit }}'
+        propagation: '{{ item.propagation }}'
     with_items:
         - user: 'NT SERVICE\TrustedInstaller'
           rights: 'FullControl'
@@ -4677,13 +4677,13 @@
 
   - name: "MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
     win_acl:
-       path: '\Program Files (x86)'
-       user: '{{ item.user }}'
-       rights: '{{ item.rights }}'
-       type: 'allow'
-       state: 'present'
-       inherit: '{{ item.inherit }}'
-       propagation: '{{ item.propagation }}'
+        path: '\Program Files (x86)'
+        user: '{{ item.user }}'
+        rights: '{{ item.rights }}'
+        type: 'allow'
+        state: 'present'
+        inherit: '{{ item.inherit }}'
+        propagation: '{{ item.propagation }}'
     with_items:
         - user: 'NT SERVICE\TrustedInstaller'
           rights: 'FullControl'
@@ -4756,8 +4756,8 @@
 
    - name: "MEDIUM | V-40178 | PATCH | Permissions for system drive root directory must conform to minimum requirements."
      win_acl_inheritance:
-        path: 'C:'
-        state: 'absent'
+         path: 'C:'
+         state: 'absent'
      tags:
          - cat2
          - medium
@@ -4766,11 +4766,11 @@
 
    - name: "REMOVAL MEDIUM | V-40178 | PATCH | Permissions for system drive root directory must conform to minimum requirements."
      win_acl:
-        path: 'C:'
-        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
-        rights: 'FullControl'
-        type: '{{ item[1] }}'
-        state: 'absent'
+         path: 'C:'
+         user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
+         rights: 'FullControl'
+         type: '{{ item[1] }}'
+         state: 'absent'
      when: "not('SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
      with_nested:
          - '{{ root_permissions_audit.stdout_lines }}'
@@ -4783,13 +4783,13 @@
 
    - name: "MEDIUM | V-40178 | PATCH | Permissions for system drive root directory must conform to minimum requirements."
      win_acl:
-        path: 'C:'
-        user: '{{ item.user }}'
-        rights: '{{ item.rights }}'
-        type: 'allow'
-        state: 'present'
-        inherit: '{{ item.inherit }}'
-        propagation: '{{ item.propagation }}'
+         path: 'C:'
+         user: '{{ item.user }}'
+         rights: '{{ item.rights }}'
+         type: 'allow'
+         state: 'present'
+         inherit: '{{ item.inherit }}'
+         propagation: '{{ item.propagation }}'
      with_items:
          - user: 'NT AUTHORITY\SYSTEM'
            rights: 'FullControl'
@@ -4854,8 +4854,8 @@
 
    - name: "REMOVAL MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
      win_acl_inheritance:
-        path: 'C:\Windows'
-        state: 'absent'
+         path: 'C:\Windows'
+         state: 'absent'
      tags:
          - cat2
          - medium
@@ -4864,11 +4864,11 @@
 
    - name: "REMOVAL MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
      win_acl:
-        path: 'C:\Windows'
-        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
-        rights: 'FullControl'
-        type: '{{ item[1] }}'
-        state: 'absent'
+         path: 'C:\Windows'
+         user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
+         rights: 'FullControl'
+         type: '{{ item[1] }}'
+         state: 'absent'
      when: "not('TrustedInstaller' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
      with_nested:
          - "{{ windows_installation_audit.stdout_lines }}"
@@ -4881,13 +4881,13 @@
    
    - name: "MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
      win_acl:
-        path: 'C:\Windows'
-        user: '{{ item.user }}'
-        rights: '{{ item.rights }}'
-        type: 'allow'
-        state: 'present'
-        inherit: '{{ item.inherit }}'
-        propagation: '{{ item.propagation }}'
+         path: 'C:\Windows'
+         user: '{{ item.user }}'
+         rights: '{{ item.rights }}'
+         type: 'allow'
+         state: 'present'
+         inherit: '{{ item.inherit }}'
+         propagation: '{{ item.propagation }}'
      with_items:
          - user: 'NT SERVICE\TrustedInstaller'
            rights: 'FullControl'
@@ -4980,10 +4980,10 @@
 
 - name: "MEDIUM | V-43238 | PATCH | The display of slide shows on the lock screen must be disabled (Windows 2012 R2)."
   win_regedit:
-     key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization\'
-     value: NoLockScreenSlideshow
-     data: 1
-     datatype: dword
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization\'
+      value: NoLockScreenSlideshow
+      data: 1
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -5004,10 +5004,10 @@
 
 - name: "MEDIUM | V-43239 | PATCH | Command line data must be prevented from inclusion in process creation events (Windows 2012 R2)."
   win_regedit:
-     key: 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Audit\'
-     value: ProcessCreationIncludeCmdLine_Enabled
-     data: 0
-     datatype: dword
+      key: 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Audit\'
+      value: ProcessCreationIncludeCmdLine_Enabled
+      data: 0
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -5028,10 +5028,10 @@
 
 - name: "MEDIUM | V-43240 | PATCH | The network selection user interface (UI) must not be displayed on the logon screen (Windows 2012 R2)."
   win_regedit:
-     key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System\'
-     value: DontDisplayNetworkSelectionUI
-     data: 1
-     datatype: dword
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System\'
+      value: DontDisplayNetworkSelectionUI
+      data: 1
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -5052,10 +5052,10 @@
 
 - name: "MEDIUM | V-43245 | PATCH | Automatically signing in the last interactive user after a system-initiated restart must be disabled (Windows 2012 R2)."
   win_regedit:
-     key: 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\'
-     value: DontDisplayNetworkSelectionUI
-     data: 1
-     datatype: dword
+      key: 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\'
+      value: DontDisplayNetworkSelectionUI
+      data: 1
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -5098,10 +5098,10 @@
 
 - name: "MEDIUM | V-57453 | PATCH | The system must be configured to collect multiple error reports of the same event type."
   win_regedit:
-     key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting\'
-     value: BypassDataThrottling
-     data: 1
-     datatype: dword
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting\'
+      value: BypassDataThrottling
+      data: 1
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -5495,10 +5495,10 @@
 
 - name: "MEDIUM | V-57639 | PATCH | Users must be required to enter a password to access private keys stored on the computer."
   win_regedit:
-     key: 'HKLM:\SOFTWARE\Policies\Microsoft\Cryptography\'
-     value: ForceKeyProtection
-     data: 2
-     datatype: dword
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Cryptography\'
+      value: ForceKeyProtection
+      data: 2
+      datatype: dword
   tags:
       - cat2
       - medium
@@ -5535,11 +5535,11 @@
 
    - name: "MEDIUM | V-57721 | PATCH | Event Viewer must be protected from unauthorized modification and deletion."
      win_acl:
-        path: 'C:\Windows\System32\Eventvwr.exe'
-        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
-        rights: 'FullControl'
-        type: '{{ item[1] }}'
-        state: 'absent'
+         path: 'C:\Windows\System32\Eventvwr.exe'
+         user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
+         rights: 'FullControl'
+         type: '{{ item[1] }}'
+         state: 'absent'
      when: "not('TrustedInstaller' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
      with_nested:
          - "{{ event_viewer_audit.stdout_lines }}"
@@ -5552,13 +5552,13 @@
 
    - name: "MEDIUM | V-57721 | PATCH | Event Viewer must be protected from unauthorized modification and deletion."
      win_acl:
-        path: 'C:\Windows\System32\Eventvwr.exe'
-        user: '{{ item.user }}'
-        rights: '{{ item.rights }}'
-        type: 'allow'
-        state: 'present'
-        inherit: '{{ item.inherit }}'
-        propagation: '{{ item.propagation }}'
+         path: 'C:\Windows\System32\Eventvwr.exe'
+         user: '{{ item.user }}'
+         rights: '{{ item.rights }}'
+         type: 'allow'
+         state: 'present'
+         inherit: '{{ item.inherit }}'
+         propagation: '{{ item.propagation }}'
      with_items:
          - user: 'NT SERVICE\TrustedInstaller'
            rights: 'FullControl'
