@@ -1852,7 +1852,6 @@
   register: list_of_drives_audit
   check_mode: no
   changed_when: no
-  ignore_errors: yes
   tags:
       - cat2
       - medium
@@ -5532,6 +5531,16 @@
 ###################### block start - conditionally apply patches if path exists #########################
 
 - block:
+
+   - name: "REMOVAL MEDIUM | V-57721 | PATCH | Event Viewer must be protected from unauthorized modification and deletion."
+     win_acl_inheritance:
+         path: 'C:\Windows\System32\Eventvwr.exe'
+         state: absent
+     tags:
+         - cat2
+         - medium
+         - patch
+         - V-57721
 
    - name: "MEDIUM | V-57721 | PATCH | Event Viewer must be protected from unauthorized modification and deletion."
      win_acl:
