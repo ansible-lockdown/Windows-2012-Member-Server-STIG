@@ -781,15 +781,15 @@
         - V-32282
 
    #Must be at the end otherwise it deletes existing ACLs and patches don't work
-   - name: "REMOVAL HIGH | V-32282 | PATCH | Standard user accounts must only have Read permissions to the Active Setup Installed Components registry key."
-     win_acl_inheritance:
-         path: 'HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components'
-         state: absent
-     tags:
-         - cat1
-         - high
-         - patch
-         - V-32282
+  - name: "REMOVAL HIGH | V-32282 | PATCH | Standard user accounts must only have Read permissions to the Active Setup Installed Components registry key."
+    win_acl_inheritance:
+        path: 'HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components'
+        state: absent
+    tags:
+        - cat1
+        - high
+        - patch
+        - V-32282
 
   when: "path_not_found not in standard_read_active_audit.stderr and standard_read_active_audit"
 ######################################### block end #####################################################
