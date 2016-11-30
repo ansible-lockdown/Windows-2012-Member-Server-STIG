@@ -1277,7 +1277,7 @@
       - V-36776
 
 - name: "LOW | V-36777 | AUDIT | Toast notifications to the lock screen must be turned off."
-  win_command: reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications\ /v NoToastApplicationNotificationOnLockScreen
+  win_command: reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications\ /v NoToastApplicationNotificationOnLockScreen
   register: toast_notifications_audit
   check_mode: no
   changed_when: no
@@ -1290,7 +1290,7 @@
 
 - name: "LOW | V-36777 | PATCH | Toast notifications to the lock screen must be turned off."
   win_regedit:
-      key: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications\'
+      key: 'HKCU:\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications\'
       value: NoToastApplicationNotificationOnLockScreen
       data: 1
       datatype: dword
