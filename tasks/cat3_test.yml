@@ -385,6 +385,7 @@
       key: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
       value: ScreenSaverGracePeriod
       data: 0
+      datatype: string
   tags:
       - cat3
       - low
@@ -475,7 +476,7 @@
   win_regedit:
       key: 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
       value: LogonType
-      data: 1
+      data: 0
       datatype: dword
   tags:
       - cat3
