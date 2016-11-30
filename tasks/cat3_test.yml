@@ -1194,7 +1194,7 @@
 
 - name: "LOW | V-36710 | PATCH | Automatic download of updates from the Windows Store must be turned off."
   win_regedit:
-      key: 'HKLM:\System\CurrentControlSet\Control\Session Manager\Kernel'
+      key: 'HKLM:\SOFTWARE\Policies\Microsoft\WindowsStore\'
       value: AutoDownload
       data: 0x00000002
       datatype: dword
