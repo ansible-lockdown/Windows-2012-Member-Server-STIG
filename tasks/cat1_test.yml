@@ -165,6 +165,10 @@
           rights: 'ReadKey'
           inherit: 'None'
           propagation: 'None'
+        - user: 'LOCAL SERVICE'
+          rights: 'ReadKey'
+          inherit: 'ContainerInherit, ObjectInherit'
+          propagation: 'None'
     tags:
         - cat1
         - high
@@ -182,7 +186,8 @@
         - V-1152
 
   when: "path_not_found not in anon_registry_access_audit.stderr and anon_registry_access_audit"
-###################################### block end ########################################################  
+###################################### block end ########################################################
+
 - name: "HIGH | V-1153 | AUDIT | The LanMan authentication level must be set to send NTLMv2 response only, and to refuse LM and NTLM."
   win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa /v LMCompatibilityLevel
   register: lanMan_authentication_audit
@@ -781,15 +786,15 @@
         - V-32282
 
    #Must be at the end otherwise it deletes existing ACLs and patches don't work
-   - name: "REMOVAL HIGH | V-32282 | PATCH | Standard user accounts must only have Read permissions to the Active Setup Installed Components registry key."
-     win_acl_inheritance:
-         path: 'HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components'
-         state: absent
-     tags:
-         - cat1
-         - high
-         - patch
-         - V-32282
+  - name: "REMOVAL HIGH | V-32282 | PATCH | Standard user accounts must only have Read permissions to the Active Setup Installed Components registry key."
+    win_acl_inheritance:
+        path: 'HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components'
+        state: absent
+    tags:
+        - cat1
+        - high
+        - patch
+        - V-32282
 
   when: "path_not_found not in standard_read_active_audit.stderr and standard_read_active_audit"
 ######################################### block end #####################################################
