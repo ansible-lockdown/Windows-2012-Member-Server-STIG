@@ -304,7 +304,7 @@
       - V-3338
 
 - name: "HIGH | V-3339 | AUDIT | Unauthorized remotely accessible registry paths must not be configured."
-  win_command: reg query 'HKLM\System\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedExactPaths' /v Machine
+  win_command: reg query HKLM\System\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedExactPaths /v Machine
   register: remotely_accessible_registry_audit
   check_mode: no
   changed_when: no
