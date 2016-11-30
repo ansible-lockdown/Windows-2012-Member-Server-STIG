@@ -1,16 +1,3 @@
-# - name: "PRELIM | Install GPMC."
-#   win_command: PowerShell Install-WindowsFeature –Name GPMC
-#   register: install_gpmc
-#   check_mode: no
-#   changed_when: "'NoChan' not in install_gpmc.stdout"
-#   tags:
-#       - cat1
-#       - cat2
-#       - cat3
-#       - low
-#       - medium
-#       - high
-
 - name: "PRELIM | Gather secedit facts"
   win_secedit_facts: 
   tags:
