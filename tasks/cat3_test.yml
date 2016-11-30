@@ -1253,7 +1253,7 @@
       - V-36775
 
 - name: "LOW | V-36776 | AUDIT | Notifications from Windows Push Network Service must be turned off."
-  win_command: reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications\ /v NoCloudApplicationNotification
+  win_command: reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications\ /v NoCloudApplicationNotification
   register: windows_push_notify_audit
   check_mode: no
   changed_when: no
@@ -1266,8 +1266,8 @@
 
 - name: "LOW | V-36776 | PATCH | Notifications from Windows Push Network Service must be turned off."
   win_regedit:
-      key: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\'
-      value: NoDispScrSavPage
+      key: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\System\'
+      value: NoCloudApplicationNotification
       data: 1
       datatype: dword
   tags:
