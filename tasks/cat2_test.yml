@@ -372,7 +372,7 @@
       key: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
       value: AllocateDASD
       data: 0
-      datatype: dword
+      datatype: string
   tags:
       - cat2
       - medium
