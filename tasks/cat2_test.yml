@@ -558,6 +558,26 @@
       - patch
       - V-3382
 
+- name: "MEDIUM | V-3383 | AUDIT | The system must be configured to use FIPS-compliant algorithms for encryption, hashing, and signing."
+  win_command: reg query HKLM\System\CurrentControlSet\Control\Lsa\FIPSAlgorithmPolicy /v Enabled
+  register: FIPS_compliant_algorithms_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in FIPS_compliant_algorithms_audit.stderr and FIPS_compliant_algorithms_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-3383
+
+# - name: "MEDIUM | V-3383 | PATCH | The system must be configured to use FIPS-compliant algorithms for encryption, hashing, and signing."
+#   win_command: true
+#   tags:
+#       - cat2
+#       - medium
+#       - patch
+#       - V-3383
+
 - name: "MEDIUM | V-3385 | AUDIT | The system must be configured to require case insensitivity for non-Windows subsystems."
   win_command: reg query \"HKLM\System\CurrentControlSet\Control\Session Manager\Kernel\" /v ObCaseInsensitive
   register: case_insensitive_audit
