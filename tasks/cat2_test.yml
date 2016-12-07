@@ -1848,7 +1848,7 @@
       - V-15727
 
 - name: "MEDIUM | V-15823 | AUDIT | Software certificate installation files will be removed from a system."
-  win_command: wmic logicaldisk get name
+  win_command: wmic logicaldisk where drivetype=3 get name
   register: list_of_drives_audit
   check_mode: no
   changed_when: no
