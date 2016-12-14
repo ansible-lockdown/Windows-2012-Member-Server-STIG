@@ -1903,7 +1903,7 @@
       - V-15823
 
 - name: "MEDIUM | V-15823 | AUDIT | Software certificate installation files will be removed from a system."
-  win_shell: 'Get-ChildItem {{ item|trim }}\\*.p12, {{ item|trim }}\\*.pfx -recurse'
+  win_shell: 'Get-ChildItem {{ item|trim }}\\*.p12, {{ item|trim }}\\*.pfx -recurse -ErrorAction SilentlyContinue'
   register: certificate_installation_files_audit
   check_mode: no
   changed_when: no
