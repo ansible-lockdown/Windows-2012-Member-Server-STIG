@@ -152,6 +152,49 @@
       - patch
       - V-1113
 
+- name: "MEDIUM | V-1114 | AUDIT | The built-in guest account will be renamed."
+  debug: var=secedit_rules.System_Access.NewGuestName
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1114
+
+# - name: "MEDIUM | V-1114 | PATCH | The built-in guest account will be renamed."
+#   win_secedit:
+#       category: 'System Access'
+#       key: NewGuestName
+#       # Need single quote and double quote because secedit prepends and apends \" to value like \"value\" 
+#       value: '"Administrator"'
+#   register: secedit
+#   failed_when: "secedit.failed is defined and 'This host is joined to a Domain Controller' not in secedit.msg"
+#   tags:
+#       - cat2
+#       - medium
+#       - patch
+#       - V-1114
+
+- name: "MEDIUM | V-1115 | AUDIT | The built-in administrator account will be renamed."
+  debug: var=secedit_rules.System_Access.NewAdministratorName
+  register: result
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1115
+
+# - name: "MEDIUM | V-1115 | PATCH | The built-in administrator account will be renamed."
+#   win_command: true
+#   tags:
+#       - cat2
+#       - medium
+#       - patch
+#       - V-1115
+
 - name: "MEDIUM | V-1119 | AUDIT | Booting into alternate non STIG compliant operating systems will not be permitted."
   win_command: bcdedit
   register: OS_list_audit
