@@ -1440,6 +1440,30 @@
       - patch
       - V-14269
 
+- name: "MEDIUM | V-15505 | AUDIT | The HBSS McAfee Agent will be installed."
+  win_shell: 'Get-ChildItem C:\ -Include FrameworkService.exe -Recurse -ErrorAction SilentlyContinue | % { $_.FullName }'
+  register: macfee_framework_service_path_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15505
+
+- name: "MEDIUM | V-15505 | AUDIT | The HBSS McAfee Agent will be installed."
+  win_shell: '[System.Diagnostics.FileVersionInfo]::GetVersionInfo("{{ item }}") | % {$_.FileName, (($_.FileMajorPart, $_.FileMinorPart, $_.FileBuildPart, $_.FilePrivatePart) -join".")}'
+  register: macfee_framework_service_version_audit
+  check_mode: no
+  changed_when: no
+  with_items:
+      - "{{ macfee_framework_service_path_audit.stdout_lines }}"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-15505
+
 - name: "MEDIUM | V-15666 | AUDIT | Windows Peer-to-Peer networking services will be turned off."
   win_command: reg query HKLM\Software\Policies\Microsoft\Peernet /v Disabled
   register: p2p_net_audit
