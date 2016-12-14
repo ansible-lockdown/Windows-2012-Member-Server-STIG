@@ -941,3 +941,23 @@
       - high
       - patch
       - V-36718 
+
+- name: "HIGH | V-40175 | AUDIT | The antivirus program signature files must be kept updated."
+  win_command: reg query \"HKLM\Software\Wow6432Node\Network Associates\ePolicy Orchestrator\Application Plugins\VIRUSCAN8800\" /v DatDate
+  register: dat_date_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "reg_not_found not in dat_date_audit.stderr and dat_date_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-40175
+
+# - name: "HIGH | V-40175 | PATCH | The antivirus program signature files must be kept updated."
+#   win_command: true
+#   tags:
+#       - cat1
+#       - high
+#       - patch
+#       - V-40175
