@@ -206,6 +206,54 @@
       - audit
       - V-1119
 
+- name: "MEDIUM | V-1120 | AUDIT | Installed FTP server will not be configured to allow prohibited logins."
+  win_shell: (Get-Service -name *ftpsvc).Status
+  register: ftp_service_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "ftp_service_audit.stderr and service_not_found not in ftp_service_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-1120
+
+######################################### block start ###################################################
+
+- block:
+    - name: "MEDIUM | V-1120 | AUDIT | Get environment temp directory"
+      win_shell: echo $env:temp
+      register: temp_dir
+
+    - name: "MEDIUM | V-1120 | AUDIT | Copy over ftp script"
+      win_copy: 
+          src: 1120.txt
+          dest: "{{ temp_dir.stdout_lines[0] }}"
+      register: copy_hotfix
+      check_mode: no
+
+    - name: "MEDIUM | V-1120 | AUDIT | Installed FTP server will not be configured to allow prohibited logins."
+      win_command: ftp -s:{{ temp_dir.stdout_lines[0] }}\1120.txt
+      register: ftp_anonymous_audit
+      check_mode: no
+      changed_when: no
+
+  when: "'Running' in ftp_service_audit.stdout"
+  tags:
+          - cat2
+          - medium
+          - audit
+          - V-1120
+######################################### block end #####################################################
+
+# - name: "MEDIUM | V-1120 | PATCH | Installed FTP server will not be configured to allow prohibited logins."
+#   win_command: true
+#   tags:
+#       - cat2
+#       - medium
+#       - patch
+#       - V-1120
+
 - name: "MEDIUM | V-1141 | AUDIT | Unencrypted passwords must not be sent to third-party SMB Servers."
   win_command: reg query HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters /v EnablePlainTextPassword
   register: plain_text_password_audit
