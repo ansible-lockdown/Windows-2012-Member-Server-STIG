@@ -1946,13 +1946,14 @@
       - V-15823
 
 - name: "MEDIUM | V-15823 | AUDIT | Software certificate installation files will be removed from a system."
-  win_shell: 'Get-ChildItem {{ item|trim }}\\*.p12, {{ item|trim }}\\*.pfx -recurse -ErrorAction SilentlyContinue'
+  win_shell: 'Get-ChildItem {{ item[0]|trim }}\ -Filter {{ item[1] }} -recurse -ErrorAction SilentlyContinue'
   register: certificate_installation_files_audit
   check_mode: no
   changed_when: no
-  when: "'Name' not in item and item"
-  with_items:
-    - "{{ list_of_drives_audit.stdout_lines }}"
+  when: "'Name' not in item[0] and item[0]"
+  with_nested: 
+      - "{{ list_of_drives_audit.stdout_lines }}"
+      - [ "*.p12", "*.pfx" ]
   tags:
       - cat2
       - medium
