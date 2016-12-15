@@ -1484,7 +1484,7 @@
       - V-14269
 
 - name: "MEDIUM | V-15505 | AUDIT | The HBSS McAfee Agent will be installed."
-  win_shell: 'Get-ChildItem C:\ -Include FrameworkService.exe -Recurse -ErrorAction SilentlyContinue | % { $_.FullName }'
+  win_shell: 'Get-ChildItem C:\ -Filter "FrameworkService.exe" -Recurse -ErrorAction SilentlyContinue | % { $_.FullName }'
   register: macfee_framework_service_path_audit
   check_mode: no
   changed_when: no
