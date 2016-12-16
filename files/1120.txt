@@ -1,0 +1,4 @@
+open 127.0.0.1
+anonymous
+password
+quit
