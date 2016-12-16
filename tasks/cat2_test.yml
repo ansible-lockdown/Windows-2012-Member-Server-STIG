@@ -1057,7 +1057,21 @@
   register: reprocess_GPO_audit
   check_mode: no
   changed_when: no
+  when: ansible_powershell_version == 4
   failed_when: "reg_not_found not in reprocess_GPO_audit.stderr and reprocess_GPO_audit.stderr"
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-4448
+
+- name: "MEDIUM | V-4448 | AUDIT | Group Policy objects will be reprocessed even if they have not changed."
+  win_shell: reg query "HKLM\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}" /v NoGPOListChanges
+  register: reprocess_GPO_audit
+  check_mode: no
+  changed_when: no
+  when: ansible_powershell_version == 3
+  failed_when: "'ERROR: Invalid syntax' in reprocess_GPO_audit.module_stdout"
   tags:
       - cat2
       - medium
