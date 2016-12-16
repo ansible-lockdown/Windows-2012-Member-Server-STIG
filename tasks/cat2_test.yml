@@ -3962,6 +3962,44 @@
       - patch
       - V-26606
 
+- name: "MEDIUM | V-32272 | AUDIT | The DoD root certificate must be installed into the Trusted Root Store."
+  win_shell: Get-ChildItem -Path cert:\LocalMachine\Root -Recurse | Select-Object -Property FriendlyName,Thumbprint,SignatureAlgorithm | ForEach-Object -Process {"`n"; $_.FriendlyName; $_.Thumbprint; $_.SignatureAlgorithm.FriendlyName}
+  register: root_certificate_trustedstore_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-32272
+
+#- name: "MEDIUM | V-32272 | PATCH | The DoD root certificate must be installed into the Trusted Root Store."
+#  win_command: true
+#  tags:
+#      - cat2
+#      - medium
+#      - patch
+#      - V-32272
+
+- name: "MEDIUM | V-32274 | AUDIT | The DoD Interoperability Root CA 1 to DoD Root CA 2 cross-certificate must be installed into the Untrusted Certificates Store."
+  win_shell: Get-ChildItem -Path cert:\LocalMachine\Disallowed -Recurse | Select-Object -Property FriendlyName,Thumbprint,SignatureAlgorithm | ForEach-Object -Process {"`n"; $_.FriendlyName; $_.Thumbprint; $_.SignatureAlgorithm.FriendlyName}
+  register: root_certificate_untrustedstore_audit
+  check_mode: no
+  changed_when: no
+  tags:
+      - cat2
+      - medium
+      - audit
+      - V-32274
+
+#- name: "MEDIUM | V-32274 | PATCH | The DoD Interoperability Root CA 1 to DoD Root CA 2 cross-certificate must be installed into the Untrusted Certificates Store."
+#  win_command: true
+#  tags:
+#      - cat2
+#      - medium
+#      - patch
+#      - V-32274
+
 - name: "MEDIUM | V-36439 | AUDIT | Local administrator accounts must have their privileged token filtered to prevent elevated privileges from being used over the network on domain systems."
   win_command: reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v LocalAccountTokenFilterPolicy
   register: token_filter_audit
