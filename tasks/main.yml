@@ -3,6 +3,7 @@
       - prelim_tasks
       - always
 
+#- include: tempcat_test.yml
 - include: cat1_test.yml
 - include: cat2_test.yml
 - include: cat3_test.yml
