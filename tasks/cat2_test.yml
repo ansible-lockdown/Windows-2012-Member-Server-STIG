@@ -4489,54 +4489,43 @@
 ###################### block start - conditionally apply patches if path exists #########################
 
 - block:
-
-  - name: "REMOVAL MEDIUM | V-36722 | PATCH | Permissions for the Application event log must prevent access by nonprivileged accounts."
-    win_acl:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
-        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
-        rights: 'FullControl'
-        type: '{{ item[1] }}'
-        state: 'absent'
-    when: "not('EventLog' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
-    with_nested:
-        - "{{ eventlog_permissions_audit.stdout_lines }}"
-        - [ allow, deny ]
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-36722
-
-  - name: "MEDIUM | V-36722 | PATCH | Permissions for the Application event log must prevent access by nonprivileged accounts."
-    win_acl:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
-        user: '{{ item }}'
-        rights: 'FullControl'
-        type: 'allow'
-        state: 'present'
-        inherit: 'ContainerInherit, ObjectInherit'
-        propagation: 'None'
-    with_items:
-        - 'NT SERVICE\EventLog'
-        - 'NT AUTHORITY\SYSTEM'
-        - 'BUILTIN\Administrators'
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-36722
-
-  - name: "REMOVAL MEDIUM | V-36722 | PATCH | Permissions for the Application event log must prevent access by nonprivileged accounts."
-    win_acl_inheritance:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
-        state: 'absent'
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-36722
-
+    - name: "REMOVAL MEDIUM | V-36722 | PATCH | Permissions for the Application event log must prevent access by nonprivileged accounts."
+      win_acl:
+          path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
+          user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
+          rights: 'FullControl'
+          type: '{{ item[1] }}'
+          state: 'absent'
+      when: "not('EventLog' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
+      with_nested:
+          - "{{ eventlog_permissions_audit.stdout_lines }}"
+          - [ allow, deny ]
+     
+    - name: "MEDIUM | V-36722 | PATCH | Permissions for the Application event log must prevent access by nonprivileged accounts."
+      win_acl:
+          path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
+          user: '{{ item }}'
+          rights: 'FullControl'
+          type: 'allow'
+          state: 'present'
+          inherit: 'ContainerInherit, ObjectInherit'
+          propagation: 'None'
+      with_items:
+          - 'NT SERVICE\EventLog'
+          - 'NT AUTHORITY\SYSTEM'
+          - 'BUILTIN\Administrators'
+   
+    - name: "REMOVAL MEDIUM | V-36722 | PATCH | Permissions for the Application event log must prevent access by nonprivileged accounts."
+      win_acl_inheritance:
+          path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Application.evtx'
+          state: 'absent'
+   
   when: "path_not_found not in eventlog_permissions_audit.stderr and eventlog_permissions_audit"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36722
 ######################################### block end #####################################################
 
 - name: "MEDIUM | V-36723 | AUDIT | Permissions for the Security event log must prevent access by nonprivileged accounts."
@@ -4566,54 +4555,43 @@
 ###################### block start - conditionally apply patches if path exists #########################
 
 - block:
-
-  - name: "REMOVAL MEDIUM | V-36723 | PATCH | Permissions for the Security event log must prevent access by nonprivileged accounts."
-    win_acl:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
-        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
-        rights: 'FullControl'
-        type: '{{ item[1] }}'
-        state: 'absent'
-    when: "not('EventLog' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
-    with_nested:
-        - "{{ security_evtx_audit.stdout_lines }}"
-        - [ allow, deny ]
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-36723
-
-  - name: "MEDIUM | V-36723 | PATCH | Permissions for the Security event log must prevent access by nonprivileged accounts."
-    win_acl:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
-        user: '{{ item }}'
-        rights: 'FullControl'
-        type: 'allow'
-        state: 'present'
-        inherit: 'ContainerInherit, ObjectInherit'
-        propagation: 'None'
-    with_items:
-        - 'NT SERVICE\Eventlog'
-        - 'NT AUTHORITY\SYSTEM'
-        - 'BUILTIN\Administrators'
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-36723
-
-  - name: "REMOVAL MEDIUM | V-36723 | PATCH | Permissions for the Security event log must prevent access by nonprivileged accounts."
-    win_acl_inheritance:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
-        state: 'absent'
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-36723
-
+    - name: "REMOVAL MEDIUM | V-36723 | PATCH | Permissions for the Security event log must prevent access by nonprivileged accounts."
+      win_acl:
+          path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
+          user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
+          rights: 'FullControl'
+          type: '{{ item[1] }}'
+          state: 'absent'
+      when: "not('EventLog' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
+      with_nested:
+          - "{{ security_evtx_audit.stdout_lines }}"
+          - [ allow, deny ]
+   
+    - name: "MEDIUM | V-36723 | PATCH | Permissions for the Security event log must prevent access by nonprivileged accounts."
+      win_acl:
+          path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
+          user: '{{ item }}'
+          rights: 'FullControl'
+          type: 'allow'
+          state: 'present'
+          inherit: 'ContainerInherit, ObjectInherit'
+          propagation: 'None'
+      with_items:
+          - 'NT SERVICE\Eventlog'
+          - 'NT AUTHORITY\SYSTEM'
+          - 'BUILTIN\Administrators'
+     
+    - name: "REMOVAL MEDIUM | V-36723 | PATCH | Permissions for the Security event log must prevent access by nonprivileged accounts."
+      win_acl_inheritance:
+          path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\Security.evtx'
+          state: 'absent'
+     
   when: "path_not_found not in security_evtx_audit.stderr and security_evtx_audit"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36723
 ######################################### block end #####################################################
 
 - name: "MEDIUM | V-36724 | AUDIT | Permissions for the System event log must prevent access by nonprivileged accounts."
@@ -4643,54 +4621,44 @@
 ###################### block start - conditionally apply patches if path exists #########################
 
 - block:
+    - name: "REMOVAL MEDIUM | V-36724 | PATCH | Permissions for the System event log must prevent access by nonprivileged accounts."
+      win_acl:
+          path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
+          user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
+          rights: 'FullControl'
+          type: '{{ item[1] }}'
+          state: 'absent'
+      when: "not('EventLog' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
+      with_nested:
+          - "{{ system_evtx_audit.stdout_lines }}"
+          - [ allow, deny ]
+   
+    - name: "MEDIUM | V-36724 | PATCH | Permissions for the System event log must prevent access by nonprivileged accounts."
+      win_acl:
+          path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
+          user: '{{ item }}'
+          rights: 'FullControl'
+          type: 'allow'
+          state: 'present'
+          inherit: 'ContainerInherit, ObjectInherit'
+          propagation: 'None'
+      with_items:
+          - 'NT SERVICE\EventLog'
+          - 'NT AUTHORITY\SYSTEM'
+          - 'BUILTIN\Administrators'
+   
 
-  - name: "REMOVAL MEDIUM | V-36724 | PATCH | Permissions for the System event log must prevent access by nonprivileged accounts."
-    win_acl:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
-        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
-        rights: 'FullControl'
-        type: '{{ item[1] }}'
-        state: 'absent'
-    when: "not('EventLog' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
-    with_nested:
-        - "{{ system_evtx_audit.stdout_lines }}"
-        - [ allow, deny ]
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-36724
-
-  - name: "MEDIUM | V-36724 | PATCH | Permissions for the System event log must prevent access by nonprivileged accounts."
-    win_acl:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
-        user: '{{ item }}'
-        rights: 'FullControl'
-        type: 'allow'
-        state: 'present'
-        inherit: 'ContainerInherit, ObjectInherit'
-        propagation: 'None'
-    with_items:
-        - 'NT SERVICE\EventLog'
-        - 'NT AUTHORITY\SYSTEM'
-        - 'BUILTIN\Administrators'
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-36724
-
-  - name: "REMOVAL MEDIUM | V-36724 | PATCH | Permissions for the System event log must prevent access by nonprivileged accounts."
-    win_acl_inheritance:
-        path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
-        state: 'absent'
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-36724
-
+    - name: "REMOVAL MEDIUM | V-36724 | PATCH | Permissions for the System event log must prevent access by nonprivileged accounts."
+      win_acl_inheritance:
+          path: 'C:\WINDOWS\SYSTEM32\WINEVT\LOGS\System.evtx'
+          state: 'absent'
+   
   when: "path_not_found not in system_evtx_audit.stderr and system_evtx_audit"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-36724
 ######################################### block end #####################################################
 
 - name: "MEDIUM | V-36773 | AUDIT | The machine inactivity limit must be set to 15 minutes, locking the system with the screensaver."
@@ -4768,151 +4736,130 @@
 ###################### block start - conditionally apply patches if paths exist #########################
 
 - block:
-
-  - name: "REMOVAL MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
-    win_acl:
-        path: '\Program Files'
-        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
-        rights: 'FullControl'
-        type: '{{ item[1] }}'
-        state: 'absent'
-    when: "not('TrustedInstaller' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
-    with_nested:
-        - '{{ program_files_minimum_audit.stdout_lines }}'
-        - [ allow, deny ]
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-40177
-
-  - name: "REMOVAL MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
-    win_acl:
-        path: '\Program Files (x86)'
-        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
-        rights: 'FullControl'
-        type: '{{ item[1] }}'
-        state: 'absent'
-    when: "not('TrustedInstaller' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
-    with_nested:
-        - '{{ program_filesx86_minimum_audit.stdout_lines }}'
-        - [ allow, deny ]
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-40177
- 
-  - name: "MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
-    win_acl:
-        path: '\Program Files'
-        user: '{{ item.user }}'
-        rights: '{{ item.rights }}'
-        type: 'allow'
-        state: 'present'
-        inherit: '{{ item.inherit }}'
-        propagation: '{{ item.propagation }}'
-    with_items:
-        - user: 'NT SERVICE\TrustedInstaller'
+    - name: "REMOVAL MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
+      win_acl:
+          path: '\Program Files'
+          user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
           rights: 'FullControl'
-          inherit: 'ContainerInherit'
-          propagation: 'InheritOnly'
-        - user: 'NT AUTHORITY\SYSTEM'
-          rights: 'Modify'
-          inherit: 'None'
-          propagation: 'None'
-        - user: 'NT AUTHORITY\SYSTEM'
+          type: '{{ item[1] }}'
+          state: 'absent'
+      when: "not('TrustedInstaller' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
+      with_nested:
+          - '{{ program_files_minimum_audit.stdout_lines }}'
+          - [ allow, deny ]
+     
+    - name: "REMOVAL MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
+      win_acl:
+          path: '\Program Files (x86)'
+          user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
           rights: 'FullControl'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'InheritOnly'
-        - user: 'BUILTIN\Administrators'
-          rights: 'Modify'
-          inherit: 'None'
-          propagation: 'None'
-        - user: 'BUILTIN\Administrators'
-          rights: 'FullControl'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'InheritOnly'
-        - user: 'BUILTIN\Users'
-          rights: 'ReadAndExecute'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'None'
-        - user: 'CREATOR OWNER'
-          rights: 'FullControl'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'InheritOnly'
-        - user: 'ALL APPLICATION PACKAGES'
-          rights: 'ReadAndExecute'
-          inherit: 'ContainerInherit, ObjectInherit'
-          propagation: 'None'
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-40177
-
-  - name: "MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
-    win_acl:
-        path: '\Program Files (x86)'
-        user: '{{ item.user }}'
-        rights: '{{ item.rights }}'
-        type: 'allow'
-        state: 'present'
-        inherit: '{{ item.inherit }}'
-        propagation: '{{ item.propagation }}'
-    with_items:
-        - user: 'NT SERVICE\TrustedInstaller'
-          rights: 'FullControl'
-          inherit: 'ContainerInherit'
-          propagation: 'InheritOnly'
-        - user: 'NT AUTHORITY\SYSTEM'
-          rights: 'Modify'
-          inherit: 'None'
-          propagation: 'None'
-        - user: 'NT AUTHORITY\SYSTEM'
-          rights: 'FullControl'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'InheritOnly'
-        - user: 'BUILTIN\Administrators'
-          rights: 'Modify'
-          inherit: 'None'
-          propagation: 'None'
-        - user: 'BUILTIN\Administrators'
-          rights: 'FullControl'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'InheritOnly'
-        - user: 'BUILTIN\Users'
-          rights: 'ReadAndExecute'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'None'
-        - user: 'CREATOR OWNER'
-          rights: 'FullControl'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'InheritOnly'
-        - user: 'ALL APPLICATION PACKAGES'
-          rights: 'ReadAndExecute'
-          inherit: 'ContainerInherit, ObjectInherit'
-          propagation: 'None'
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-40177
-
-  - name: "REMOVAL MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
-    win_acl_inheritance:
-        path: '{{ item }}'
-        state: absent
-    with_items:
-        - '\Program Files'
-        - '\Program Files (x86)'
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-40177
-
+          type: '{{ item[1] }}'
+          state: 'absent'
+      when: "not('TrustedInstaller' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
+      with_nested:
+          - '{{ program_filesx86_minimum_audit.stdout_lines }}'
+          - [ allow, deny ]
+   
+    - name: "MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
+      win_acl:
+          path: '\Program Files'
+          user: '{{ item.user }}'
+          rights: '{{ item.rights }}'
+          type: 'allow'
+          state: 'present'
+          inherit: '{{ item.inherit }}'
+          propagation: '{{ item.propagation }}'
+      with_items:
+          - user: 'NT SERVICE\TrustedInstaller'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit'
+            propagation: 'InheritOnly'
+          - user: 'NT AUTHORITY\SYSTEM'
+            rights: 'Modify'
+            inherit: 'None'
+            propagation: 'None'
+          - user: 'NT AUTHORITY\SYSTEM'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'InheritOnly'
+          - user: 'BUILTIN\Administrators'
+            rights: 'Modify'
+            inherit: 'None'
+            propagation: 'None'
+          - user: 'BUILTIN\Administrators'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'InheritOnly'
+          - user: 'BUILTIN\Users'
+            rights: 'ReadAndExecute'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'None'
+          - user: 'CREATOR OWNER'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'InheritOnly'
+          - user: 'ALL APPLICATION PACKAGES'
+            rights: 'ReadAndExecute'
+            inherit: 'ContainerInherit, ObjectInherit'
+            propagation: 'None'
+   
+    - name: "MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
+      win_acl:
+          path: '\Program Files (x86)'
+          user: '{{ item.user }}'
+          rights: '{{ item.rights }}'
+          type: 'allow'
+          state: 'present'
+          inherit: '{{ item.inherit }}'
+          propagation: '{{ item.propagation }}'
+      with_items:
+          - user: 'NT SERVICE\TrustedInstaller'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit'
+            propagation: 'InheritOnly'
+          - user: 'NT AUTHORITY\SYSTEM'
+            rights: 'Modify'
+            inherit: 'None'
+            propagation: 'None'
+          - user: 'NT AUTHORITY\SYSTEM'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'InheritOnly'
+          - user: 'BUILTIN\Administrators'
+            rights: 'Modify'
+            inherit: 'None'
+            propagation: 'None'
+          - user: 'BUILTIN\Administrators'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'InheritOnly'
+          - user: 'BUILTIN\Users'
+            rights: 'ReadAndExecute'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'None'
+          - user: 'CREATOR OWNER'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'InheritOnly'
+          - user: 'ALL APPLICATION PACKAGES'
+            rights: 'ReadAndExecute'
+            inherit: 'ContainerInherit, ObjectInherit'
+            propagation: 'None'
+   
+    - name: "REMOVAL MEDIUM | V-40177 | PATCH | Permissions for program file directories must conform to minimum requirements."
+      win_acl_inheritance:
+          path: '{{ item }}'
+          state: absent
+      with_items:
+          - '\Program Files'
+          - '\Program Files (x86)'
+   
   when: "path_not_found not in (program_files_minimum_audit.stderr and program_filesx86_minimum_audit.stderr) and program_files_minimum_audit and program_filesx86_minimum_audit"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-40177
 ######################################### block end #####################################################
 
 - name: "MEDIUM | V-40178 | AUDIT | Permissions for system drive root directory must conform to minimum requirements."
@@ -4942,75 +4889,64 @@
 ###################### block start - conditionally apply patches if paths exist #########################
 
 - block:
-
-  - name: "REMOVAL MEDIUM | V-40178 | PATCH | Permissions for system drive root directory must conform to minimum requirements."
-    win_acl:
-        path: 'C:'
-        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
-        rights: 'FullControl'
-        type: '{{ item[1] }}'
-        state: 'absent'
-    when: "not('SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
-    with_nested:
-        - '{{ root_permissions_audit.stdout_lines }}'
-        - [ allow, deny ]
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-40178
-
-  - name: "MEDIUM | V-40178 | PATCH | Permissions for system drive root directory must conform to minimum requirements."
-    win_acl:
-        path: 'C:'
-        user: '{{ item.user }}'
-        rights: '{{ item.rights }}'
-        type: 'allow'
-        state: 'present'
-        inherit: '{{ item.inherit }}'
-        propagation: '{{ item.propagation }}'
-    with_items:
-        - user: 'NT AUTHORITY\SYSTEM'
+    - name: "REMOVAL MEDIUM | V-40178 | PATCH | Permissions for system drive root directory must conform to minimum requirements."
+      win_acl:
+          path: 'C:'
+          user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES")}}'
           rights: 'FullControl'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'None'
-        - user: 'BUILTIN\Administrators'
-          rights: 'FullControl'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'None'
-        - user: 'BUILTIN\Users'
-          rights: 'ReadAndExecute'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'None'
-        - user: 'BUILTIN\Users'
-          rights: 'AppendData'
-          inherit: 'ContainerInherit'
-          propagation: 'None'
-        - user: 'BUILTIN\Users'
-          rights: 'CreateFiles,WriteData'
-          inherit: 'ContainerInherit'
-          propagation: 'InheritOnly'
-        - user: 'CREATOR OWNER'
-          rights: 'FullControl'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'InheritOnly'
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-40178
-
-  - name: "MEDIUM | V-40178 | PATCH | Permissions for system drive root directory must conform to minimum requirements."
-    win_acl_inheritance:
-        path: 'C:'
-        state: 'absent'
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-40178
-
+          type: '{{ item[1] }}'
+          state: 'absent'
+      when: "not('SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
+      with_nested:
+          - '{{ root_permissions_audit.stdout_lines }}'
+          - [ allow, deny ]
+   
+    - name: "MEDIUM | V-40178 | PATCH | Permissions for system drive root directory must conform to minimum requirements."
+      win_acl:
+          path: 'C:'
+          user: '{{ item.user }}'
+          rights: '{{ item.rights }}'
+          type: 'allow'
+          state: 'present'
+          inherit: '{{ item.inherit }}'
+          propagation: '{{ item.propagation }}'
+      with_items:
+          - user: 'NT AUTHORITY\SYSTEM'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'None'
+          - user: 'BUILTIN\Administrators'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'None'
+          - user: 'BUILTIN\Users'
+            rights: 'ReadAndExecute'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'None'
+          - user: 'BUILTIN\Users'
+            rights: 'AppendData'
+            inherit: 'ContainerInherit'
+            propagation: 'None'
+          - user: 'BUILTIN\Users'
+            rights: 'CreateFiles,WriteData'
+            inherit: 'ContainerInherit'
+            propagation: 'InheritOnly'
+          - user: 'CREATOR OWNER'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'InheritOnly'
+   
+    - name: "MEDIUM | V-40178 | PATCH | Permissions for system drive root directory must conform to minimum requirements."
+      win_acl_inheritance:
+          path: 'C:'
+          state: 'absent'
+   
   when: "path_not_found not in root_permissions_audit.stderr and root_permissions_audit"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-40178
 ######################################### block end #####################################################
 
 - name: "MEDIUM | V-40179 | AUDIT | Permissions for Windows installation directory must conform to minimum requirements."
@@ -5040,79 +4976,68 @@
 ###################### block start - conditionally apply patches if path exists #########################
 
 - block:
-
-  - name: "REMOVAL MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
-    win_acl:
-        path: 'C:\Windows'
-        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
-        rights: 'FullControl'
-        type: '{{ item[1] }}'
-        state: 'absent'
-    when: "not('TrustedInstaller' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
-    with_nested:
-        - "{{ windows_installation_audit.stdout_lines }}"
-        - [ allow, deny ]
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-40179
-  
-  - name: "MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
-    win_acl:
-        path: 'C:\Windows'
-        user: '{{ item.user }}'
-        rights: '{{ item.rights }}'
-        type: 'allow'
-        state: 'present'
-        inherit: '{{ item.inherit }}'
-        propagation: '{{ item.propagation }}'
-    with_items:
-        - user: 'NT SERVICE\TrustedInstaller'
+    - name: "REMOVAL MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
+      win_acl:
+          path: 'C:\Windows'
+          user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
           rights: 'FullControl'
-          inherit: 'ContainerInherit'
-          propagation: 'None'
-        - user: 'NT AUTHORITY\SYSTEM'
-          rights: 'Modify'
-          inherit: 'None'
-          propagation: 'None'
-        - user: 'NT AUTHORITY\SYSTEM'
-          rights: 'FullControl'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'InheritOnly'
-        - user: 'BUILTIN\Administrators'
-          rights: 'Modify'
-          inherit: 'None'
-          propagation: 'None'
-        - user: 'BUILTIN\Administrators'
-          rights: 'FullControl'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'InheritOnly'
-        - user: 'CREATOR OWNER'
-          rights: 'FullControl'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'InheritOnly'
-        - user: 'ALL APPLICATION PACKAGES'
-          rights: 'FullControl'
-          inherit: 'ContainerInherit,ObjectInherit'
-          propagation: 'None'
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-40179
-
-  - name: "REMOVAL MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
-    win_acl_inheritance:
-        path: 'C:\Windows'
-        state: 'absent'
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-40179
-
+          type: '{{ item[1] }}'
+          state: 'absent'
+      when: "not('TrustedInstaller' in item[0] or 'SYSTEM' in item[0] or 'Administrators' in item[0] or 'CREATOR OWNER' in item[0]) or 'allow' not in item[1]"
+      with_nested:
+          - "{{ windows_installation_audit.stdout_lines }}"
+          - [ allow, deny ]
+   
+    - name: "MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
+      win_acl:
+          path: 'C:\Windows'
+          user: '{{ item.user }}'
+          rights: '{{ item.rights }}'
+          type: 'allow'
+          state: 'present'
+          inherit: '{{ item.inherit }}'
+          propagation: '{{ item.propagation }}'
+      with_items:
+          - user: 'NT SERVICE\TrustedInstaller'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit'
+            propagation: 'None'
+          - user: 'NT AUTHORITY\SYSTEM'
+            rights: 'Modify'
+            inherit: 'None'
+            propagation: 'None'
+          - user: 'NT AUTHORITY\SYSTEM'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'InheritOnly'
+          - user: 'BUILTIN\Administrators'
+            rights: 'Modify'
+            inherit: 'None'
+            propagation: 'None'
+          - user: 'BUILTIN\Administrators'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'InheritOnly'
+          - user: 'CREATOR OWNER'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'InheritOnly'
+          - user: 'ALL APPLICATION PACKAGES'
+            rights: 'FullControl'
+            inherit: 'ContainerInherit,ObjectInherit'
+            propagation: 'None'
+   
+    - name: "REMOVAL MEDIUM | V-40179 | PATCH | Permissions for Windows installation directory must conform to minimum requirements."
+      win_acl_inheritance:
+          path: 'C:\Windows'
+          state: 'absent'
+   
   when: "path_not_found not in windows_installation_audit.stderr and windows_installation_audit"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-40179
 ######################################### block end #####################################################
 
 - name: "MEDIUM | V-40200 | AUDIT | The system must be configured to audit Object Access - Central Access Policy Staging failures."
@@ -5722,65 +5647,54 @@
 ###################### block start - conditionally apply patches if path exists #########################
 
 - block:
-
-  - name: "MEDIUM | V-57721 | PATCH | Event Viewer must be protected from unauthorized modification and deletion."
-    win_acl:
-        path: 'C:\Windows\System32\Eventvwr.exe'
-        user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
-        rights: 'FullControl'
-        type: '{{ item[1] }}'
-        state: 'absent'
-    when: "not('TrustedInstaller' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
-    with_nested:
-        - "{{ event_viewer_audit.stdout_lines }}"
-        - [ allow, deny ]
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-57721
-
-  - name: "MEDIUM | V-57721 | PATCH | Event Viewer must be protected from unauthorized modification and deletion."
-    win_acl:
-        path: 'C:\Windows\System32\Eventvwr.exe'
-        user: '{{ item.user }}'
-        rights: '{{ item.rights }}'
-        type: 'allow'
-        state: 'present'
-        inherit: '{{ item.inherit }}'
-        propagation: '{{ item.propagation }}'
-    with_items:
-        - user: 'NT SERVICE\TrustedInstaller'
+    - name: "MEDIUM | V-57721 | PATCH | Event Viewer must be protected from unauthorized modification and deletion."
+      win_acl:
+          path: 'C:\Windows\System32\Eventvwr.exe'
+          user: '{{ item[0] | replace("APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES" , "ALL APPLICATION PACKAGES") }}'
           rights: 'FullControl'
-          inherit: 'None'
-          propagation: 'None'
-        - user: 'NT AUTHORITY\SYSTEM'
-          rights: 'ReadAndExecute'
-          inherit: 'None'
-          propagation: 'None'
-        - user: 'BUILTIN\Users'
-          rights: 'ReadAndExecute'
-          inherit: 'None'
-          propagation: 'None'
-        - user: 'ALL APPLICATION PACKAGES'
-          rights: 'ReadAndExecute'
-          inherit: 'None'
-          propagation: 'None'
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-57721
-
-  - name: "REMOVAL MEDIUM | V-57721 | PATCH | Event Viewer must be protected from unauthorized modification and deletion."
-    win_acl_inheritance:
-        path: 'C:\Windows\System32\Eventvwr.exe'
-        state: absent
-    tags:
-        - cat2
-        - medium
-        - patch
-        - V-57721
-
+          type: '{{ item[1] }}'
+          state: 'absent'
+      when: "not('TrustedInstaller' in item[0] or 'Administrators' in item[0]) or 'allow' not in item[1]"
+      with_nested:
+          - "{{ event_viewer_audit.stdout_lines }}"
+          - [ allow, deny ]
+     
+    - name: "MEDIUM | V-57721 | PATCH | Event Viewer must be protected from unauthorized modification and deletion."
+      win_acl:
+          path: 'C:\Windows\System32\Eventvwr.exe'
+          user: '{{ item.user }}'
+          rights: '{{ item.rights }}'
+          type: 'allow'
+          state: 'present'
+          inherit: '{{ item.inherit }}'
+          propagation: '{{ item.propagation }}'
+      with_items:
+          - user: 'NT SERVICE\TrustedInstaller'
+            rights: 'FullControl'
+            inherit: 'None'
+            propagation: 'None'
+          - user: 'NT AUTHORITY\SYSTEM'
+            rights: 'ReadAndExecute'
+            inherit: 'None'
+            propagation: 'None'
+          - user: 'BUILTIN\Users'
+            rights: 'ReadAndExecute'
+            inherit: 'None'
+            propagation: 'None'
+          - user: 'ALL APPLICATION PACKAGES'
+            rights: 'ReadAndExecute'
+            inherit: 'None'
+            propagation: 'None'
+   
+    - name: "REMOVAL MEDIUM | V-57721 | PATCH | Event Viewer must be protected from unauthorized modification and deletion."
+      win_acl_inheritance:
+          path: 'C:\Windows\System32\Eventvwr.exe'
+          state: absent
+   
   when: "path_not_found not in event_viewer_audit.stderr and event_viewer_audit"
+  tags:
+      - cat2
+      - medium
+      - patch
+      - V-57721
 ######################################### block end #####################################################
