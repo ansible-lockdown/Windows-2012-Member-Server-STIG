@@ -81,6 +81,60 @@
       - patch
       - V-1102
 
+- name: "HIGH | V-1121 | AUDIT | Installed FTP server will not be configured to allow access to the system drive."
+  win_shell: (Get-Service -name *ftpsvc).Status
+  register: ftp_service_audit
+  check_mode: no
+  changed_when: no
+  failed_when: "ftp_service_audit.stderr and service_not_found not in ftp_service_audit.stderr"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-1121
+
+######################################### block start ###################################################
+
+- block:
+    - name: "HIGH | V-1121 | AUDIT | Get environment temp directory"
+      win_shell: echo $env:temp
+      register: temp_dir
+
+    - name: "HIGH | V-1121 | AUDIT | Copy over ftp script"
+      win_copy: 
+          src: 1121.txt
+          dest: "{{ temp_dir.stdout_lines[0] }}"
+      register: copy_hotfix
+      check_mode: no
+
+    - name: "HIGH | V-1121 | AUDIT | Installed FTP server will not be configured to allow prohibited logins."
+      win_command: ftp -s:{{ temp_dir.stdout_lines[0] }}\1121.txt
+      register: ftp_anonymous_audit
+      check_mode: no
+      changed_when: no
+
+    - name: "HIGH | V-1121 | Clean up."
+      win_file:
+          path: "{{ temp_dir.stdout_lines[0] }}/1121.txt"
+          state: absent
+      check_mode: no
+
+  when: "'Running' in ftp_service_audit.stdout"
+  tags:
+      - cat1
+      - high
+      - audit
+      - V-1121
+######################################### block end #####################################################
+
+# - name: "HIGH | V-1121 | PATCH | FTP servers must be configured to prevent access to the system drive."
+#   win_command: true
+#   tags:
+#       - cat1
+#       - high
+#       - patch
+#       - V-1121
+
 - name: "HIGH | V-1127 | AUDIT | Only administrators responsible for the system must have Administrator rights on the system."
   win_command: net localgroup Administrators
   register: administrators_audit
