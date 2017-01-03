@@ -238,12 +238,18 @@
       check_mode: no
       changed_when: no
 
+    - name: "MEDIUM | V-1120 | Clean up."
+      win_file:
+          path: "{{ temp_dir.stdout_lines[0] }}/1120.txt"
+          state: absent
+      check_mode: no
+
   when: "'Running' in ftp_service_audit.stdout"
   tags:
-          - cat2
-          - medium
-          - audit
-          - V-1120
+      - cat2
+      - medium
+      - audit
+      - V-1120
 ######################################### block end #####################################################
 
 # - name: "MEDIUM | V-1120 | PATCH | Installed FTP server will not be configured to allow prohibited logins."
